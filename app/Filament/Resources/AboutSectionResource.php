@@ -31,7 +31,11 @@ class AboutSectionResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('background_media')
                     ->label('خلفية القسم (صورة / فيديو)')
-                    ->directory('uploads/about_section'),
+                    ->directory('uploads/about_section')
+                    ->visibility('public')
+                    ->preserveFilenames()
+                    ->columnSpanFull()
+                    ->live(),
                 Forms\Components\TextInput::make('title2')
                     ->label('عنوان القسم')
                     ->required(),

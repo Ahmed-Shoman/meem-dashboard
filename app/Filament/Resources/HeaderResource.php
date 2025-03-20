@@ -26,17 +26,17 @@ public static function form(Form $form): Form
         ->schema([
             Forms\Components\Section::make('Header Settings')
                 ->schema([
-                    Forms\Components\FileUpload::make('logo')
-                        ->label('Logo')
-                        ->image()
-                        ->directory('uploads/logos')
-                        ->visibility('public')
-                        ->preserveFilenames()
-                        ->columnSpanFull()
-                        ->live(),
-                        //->url(fn ($record) => asset('storage/uploads/logos/' . $record->logo)), // توليد رابط مباشر للصو
+                Forms\Components\FileUpload::make('logo')
+                    ->label('Logo')
+                    ->image()
+                    ->directory('uploads/logos')
+                    ->preserveFilenames()
+                    ->columnSpanFull()
+                    ->live()
+                    ->visibility('public') ,
 
-                    Forms\Components\Repeater::make('links')
+
+                Forms\Components\Repeater::make('links')
                         ->label('Navigation Links')
                         ->schema([
                             Forms\Components\TextInput::make('text')

@@ -17,6 +17,6 @@ class AboutSection extends Model
         'image',
         'title2',
         'sub_title2',
-        'sub_descriotion2'
+        'sub_description2'
     ];
 }
