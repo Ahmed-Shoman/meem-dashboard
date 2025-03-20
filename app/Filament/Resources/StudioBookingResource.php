@@ -13,7 +13,10 @@ use Filament\Tables\Table;
 class StudioBookingResource extends Resource
 {
     protected static ?string $model = StudioBooking::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark';
+
+        protected static ?string $navigationGroup = 'Home Page Sections';
+
 
     public static function form(Form $form): Form
     {

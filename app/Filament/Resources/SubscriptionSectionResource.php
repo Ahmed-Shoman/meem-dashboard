@@ -14,8 +14,11 @@ use Illuminate\Database\Eloquent\Builder;
 class SubscriptionSectionResource extends Resource
 {
     protected static ?string $model = SubscriptionSection::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Website Content';
+    protected static ?string $navigationIcon = 'heroicon-o-bell';
+    protected static ?string $navigationGroup = 'Home Page Sections';
+
+
+
 
     public static function form(Form $form): Form
     {

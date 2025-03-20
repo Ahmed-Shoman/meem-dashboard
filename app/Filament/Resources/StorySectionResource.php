@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\StorySectionResource\Pages;
+use App\Models\StorySection;
+use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
+class StorySectionResource extends Resource
+{
+    protected static ?string $model = StorySection::class;
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationGroup = 'About us Page Sections';
+    protected static ?string $label = 'Story Section';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('title')
+                    ->label('Title')
+                    ->required()
+                    ->columnSpanFull(),
+
+                Forms\Components\Textarea::make('description')
+                    ->label('Description')
+                    ->columnSpanFull(),
+
+                Forms\Components\FileUpload::make('image')
+                    ->label('Story Image')
+                    ->image()
+                    ->columnSpanFull(),
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Title')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Description')
+                    ->limit(50),
+
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Story Image'),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->dateTime(),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ]);
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListStorySections::route('/'),
+            'create' => Pages\CreateStorySection::route('/create'),
+            'edit' => Pages\EditStorySection::route('/{record}/edit'),
+        ];
+    }
+}

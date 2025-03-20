@@ -54,32 +54,93 @@ Route::prefix('studio-bookings')->group(function () {
 use App\Http\Controllers\API\OurWorksController;
 
 Route::prefix('our-works')->group(function () {
-    Route::get('/', [OurWorksController::class, 'index']); // ✅ جلب كل البيانات
-    Route::get('/{id}', [OurWorksController::class, 'show']); // ✅ جلب سجل واحد
-    Route::post('/', [OurWorksController::class, 'store']); // ✅ إنشاء سجل جديد
-    Route::put('/{id}', [OurWorksController::class, 'update']); // ✅ تحديث بيانات
-    Route::delete('/{id}', [OurWorksController::class, 'destroy']); // ✅ حذف سجل
+    Route::get('/', [OurWorksController::class, 'index']);
+    Route::get('/{id}', [OurWorksController::class, 'show']);
+    Route::post('/', [OurWorksController::class, 'store']); //
+    Route::put('/{id}', [OurWorksController::class, 'update']); //
+    Route::delete('/{id}', [OurWorksController::class, 'destroy']); //
+
 });
-
-
 use App\Http\Controllers\API\HeaderController;
 
-Route::get('/header', [HeaderController::class, 'index']); // عرض بيانات الهيدر
-Route::post('/header', [HeaderController::class, 'store']); // إنشاء أو تعديل بيانات الهيدر
-Route::delete('/header', [HeaderController::class, 'destroy']); // حذف بيانات الهيدر
+Route::get('/header', [HeaderController::class, 'index']); //
+Route::post('/header', [HeaderController::class, 'store']); //
+Route::delete('/header', [HeaderController::class, 'destroy']); //
 
 
 
 use App\Http\Controllers\API\SubscriptionSectionController;
 
-Route::get('/subscription-section', [SubscriptionSectionController::class, 'index']); // جلب البيانات
-Route::post('/subscription-section', [SubscriptionSectionController::class, 'store']); // إنشاء أو تعديل
-Route::delete('/subscription-section', [SubscriptionSectionController::class, 'destroy']); // حذف
+Route::get('/subscription-section', [SubscriptionSectionController::class, 'index']); //
+Route::post('/subscription-section', [SubscriptionSectionController::class, 'store']); //
+Route::delete('/subscription-section', [SubscriptionSectionController::class, 'destroy']); //
 
 use App\Http\Controllers\API\AboutSectionController;
 
 Route::prefix('about')->group(function () {
-    Route::get('/', [AboutSectionController::class, 'index']); // عرض البيانات
-    Route::post('/', [AboutSectionController::class, 'store']); // إنشاء البيانات
-    Route::put('/{id}', [AboutSectionController::class, 'update']); // تعديل البيانات
+    Route::get('/', [AboutSectionController::class, 'index']); //
+    Route::post('/', [AboutSectionController::class, 'store']); //
+    Route::put('/{id}', [AboutSectionController::class, 'update']); //
 });
+
+
+//section controller in aboutus page
+use App\Http\Controllers\API\StorySectionController;
+
+Route::get('/story-section', [StorySectionController::class, 'index']);
+Route::post('/story-section', [StorySectionController::class, 'store']);
+
+use App\Http\Controllers\API\MissionSectionController;
+
+Route::prefix('mission-sections')->group(function () {
+    Route::get('/', [MissionSectionController::class, 'index']); // Get all records
+    Route::get('/{id}', [MissionSectionController::class, 'show']); // Get single record
+    Route::post('/', [MissionSectionController::class, 'store']); // Create new record
+    Route::put('/{id}', [MissionSectionController::class, 'update']); // Update record
+    Route::delete('/{id}', [MissionSectionController::class, 'destroy']); // Delete record
+});
+
+use App\Http\Controllers\API\TeamMemberController;
+
+Route::prefix('team-members')->group(function () {
+    Route::get('/', [TeamMemberController::class, 'index']); // Get all records
+    Route::get('/{id}', [TeamMemberController::class, 'show']); // Get single record
+    Route::post('/', [TeamMemberController::class, 'store']); // Create new record
+    Route::put('/{id}', [TeamMemberController::class, 'update']); // Update record
+    Route::delete('/{id}', [TeamMemberController::class, 'destroy']); // Delete record
+});
+
+
+
+use App\Http\Controllers\Api\ConsultantController;
+
+Route::get('/consultants', [ConsultantController::class, 'index']);
+Route::post('/consultants', [ConsultantController::class, 'store']);
+Route::get('/consultants/{id}', [ConsultantController::class, 'show']);
+Route::put('/consultants/{id}', [ConsultantController::class, 'update']);
+Route::delete('/consultants/{id}', [ConsultantController::class, 'destroy']);
+
+
+use App\Http\Controllers\Api\PartnerController;
+
+Route::get('/partners', [PartnerController::class, 'index']);
+Route::post('/partners', [PartnerController::class, 'store']);
+Route::get('/partners/{id}', [PartnerController::class, 'show']);
+Route::put('/partners/{id}', [PartnerController::class, 'update']);
+Route::delete('/partners/{id}', [PartnerController::class, 'destroy']);
+
+
+
+use App\Http\Controllers\Api\NewsletterSectionController;
+
+Route::get('/newsletter-section', [NewsletterSectionController::class, 'index']);
+Route::post('/newsletter-section', [NewsletterSectionController::class, 'store']);
+Route::put('/newsletter-section/{newsletterSection}', [NewsletterSectionController::class, 'update']);
+
+
+use App\Http\Controllers\Api\PartnershipController;
+
+Route::get('/partnerships', [PartnershipController::class, 'index']);
+Route::post('/partnerships', [PartnershipController::class, 'store']);
+Route::put('/partnerships/{partnership}', [PartnershipController::class, 'update']);
+Route::delete('/partnerships/{partnership}', [PartnershipController::class, 'destroy']);

@@ -1,21 +1,22 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Program extends Model
+class Partnership extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'title',
-        'presenter',
-        'image',
-        'seasons',
-        'episodes',
-        'links',
+        'description',
         'cta_button_text',
-        'program_name',
+        'images',
+    ];
+
+    protected $casts = [
+        'images' => 'array', // Store images as an array
     ];
 }

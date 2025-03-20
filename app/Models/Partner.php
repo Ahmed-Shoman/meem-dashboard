@@ -1,21 +1,23 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Program extends Model
+class Partner extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'title',
-        'presenter',
-        'image',
-        'seasons',
-        'episodes',
-        'links',
-        'cta_button_text',
-        'program_name',
+        'description',
+        'logos',
+        'cta_text',
+
+    ];
+
+    protected $casts = [
+        'logos' => 'array', // تخزين الشعارات كمصفوفة JSON
     ];
 }

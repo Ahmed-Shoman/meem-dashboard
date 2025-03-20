@@ -5,6 +5,7 @@ use App\Filament\Resources\ProgramResource\Pages;
 use App\Models\Program;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Navigation\NavigationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -14,6 +15,8 @@ class ProgramResource extends Resource
 {
     protected static ?string $model = Program::class;
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+
+    protected static ?string $navigationGroup = 'Home Page Sections';
 
     public static function form(Form $form): Form
     {
@@ -43,6 +46,16 @@ class ProgramResource extends Resource
                     ->label('Links')
                     ->required()
                     ->url(),
+
+                     Forms\Components\TextInput::make('cta_button_text')
+                    ->label('button')
+                    ->required(),
+
+
+                     Forms\Components\TextInput::make('program_name')
+                    ->label('Program Name')
+                    ->required()
+
             ]);
     }
 

@@ -13,7 +13,10 @@ use Filament\Tables\Table;
 class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-plus';
+
+        protected static ?string $navigationGroup = 'Home Page Sections';
+
 
     public static function form(Form $form): Form
     {

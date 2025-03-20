@@ -1,21 +1,17 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Program extends Model
+class StorySection extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'title',
-        'presenter',
+        'description',
         'image',
-        'seasons',
-        'episodes',
-        'links',
-        'cta_button_text',
-        'program_name',
     ];
 }
