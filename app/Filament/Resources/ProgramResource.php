@@ -22,9 +22,9 @@ class ProgramResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->label('اسم البرنامج')
-                    ->required(),
+                // Forms\Components\TextInput::make('title')
+                //     ->label('اسم البرنامج')
+                //     ->required(),
                 Forms\Components\TextInput::make('presenter')
                     ->label('المقدم')
                     ->required(),
@@ -47,14 +47,40 @@ class ProgramResource extends Resource
                     ->required()
                     ->url(),
 
-                     Forms\Components\TextInput::make('cta_button_text')
-                    ->label('button')
-                    ->required(),
+                    //  Forms\Components\TextInput::make('cta_button_text')
+                    // ->label('button')
+                    // ->required(),
 
 
                      Forms\Components\TextInput::make('program_name')
                     ->label('Program Name')
-                    ->required()
+                    ->required(),
+
+
+                   Forms\Components\FileUpload::make('audio')
+    ->label('Audio File')
+    ->directory('uploads/audio') // ✅ Store inside an audio folder
+    ->acceptedFileTypes([
+        'audio/mpeg',      // MP3
+        'audio/wav',       // WAV
+        'audio/ogg',       // OGG
+        'audio/aac',       // AAC
+        'audio/flac',      // FLAC
+        'audio/x-ms-wma',  // WMA
+        'audio/x-wav',     // Alternative WAV MIME type
+        'audio/webm'       // WEBM
+    ])
+    ->maxSize(10240) // ✅ Set max file size (10MB)
+    ->nullable()
+    ->required(),
+
+
+     Forms\Components\TextInput::make('audio_time')
+         ->label('Audio Duration')
+         ->required(),
+
+
+
 
             ]);
     }

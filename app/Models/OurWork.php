@@ -14,7 +14,7 @@ class OurWork extends Model
     protected $fillable = [
         'main_title',
         'subtitle',
-        'cta_button_text',
+        //'cta_button_text',
         'client_logos',
         'description_text',
         'listeners_stat',

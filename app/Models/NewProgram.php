@@ -5,22 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MissionSection extends Model
+class NewProgram  extends Model
 {
     use HasFactory;
 
+    protected $table = 'new_programs';
+
     protected $fillable = [
-        'main_title',
+        'title',
+        'category',
+        'image',
+        'seasons',
+        'episodes',
+        'producer',
         'description',
-        'points',
-        'title2',
-        'description2',
-        'story_text',
-        'title3',
-        'description3',
     ];
 
     protected $casts = [
-        'points' => 'array',
+        'category' => 'array',
     ];
 }

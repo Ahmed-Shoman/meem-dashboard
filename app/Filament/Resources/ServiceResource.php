@@ -22,15 +22,15 @@ class ServiceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->label('Service Title')
-                    ->required(),
+                // Forms\Components\TextInput::make('title')
+                //     ->label('Service Title')
+                //     ->required(),
                 Forms\Components\Textarea::make('description')
                     ->label('Service Description'),
 
-                     Forms\Components\TextInput::make('button_title')
-                    ->label('Button Text')
-                    ->required(),
+                    //  Forms\Components\TextInput::make('button_title')
+                    // ->label('Button Text')
+                    // ->required(),
 
                      Forms\Components\TextInput::make('service_name')
                     ->label('Service Name')

@@ -9,13 +9,14 @@ class Program extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+
         'presenter',
         'image',
         'seasons',
         'episodes',
         'links',
-        'cta_button_text',
         'program_name',
+        'audio',
+        'audio_time',
     ];
 }

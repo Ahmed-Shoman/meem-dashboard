@@ -14,7 +14,9 @@ return new class extends Migration {
             $table->json('points')->nullable();
             $table->string('title2');
             $table->string('description2')->nullable();
-
+            $table->string('story_text')->nullable();
+            $table->string('title3');
+            $table->string('description3')->nullable();
             $table->timestamps();
         });
     }

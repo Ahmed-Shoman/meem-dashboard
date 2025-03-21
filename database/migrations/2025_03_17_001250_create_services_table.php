@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); // عنوان الخدمة
-            $table->string('button_title');
+            // $table->string('title'); // عنوان الخدمة
+            // $table->string('button_title');
             $table->string('service_name');
             $table->text('description')->nullable(); // وصف الخدمة
             $table->timestamps();

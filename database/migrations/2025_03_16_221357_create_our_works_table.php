@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('subtitle')->nullable(); // تم تغيير الاسم ليكون أكثر اختصارًا ووضوحًا
 
             // نص الزر
-            $table->string('cta_button_text')->nullable(); // CTA تعني Call To Action
+          //  $table->string('cta_button_text')->nullable(); // CTA تعني Call To Action
 
             // شريط العملاء (شعارات الشركات)
             $table->json('client_logos')->nullable(); // تخزين اللوجوهات كـ JSON

@@ -144,3 +144,22 @@ Route::get('/partnerships', [PartnershipController::class, 'index']);
 Route::post('/partnerships', [PartnershipController::class, 'store']);
 Route::put('/partnerships/{partnership}', [PartnershipController::class, 'update']);
 Route::delete('/partnerships/{partnership}', [PartnershipController::class, 'destroy']);
+
+
+use App\Http\Controllers\ContentSectionController;
+
+Route::get('/content-section', [ContentSectionController::class, 'index']);
+Route::post('/content-section', [ContentSectionController::class, 'store']);
+Route::put('/content-section/{id}', [ContentSectionController::class, 'update']);
+Route::delete('/content-section/{id}', [ContentSectionController::class, 'destroy']);
+
+
+use App\Http\Controllers\Api\AudioLibraryController;
+
+Route::prefix('audio-library')->group(function () {
+    Route::get('/', [AudioLibraryController::class, 'index']);
+    Route::post('/', [AudioLibraryController::class, 'store']);
+    Route::get('/{id}', [AudioLibraryController::class, 'show']);
+    Route::put('/{id}', [AudioLibraryController::class, 'update']);
+    Route::delete('/{id}', [AudioLibraryController::class, 'destroy']);
+});

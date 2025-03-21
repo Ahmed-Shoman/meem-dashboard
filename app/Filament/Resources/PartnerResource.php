@@ -59,8 +59,8 @@ class PartnerResource extends Resource
                     ->label('Description')
                     ->limit(50),
 
-                Tables\Columns\ImageColumn::make('logos')
-                    ->label('Logos'),
+                // Tables\Columns\ImageColumn::make('logos')
+                //     ->label('Logos'),
 
                 Tables\Columns\TextColumn::make('cta_text')
                     ->label('CTA Button Text'),

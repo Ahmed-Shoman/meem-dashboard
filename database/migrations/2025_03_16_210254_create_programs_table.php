@@ -8,14 +8,16 @@ return new class extends Migration {
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('cta_button_text');
             $table->string('presenter');
             $table->string('image');
             $table->integer('seasons')->default(1);
             $table->integer('episodes')->default(1);
             $table->text('program_name');
             $table->string('links');
+            $table->string('audio');
+            $table->string('audio_time'); // مدة الصوت
+
+
             $table->timestamps();
         });
     }
