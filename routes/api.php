@@ -163,3 +163,24 @@ Route::prefix('audio-library')->group(function () {
     Route::put('/{id}', [AudioLibraryController::class, 'update']);
     Route::delete('/{id}', [AudioLibraryController::class, 'destroy']);
 });
+
+use App\Http\Controllers\Api\SliderSectionController;
+
+Route::prefix('slider-sections')->group(function () {
+    Route::get('/', [SliderSectionController::class, 'index']);
+    Route::get('/{id}', [SliderSectionController::class, 'show']);
+    Route::post('/', [SliderSectionController::class, 'store']);
+    Route::put('/{id}', [SliderSectionController::class, 'update']);
+    Route::delete('/{id}', [SliderSectionController::class, 'destroy']);
+});
+
+
+use App\Http\Controllers\Api\CustomerReviewController;
+
+Route::prefix('customer-reviews')->group(function () {
+    Route::get('/', [CustomerReviewController::class, 'index']);
+    Route::get('/{id}', [CustomerReviewController::class, 'show']);
+    Route::post('/', [CustomerReviewController::class, 'store']);
+    Route::put('/{id}', [CustomerReviewController::class, 'update']);
+    Route::delete('/{id}', [CustomerReviewController::class, 'destroy']);
+});
