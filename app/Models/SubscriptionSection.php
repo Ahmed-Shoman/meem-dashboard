@@ -20,7 +20,6 @@ class SubscriptionSection extends Model
         'listen_now_text',
         'platform_links',
         'listen_now_image',
-        'faqs_main_title'
     ];
 
     protected $casts = [
