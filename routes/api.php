@@ -184,3 +184,13 @@ Route::prefix('customer-reviews')->group(function () {
     Route::put('/{id}', [CustomerReviewController::class, 'update']);
     Route::delete('/{id}', [CustomerReviewController::class, 'destroy']);
 });
+
+use App\Http\Controllers\Api\NewsController;
+
+Route::get('/news', [NewsController::class, 'index']);
+
+
+
+use App\Http\Controllers\Api\MeemOriginalController;
+
+Route::get('/meem-originals', [MeemOriginalController::class, 'index']);
