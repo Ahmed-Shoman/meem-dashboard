@@ -70,7 +70,7 @@ class ProgramResource extends Resource
         'audio/x-wav',     // Alternative WAV MIME type
         'audio/webm'       // WEBM
     ])
-    ->maxSize(10240) // ✅ Set max file size (10MB)
+    ->maxSize(null) // ✅ Set max file size (10MB)
     ->nullable()
     ->required(),
 

@@ -33,7 +33,8 @@ class SliderSectionResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('Main Image')
                     ->directory('uploads/slider')
-                    ->image(),
+                    ->image()
+                    ->maxsize(null),
 
                 Forms\Components\Repeater::make('slider_images')
                     ->label('Slider Images')

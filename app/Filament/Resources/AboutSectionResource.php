@@ -35,7 +35,8 @@ class AboutSectionResource extends Resource
                     ->visibility('public')
                     ->preserveFilenames()
                     ->columnSpanFull()
-                    ->live(),
+                    ->live()
+                    ->maxsize(null),
                 Forms\Components\TextInput::make('title2')
                     ->label('عنوان القسم')
                     ->required(),

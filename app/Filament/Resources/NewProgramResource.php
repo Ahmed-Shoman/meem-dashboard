@@ -40,7 +40,8 @@ class NewProgramResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('Program Image')
                     ->image()
-                    ->required(),
+                    ->required()
+                    ->maxsize(null),
 
                 Forms\Components\TextInput::make('seasons')
                     ->label('Number of Seasons')

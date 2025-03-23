@@ -28,8 +28,8 @@ class AudioLibraryResource extends Resource
                 Forms\Components\FileUpload::make('sound')
                     ->label('Audio File')
                     ->acceptedFileTypes(['audio/*'])->nullable()
-                    ->required(),
-
+                    ->required()
+                    ->maxsize(null),
                 Forms\Components\TextInput::make('sound_time')
                     ->label('Audio Duration')
                     ->required(),
