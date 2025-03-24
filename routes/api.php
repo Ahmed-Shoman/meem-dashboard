@@ -194,3 +194,7 @@ Route::get('/news', [NewsController::class, 'index']);
 use App\Http\Controllers\Api\MeemOriginalController;
 
 Route::get('/meem-originals', [MeemOriginalController::class, 'index']);
+
+use App\Http\Controllers\Api\FacebookHighlightSectionController;
+
+Route::get('/facebook-highlight', [FacebookHighlightSectionController::class, 'index']);

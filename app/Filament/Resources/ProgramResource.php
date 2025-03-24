@@ -70,7 +70,7 @@ class ProgramResource extends Resource
         'audio/x-wav',     // Alternative WAV MIME type
         'audio/webm'       // WEBM
     ])
-    ->maxSize(null) // ✅ Set max file size (10MB)
+    ->maxSize(20000000) // ✅ Set max file size (10MB)
     ->nullable()
     ->required(),
 
@@ -78,6 +78,9 @@ class ProgramResource extends Resource
      Forms\Components\TextInput::make('audio_time')
          ->label('Audio Duration')
          ->required(),
+Forms\Components\Toggle::make('is_active')
+    ->label('مفعل')
+    ->default(true),
 
 
 
@@ -104,12 +107,19 @@ class ProgramResource extends Resource
                 Tables\Columns\TextColumn::make('episodes')
                     ->label('الحلقات'),
                       Tables\Columns\TextColumn::make('links')
-                    ->label('Links')
+                    ->label('Links'),
+                      Tables\Columns\IconColumn::make('is_active')
+                 ->label('الحالة')
+                 ->boolean(),
             ])
             ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+
+
+
+
             ]);
     }
 

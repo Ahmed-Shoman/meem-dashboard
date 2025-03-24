@@ -8,15 +8,15 @@ class Program extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-
-        'presenter',
-        'image',
-        'seasons',
-        'episodes',
-        'links',
-        'program_name',
-        'audio',
-        'audio_time',
-    ];
+   protected $fillable = [
+    'presenter',
+    'image',
+    'seasons',
+    'episodes',
+    'links',
+    'program_name',
+    'audio',
+    'audio_time',
+    'is_active', // ✅ تمت الإضافة
+];
 }
