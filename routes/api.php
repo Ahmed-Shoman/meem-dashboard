@@ -120,6 +120,10 @@ Route::get('/consultants/{id}', [ConsultantController::class, 'show']);
 Route::put('/consultants/{id}', [ConsultantController::class, 'update']);
 Route::delete('/consultants/{id}', [ConsultantController::class, 'destroy']);
 
+Route::get('/test', function () {
+    return class_exists(\App\Http\Controllers\Api\ConsultantController::class) ? 'Found' : 'Not Found';
+});
+
 
 use App\Http\Controllers\Api\PartnerController;
 
