@@ -112,7 +112,7 @@ Route::prefix('team-members')->group(function () {
 
 
 
-use App\Http\Controllers\Api\ConsultantController;
+use App\Http\Controllers\API\ConsultantController;
 
 Route::get('/consultants', [ConsultantController::class, 'index']);
 Route::post('/consultants', [ConsultantController::class, 'store']);
@@ -120,12 +120,9 @@ Route::get('/consultants/{id}', [ConsultantController::class, 'show']);
 Route::put('/consultants/{id}', [ConsultantController::class, 'update']);
 Route::delete('/consultants/{id}', [ConsultantController::class, 'destroy']);
 
-Route::get('/test', function () {
-    return class_exists(\App\Http\Controllers\Api\ConsultantController::class) ? 'Found' : 'Not Found';
-});
 
 
-use App\Http\Controllers\Api\PartnerController;
+use App\Http\Controllers\API\PartnerController;
 
 Route::get('/partners', [PartnerController::class, 'index']);
 Route::post('/partners', [PartnerController::class, 'store']);
@@ -135,14 +132,14 @@ Route::delete('/partners/{id}', [PartnerController::class, 'destroy']);
 
 
 
-use App\Http\Controllers\Api\NewsletterSectionController;
+use App\Http\Controllers\API\NewsletterSectionController;
 
 Route::get('/newsletter-section', [NewsletterSectionController::class, 'index']);
 Route::post('/newsletter-section', [NewsletterSectionController::class, 'store']);
 Route::put('/newsletter-section/{newsletterSection}', [NewsletterSectionController::class, 'update']);
 
 
-use App\Http\Controllers\Api\PartnershipController;
+use App\Http\Controllers\API\PartnershipController;
 
 Route::get('/partnerships', [PartnershipController::class, 'index']);
 Route::post('/partnerships', [PartnershipController::class, 'store']);
@@ -158,7 +155,7 @@ Route::put('/content-section/{id}', [ContentSectionController::class, 'update'])
 Route::delete('/content-section/{id}', [ContentSectionController::class, 'destroy']);
 
 
-use App\Http\Controllers\Api\AudioLibraryController;
+use App\Http\Controllers\API\AudioLibraryController;
 
 Route::prefix('audio-library')->group(function () {
     Route::get('/', [AudioLibraryController::class, 'index']);
@@ -168,7 +165,7 @@ Route::prefix('audio-library')->group(function () {
     Route::delete('/{id}', [AudioLibraryController::class, 'destroy']);
 });
 
-use App\Http\Controllers\Api\SliderSectionController;
+use App\Http\Controllers\API\SliderSectionController;
 
 Route::prefix('slider-sections')->group(function () {
     Route::get('/', [SliderSectionController::class, 'index']);
@@ -179,7 +176,7 @@ Route::prefix('slider-sections')->group(function () {
 });
 
 
-use App\Http\Controllers\Api\CustomerReviewController;
+use App\Http\Controllers\API\CustomerReviewController;
 
 Route::prefix('customer-reviews')->group(function () {
     Route::get('/', [CustomerReviewController::class, 'index']);
@@ -189,16 +186,16 @@ Route::prefix('customer-reviews')->group(function () {
     Route::delete('/{id}', [CustomerReviewController::class, 'destroy']);
 });
 
-use App\Http\Controllers\Api\NewsController;
+use App\Http\Controllers\API\NewsController;
 
 Route::get('/news', [NewsController::class, 'index']);
 
 
 
-use App\Http\Controllers\Api\MeemOriginalController;
+use App\Http\Controllers\API\MeemOriginalController;
 
 Route::get('/meem-originals', [MeemOriginalController::class, 'index']);
 
-use App\Http\Controllers\Api\FacebookHighlightSectionController;
+use App\Http\Controllers\API\FacebookHighlightSectionController;
 
 Route::get('/facebook-highlight', [FacebookHighlightSectionController::class, 'index']);
