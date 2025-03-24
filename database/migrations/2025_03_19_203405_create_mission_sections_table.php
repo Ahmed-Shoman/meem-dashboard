@@ -9,13 +9,13 @@ return new class extends Migration {
     {
         Schema::create('mission_sections', function (Blueprint $table) {
             $table->id();
-            $table->string('main_title');
+            $table->string('main_title')->nullable();
             $table->text('description')->nullable();
             $table->json('points')->nullable();
-            $table->string('title2');
+            $table->string('title2')->nullable();
             $table->string('description2')->nullable();
             $table->string('story_text')->nullable();
-            $table->string('title3');
+            $table->string('title3')->nullable();
             $table->string('description3')->nullable();
             $table->timestamps();
         });
