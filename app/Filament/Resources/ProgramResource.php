@@ -57,22 +57,21 @@ class ProgramResource extends Resource
                     ->required(),
 
 
-                   Forms\Components\FileUpload::make('audio')
-    ->label('Audio File')
-    ->directory('uploads/audio') // ✅ Store inside an audio folder
+ Forms\Components\FileUpload::make('audio')
+    ->label('Audio/Video File')
+    ->directory('uploads/audio')
     ->acceptedFileTypes([
-        'audio/mpeg',      // MP3
-        'audio/wav',       // WAV
-        'audio/ogg',       // OGG
-        'audio/aac',       // AAC
-        'audio/flac',      // FLAC
-        'audio/x-ms-wma',  // WMA
-        'audio/x-wav',     // Alternative WAV MIME type
-        'audio/webm'       // WEBM
+        // Audio formats
+        'audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/aac',
+        'audio/flac', 'audio/x-ms-wma', 'audio/x-wav', 'audio/webm',
+
+        // Video formats
+        'video/mp4', 'video/x-msvideo', 'video/x-matroska', 'video/webm',
+        'video/ogg', 'video/quicktime', 'video/x-ms-wmv'
     ])
-    ->maxSize(20000000) // ✅ Set max file size (10MB)
     ->nullable()
     ->required(),
+
 
 
      Forms\Components\TextInput::make('audio_time')

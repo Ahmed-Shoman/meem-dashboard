@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->text('description')->nullable(); // الوصف
             $table->json('logos')->nullable(); // تخزين الشعارات كـ JSON
             $table->string('cta_text')->nullable(); // نص الزر
-            $table->string('cta_link')->nullable(); // رابط الزر
+           // $table->string('cta_link')->nullable(); // رابط الزر
             $table->timestamps();
         });
     }
