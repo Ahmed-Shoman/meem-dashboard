@@ -38,7 +38,8 @@ class StorySectionResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('Story Image')
                     ->image()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                ->maxSize(20971520),
             ]);
     }
 

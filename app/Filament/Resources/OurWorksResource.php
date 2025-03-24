@@ -43,7 +43,8 @@ class OurWorksResource extends Resource
                         Forms\Components\FileUpload::make('logo')
                             ->label('Logo')
                             ->image()
-                            ->required(),
+                            ->required()
+                    ->maxSize(20971520),
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
@@ -75,7 +76,8 @@ class OurWorksResource extends Resource
                     ->schema([
                         Forms\Components\FileUpload::make('image')
                             ->label('Program Image')
-                            ->image(),
+                            ->image()
+                    ->maxSize(20971520),
 
                         Forms\Components\TextInput::make('name')
                             ->label('Program Name'),

@@ -36,7 +36,8 @@ class PartnerResource extends Resource
                         Forms\Components\FileUpload::make('logo')
                             ->label('Logo Image')
                             ->image()
-                            ->required(),
+                            ->required()
+                    ->maxSize(20971520),
                     ])
                     ->collapsible()
                     ->columnSpanFull(),

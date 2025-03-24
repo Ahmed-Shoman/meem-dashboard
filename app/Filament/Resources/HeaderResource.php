@@ -20,76 +20,77 @@ class HeaderResource extends Resource
     protected static ?string $navigationGroup = 'Home Page Sections';
 
 
-public static function form(Form $form): Form
-{
-    return $form
-        ->schema([
-            Forms\Components\Section::make('Header Settings')
-                ->schema([
-                Forms\Components\FileUpload::make('logo')
-                    ->label('Logo')
-                    ->image()
-                    ->directory('uploads/logos')
-                    ->preserveFilenames()
-                    ->columnSpanFull()
-                    ->live()
-                    ->visibility('public') ,
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\Section::make('Header Settings')
+                    ->schema([
+                        Forms\Components\FileUpload::make('logo')
+                            ->label('Logo')
+                            ->image()
+                            ->directory('uploads/logos')
+                            ->preserveFilenames()
+                            ->columnSpanFull()
+                            ->live()
+                            ->visibility('public')
+                            ->maxSize(20971520),
 
 
-                Forms\Components\Repeater::make('links')
-                        ->label('Navigation Links')
-                        ->schema([
-                            Forms\Components\TextInput::make('text')
-                                ->label('Link Text')
-                                ->required()
-                                ->columnSpanFull(),
+                        Forms\Components\Repeater::make('links')
+                            ->label('Navigation Links')
+                            ->schema([
+                                Forms\Components\TextInput::make('text')
+                                    ->label('Link Text')
+                                    ->required()
+                                    ->columnSpanFull(),
 
 
-                        ])
-                        ->collapsible()
-                        ->columns(1) // جعل كل الإدخالات في سطر واحد
+                            ])
+                            ->collapsible()
+                            ->columns(1) // جعل كل الإدخالات في سطر واحد
 
-                        ->columnSpanFull(), // جعل الحقل يأخذ العرض بالكامل
+                            ->columnSpanFull(), // جعل الحقل يأخذ العرض بالكامل
 
-                    Forms\Components\TextInput::make('cta_text')
-                        ->label('CTA Button Text')
-                        ->required()
-                        ->columnSpanFull(),
+                        Forms\Components\TextInput::make('cta_text')
+                            ->label('CTA Button Text')
+                            ->required()
+                            ->columnSpanFull(),
 
 
-                ])
-                ->columns(1), // يجعل كل العناصر تحت بعضها مباشرة
-        ]);
-}
+                    ])
+                    ->columns(1), // يجعل كل العناصر تحت بعضها مباشرة
+            ]);
+    }
 
 
     public static function table(Table $table): Table
-{
-    return $table
-        ->columns([
-            Tables\Columns\ImageColumn::make('logo')
-                ->label('Logo'),
+    {
+        return $table
+            ->columns([
+                Tables\Columns\ImageColumn::make('logo')
+                    ->label('Logo'),
 
-            Tables\Columns\TextColumn::make('cta_text')
-                ->label('CTA Button Text'),
+                Tables\Columns\TextColumn::make('cta_text')
+                    ->label('CTA Button Text'),
 
-            Tables\Columns\TextColumn::make('cta_link')
-                ->label('CTA Button Link')
-                ->limit(30),
+                Tables\Columns\TextColumn::make('cta_link')
+                    ->label('CTA Button Link')
+                    ->limit(30),
 
-            Tables\Columns\TextColumn::make('created_at')
-                ->label('Created At')
-                ->dateTime()
-                ->sortable(),
-        ])
-        ->filters([
-            //
-        ])
-        ->actions([
-            Tables\Actions\EditAction::make(),
-            Tables\Actions\DeleteAction::make(),
-        ]);
-}
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->dateTime()
+                    ->sortable(),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ]);
+    }
 
 
     public static function getPages(): array

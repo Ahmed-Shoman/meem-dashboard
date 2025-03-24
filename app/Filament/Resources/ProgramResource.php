@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProgramResource\Pages;
@@ -30,9 +31,10 @@ class ProgramResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('image')
                     ->label('صورة الغلاف')
-                     ->directory('uploads/logos')
+                    ->directory('uploads/logos')
                     ->image()
-                    ->required(),
+                    ->required()
+                    ->maxSize(20971520),
                 Forms\Components\TextInput::make('seasons')
                     ->label('عدد المواسم')
                     ->numeric()
@@ -42,44 +44,56 @@ class ProgramResource extends Resource
                     ->numeric()
                     ->required(),
 
-                    Forms\Components\TextInput::make('links')
+                Forms\Components\TextInput::make('links')
                     ->label('Links')
                     ->required()
                     ->url(),
 
-                    //  Forms\Components\TextInput::make('cta_button_text')
-                    // ->label('button')
-                    // ->required(),
+                //  Forms\Components\TextInput::make('cta_button_text')
+                // ->label('button')
+                // ->required(),
 
 
-                     Forms\Components\TextInput::make('program_name')
+                Forms\Components\TextInput::make('program_name')
                     ->label('Program Name')
                     ->required(),
 
 
- Forms\Components\FileUpload::make('audio')
-    ->label('Audio/Video File')
-    ->directory('uploads/audio')
-    ->acceptedFileTypes([
-        // Audio formats
-        'audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/aac',
-        'audio/flac', 'audio/x-ms-wma', 'audio/x-wav', 'audio/webm',
+                Forms\Components\FileUpload::make('audio')
+                    ->label('Audio/Video File')
+                    ->directory('uploads/audio')
+                    ->acceptedFileTypes([
+                        // Audio formats
+                        'audio/mpeg',
+                        'audio/wav',
+                        'audio/ogg',
+                        'audio/aac',
+                        'audio/flac',
+                        'audio/x-ms-wma',
+                        'audio/x-wav',
+                        'audio/webm',
 
-        // Video formats
-        'video/mp4', 'video/x-msvideo', 'video/x-matroska', 'video/webm',
-        'video/ogg', 'video/quicktime', 'video/x-ms-wmv'
-    ])
-    ->nullable()
-    ->required(),
+                        // Video formats
+                        'video/mp4',
+                        'video/x-msvideo',
+                        'video/x-matroska',
+                        'video/webm',
+                        'video/ogg',
+                        'video/quicktime',
+                        'video/x-ms-wmv'
+                    ])
+                    ->nullable()
+                    ->required()
+                ->maxSize(20971520),
 
 
 
-     Forms\Components\TextInput::make('audio_time')
-         ->label('Audio Duration')
-         ->required(),
-Forms\Components\Toggle::make('is_active')
-    ->label('مفعل')
-    ->default(true),
+                Forms\Components\TextInput::make('audio_time')
+                    ->label('Audio Duration')
+                    ->required(),
+                Forms\Components\Toggle::make('is_active')
+                    ->label('مفعل')
+                    ->default(true),
 
 
 
@@ -105,11 +119,11 @@ Forms\Components\Toggle::make('is_active')
                     ->label('المواسم'),
                 Tables\Columns\TextColumn::make('episodes')
                     ->label('الحلقات'),
-                      Tables\Columns\TextColumn::make('links')
+                Tables\Columns\TextColumn::make('links')
                     ->label('Links'),
-                      Tables\Columns\IconColumn::make('is_active')
-                 ->label('الحالة')
-                 ->boolean(),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->label('الحالة')
+                    ->boolean(),
             ])
             ->filters([])
             ->actions([

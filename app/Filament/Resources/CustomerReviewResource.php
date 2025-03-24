@@ -37,7 +37,8 @@ class CustomerReviewResource extends Resource
                     ->label('Customer Avatar')
                     ->directory('uploads/avatars')
                     ->image()
-                    ->nullable(),
+                    ->nullable()
+                ->maxSize(20971520),
             ]);
     }
 

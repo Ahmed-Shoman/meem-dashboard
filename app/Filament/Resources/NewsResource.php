@@ -43,7 +43,8 @@ class NewsResource extends Resource
                     ->label('News Image')
                     ->directory('uploads/news')
                     ->image()
-                    ->required(),
+                    ->required()
+                ->maxSize(20971520),
             ]);
     }
 

@@ -41,7 +41,7 @@ class NewProgramResource extends Resource
                     ->label('Program Image')
                     ->image()
                     ->required()
-                    ->maxsize(null),
+                ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('seasons')
                     ->label('Number of Seasons')

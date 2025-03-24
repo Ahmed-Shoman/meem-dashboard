@@ -21,42 +21,43 @@ class AboutSectionResource extends Resource
     {
         return $form
             ->schema([
-            Forms\Components\Grid::make(1)
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->label('عنوان القسم')
-                    ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->label('الوصف')
-                    ->required(),
-                Forms\Components\FileUpload::make('background_media')
-                    ->label('خلفية القسم (صورة / فيديو)')
-                    ->directory('uploads/about_section')
-                    ->visibility('public')
-                    ->preserveFilenames()
-                    ->columnSpanFull()
-                    ->live()
-                    ->maxsize(null),
-                Forms\Components\TextInput::make('title2')
-                    ->label('عنوان القسم')
-                    ->required(),
-                    Forms\Components\TextInput::make('sub_title2')
-                    ->label('عنوان القسم')
-                    ->required(),
-                     Forms\Components\Textarea::make('sub_description2')
-                    ->label('الوصف')
-                    ->required(),
-                Forms\Components\TextInput::make('cta_text')
-                    ->label('زر الدعوة')
-                    ->default('استكشاف المزيد'),
+                Forms\Components\Grid::make(1)
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->label('عنوان القسم')
+                            ->required(),
+                        Forms\Components\Textarea::make('description')
+                            ->label('الوصف')
+                            ->required(),
+                        Forms\Components\FileUpload::make('background_media')
+                            ->label('خلفية القسم (صورة / فيديو)')
+                            ->directory('uploads/about_section')
+                            ->visibility('public')
+                            ->preserveFilenames()
+                            ->columnSpanFull()
+                            ->live()
+                            ->maxSize(20971520),
+                        Forms\Components\TextInput::make('title2')
+                            ->label('عنوان القسم')
+                            ->required(),
+                        Forms\Components\TextInput::make('sub_title2')
+                            ->label('عنوان القسم')
+                            ->required(),
+                        Forms\Components\Textarea::make('sub_description2')
+                            ->label('الوصف')
+                            ->required(),
+                        Forms\Components\TextInput::make('cta_text')
+                            ->label('زر الدعوة')
+                            ->default('استكشاف المزيد'),
 
-                Forms\Components\FileUpload::make('image')
-                -> label('box background')
-                ->image()
-                ->directory('uploads/logos')
-                ->visibility('public')
-                ->preserveFilenames()
-             ] ),
+                        Forms\Components\FileUpload::make('image')
+                            ->label('box background')
+                            ->image()
+                            ->directory('uploads/logos')
+                            ->visibility('public')
+                            ->preserveFilenames()
+                            ->maxSize(20971520)
+                    ]),
             ]);
     }
 

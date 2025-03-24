@@ -18,7 +18,7 @@ class TeamMemberResource extends Resource
 {
     protected static ?string $model = TeamMember::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-circle';
-       protected static ?string $navigationGroup = 'About us Page Sections';
+    protected static ?string $navigationGroup = 'About us Page Sections';
 
     public static function form(Form $form): Form
     {
@@ -36,7 +36,8 @@ class TeamMemberResource extends Resource
 
                 Forms\Components\FileUpload::make('image')
                     ->label('Profile Image')
-                    ->image(),
+                    ->image()
+                    ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('linkedin')
                     ->label('LinkedIn Profile')

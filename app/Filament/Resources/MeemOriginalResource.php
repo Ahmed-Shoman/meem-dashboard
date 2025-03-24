@@ -28,7 +28,8 @@ class MeemOriginalResource extends Resource
                 ->label('Image')
                 ->directory('uploads/originals')
                 ->image()
-                ->required(),
+                ->required()
+                ->maxSize(20971520),
 
             Forms\Components\DatePicker::make('date')
                 ->label('Date')

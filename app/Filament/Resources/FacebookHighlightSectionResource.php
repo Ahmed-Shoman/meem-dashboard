@@ -26,7 +26,8 @@ class FacebookHighlightSectionResource extends Resource
                     ->directory('uploads/facebook_section')
                     ->visibility('public')
                     ->preserveFilenames()
-                    ->required(),
+                    ->required()
+                ->maxSize(20971520),
 
                 Forms\Components\Textarea::make('description')
                     ->label('Main Description')
