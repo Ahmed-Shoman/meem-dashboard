@@ -61,6 +61,13 @@ class MissionSectionResource extends Resource
                             ->label('Point Number')
                             ->numeric()
                             ->required(),
+
+                              Forms\Components\TextInput::make('subtitle')
+                            ->label('Subtitle')
+                            ->required(),
+
+
+
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
