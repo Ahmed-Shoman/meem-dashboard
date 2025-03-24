@@ -54,6 +54,10 @@ class MissionSectionResource extends Resource
                             ->label('Point Title')
                             ->required(),
 
+                               Forms\Components\TextInput::make('subtitle')
+                            ->label('Subtitle')
+                            ->required(),
+
                         Forms\Components\Textarea::make('description')
                             ->label('Point Description'),
 
@@ -62,9 +66,7 @@ class MissionSectionResource extends Resource
                             ->numeric()
                             ->required(),
 
-                              Forms\Components\TextInput::make('subtitle')
-                            ->label('Subtitle')
-                            ->required(),
+
 
 
 
