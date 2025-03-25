@@ -14,47 +14,49 @@ class StudioBookingResource extends Resource
 {
     protected static ?string $model = StudioBooking::class;
     protected static ?string $navigationIcon = 'heroicon-o-bookmark';
-
-        protected static ?string $navigationGroup = 'Home Page Sections';
-
+    protected static ?string $navigationGroup = 'Home Page Sections';
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema( [
-             Forms\Components\Grid::make(1)
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->label('Title')
-                    ->required(),
-                Forms\Components\Textarea::make('description1')
-                    ->label('Description 1'),
-
-                    Forms\Components\Textarea::make('description2')
-                    ->label('Description 2'),
-
-                Forms\Components\Repeater::make('studio_images')
-                    ->label('Studio Images')
+                Forms\Components\Section::make('Studio Booking Info')
                     ->schema([
-                        Forms\Components\FileUpload::make('image')
-                            ->label('Image')
-                            ->image()
+                        Forms\Components\TextInput::make('title')
+                            ->label('Title')
                             ->required(),
-                    ])
-                    ->collapsible(),
 
-                Forms\Components\Repeater::make('equipment_list')
-                    ->label('Equipment List')
-                    ->schema([
-                        Forms\Components\TextInput::make('equipment_name')
-                            ->label('Equipment Name')
-                            ->required(),
-                    ])
-                    ->collapsible(),
+                        Forms\Components\Textarea::make('description1')
+                            ->label('Description 1'),
 
-                Forms\Components\TextInput::make('cta_button_text')
-                    ->label('CTA Button Text'),
-                    ]),
+                        Forms\Components\Textarea::make('description2')
+                            ->label('Description 2'),
+
+                        Forms\Components\Repeater::make('studio_images')
+                            ->label('Studio Images')
+                            ->schema([
+                                Forms\Components\FileUpload::make('image')
+                                    ->label('Image')
+                                    ->image()
+                                    ->required(),
+                            ])
+                            ->collapsible()
+                            ->columnSpanFull(),
+
+                        Forms\Components\Repeater::make('equipment_list')
+                            ->label('Equipment List')
+                            ->schema([
+                                Forms\Components\TextInput::make('equipment_name')
+                                    ->label('Equipment Name')
+                                    ->required(),
+                            ])
+                            ->collapsible()
+                            ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('cta_button_text')
+                            ->label('CTA Button Text'),
+                    ])
+                    ->columns(1)
             ]);
     }
 
@@ -65,6 +67,7 @@ class StudioBookingResource extends Resource
                 Tables\Columns\TextColumn::make('title')
                     ->label('Title')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('cta_button_text')
                     ->label('CTA Button'),
             ])

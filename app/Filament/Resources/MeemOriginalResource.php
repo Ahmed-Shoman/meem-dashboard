@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MeemOriginalResource\Pages;
 use App\Models\MeemOriginal;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Section;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,25 +22,29 @@ class MeemOriginalResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\TextInput::make('main_title')
-                ->label('Main Title')
-                ->required(),
+            Section::make('Meem Original Details')
+                ->schema([
+                    Forms\Components\TextInput::make('main_title')
+                        ->label('Main Title')
+                        ->required(),
 
-            Forms\Components\FileUpload::make('image')
-                ->label('Image')
-                ->directory('uploads/originals')
-                ->image()
-                ->required(),
+                    Forms\Components\FileUpload::make('image')
+                        ->label('Image')
+                        ->directory('uploads/originals')
+                        ->image()
+                        ->required(),
 
-            Forms\Components\DatePicker::make('date')
-                ->label('Date')
-                ->required(),
+                    Forms\Components\DatePicker::make('date')
+                        ->label('Date')
+                        ->required(),
 
-            Forms\Components\TextInput::make('subtitle')
-                ->label('Subtitle'),
+                    Forms\Components\TextInput::make('subtitle')
+                        ->label('Subtitle'),
 
-            Forms\Components\Textarea::make('description')
-                ->label('Description'),
+                    Forms\Components\Textarea::make('description')
+                        ->label('Description'),
+                ])
+                ->columns(1),
         ]);
     }
 

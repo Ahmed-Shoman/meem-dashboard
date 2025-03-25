@@ -13,7 +13,6 @@ use Filament\Tables\Table;
 class AboutSectionResource extends Resource
 {
     protected static ?string $model = AboutSection::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';
     protected static ?string $navigationGroup = 'Home Page Sections';
 
@@ -21,42 +20,55 @@ class AboutSectionResource extends Resource
     {
         return $form
             ->schema([
-            Forms\Components\Grid::make(1)
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->label('عنوان القسم')
-                    ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->label('الوصف')
-                    ->required(),
-                Forms\Components\FileUpload::make('background_media')
-                    ->label('خلفية القسم (صورة / فيديو)')
-                    ->directory('uploads/about_section')
-                    ->visibility('public')
-                    ->preserveFilenames()
-                    ->columnSpanFull()
-                    ->live()
-                    ->maxsize(null),
-                Forms\Components\TextInput::make('title2')
-                    ->label('عنوان القسم')
-                    ->required(),
-                    Forms\Components\TextInput::make('sub_title2')
-                    ->label('عنوان القسم')
-                    ->required(),
-                     Forms\Components\Textarea::make('sub_description2')
-                    ->label('الوصف')
-                    ->required(),
-                Forms\Components\TextInput::make('cta_text')
-                    ->label('زر الدعوة')
-                    ->default('استكشاف المزيد'),
+                Forms\Components\Section::make('About Section Settings')
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->label('عنوان القسم')
+                            ->required()
+                            ->columnSpanFull(),
 
-                Forms\Components\FileUpload::make('image')
-                -> label('box background')
-                ->image()
-                ->directory('uploads/logos')
-                ->visibility('public')
-                ->preserveFilenames()
-             ] ),
+                        Forms\Components\Textarea::make('description')
+                            ->label('الوصف')
+                            ->required()
+                            ->columnSpanFull(),
+
+                        Forms\Components\FileUpload::make('background_media')
+                            ->label('خلفية القسم (صورة / فيديو)')
+                            ->directory('uploads/about_section')
+                            ->visibility('public')
+                            ->preserveFilenames()
+                            ->live()
+                            ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('title2')
+                            ->label('عنوان القسم الفرعي')
+                            ->required()
+                            ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('sub_title2')
+                            ->label('العنوان الفرعي 2')
+                            ->required()
+                            ->columnSpanFull(),
+
+                        Forms\Components\Textarea::make('sub_description2')
+                            ->label('الوصف الفرعي')
+                            ->required()
+                            ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('cta_text')
+                            ->label('زر الدعوة')
+                            ->default('استكشاف المزيد')
+                            ->columnSpanFull(),
+
+                        Forms\Components\FileUpload::make('image')
+                            ->label('خلفية الصندوق')
+                            ->image()
+                            ->directory('uploads/logos')
+                            ->visibility('public')
+                            ->preserveFilenames()
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1),
             ]);
     }
 
@@ -66,18 +78,21 @@ class AboutSectionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label('عنوان القسم'),
+
                 Tables\Columns\TextColumn::make('description')
                     ->label('الوصف')
                     ->limit(50),
+
                 Tables\Columns\ImageColumn::make('background_media')
                     ->label('الخلفية')
                     ->disk('public'),
+
                 Tables\Columns\TextColumn::make('cta_text')
                     ->label('زر الدعوة'),
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('box image')
-                    ->disk('public'),
 
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('خلفية الصندوق')
+                    ->disk('public'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

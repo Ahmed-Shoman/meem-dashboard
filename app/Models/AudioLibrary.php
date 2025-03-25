@@ -18,5 +18,6 @@ class AudioLibrary extends Model
         'category',
         'description',
         'sub_description',
+        'is_active'
     ];
 }

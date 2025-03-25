@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('category'); // التصنيف
             $table->text('description')->nullable(); // الوصف
             $table->text('sub_description')->nullable(); // الوصف الفرعي
+            $table->boolean('is_active')->nullable()->default(true);
             $table->timestamps();
         });
     }

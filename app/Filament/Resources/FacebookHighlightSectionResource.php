@@ -14,7 +14,7 @@ class FacebookHighlightSectionResource extends Resource
 {
     protected static ?string $model = FacebookHighlightSection::class;
     protected static ?string $navigationIcon = 'heroicon-o-numbered-list';
-    protected static ?string $navigationGroup = 'Home Page Sections';
+    protected static ?string $navigationGroup = 'Meem Articles Section';
 
     public static function form(Form $form): Form
     {

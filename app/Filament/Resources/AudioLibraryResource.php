@@ -26,10 +26,11 @@ class AudioLibraryResource extends Resource
                     ->required(),
 
                 Forms\Components\FileUpload::make('sound')
-                    ->label('Audio File')
-                    ->acceptedFileTypes(['audio/*'])->nullable()
-                    ->required()
-                    ->maxsize(null),
+    ->label('Audio File')
+    ->acceptedFileTypes(['audio/*'])
+    ->nullable()
+    ->required(),
+
                 Forms\Components\TextInput::make('sound_time')
                     ->label('Audio Duration')
                     ->required(),
@@ -45,6 +46,10 @@ class AudioLibraryResource extends Resource
                 Forms\Components\Textarea::make('sub_description')
                     ->label('Sub Description')
                     ->columnSpanFull(),
+
+                    Forms\Components\Toggle::make('is_active')
+                    ->label('مفعل')
+                    ->default(true),
             ]);
     }
 
