@@ -14,7 +14,6 @@ use Filament\Tables\Table;
 class MeemOriginalResource extends Resource
 {
     protected static ?string $model = MeemOriginal::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-numbered-list';
     protected static ?string $navigationGroup = 'Meem Articles Section';
     protected static ?string $navigationLabel = 'Meem Originals';
@@ -28,20 +27,12 @@ class MeemOriginalResource extends Resource
                         ->label('Main Title')
                         ->required(),
 
-<<<<<<< HEAD
                     Forms\Components\FileUpload::make('image')
                         ->label('Image')
                         ->directory('uploads/originals')
                         ->image()
-                        ->required(),
-=======
-            Forms\Components\FileUpload::make('image')
-                ->label('Image')
-                ->directory('uploads/originals')
-                ->image()
-                ->required()
-                ->maxSize(20971520),
->>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
+                        ->required()
+                        ->maxSize(20971520),
 
                     Forms\Components\DatePicker::make('date')
                         ->label('Date')
@@ -78,13 +69,13 @@ class MeemOriginalResource extends Resource
                 ->label('Description')
                 ->limit(40),
         ])
-        ->actions([
-            Tables\Actions\EditAction::make(),
-            Tables\Actions\DeleteAction::make(),
-        ])
-        ->bulkActions([
-            Tables\Actions\DeleteBulkAction::make(),
-        ]);
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]);
     }
 
     public static function getPages(): array

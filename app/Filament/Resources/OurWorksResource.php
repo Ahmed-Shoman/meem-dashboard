@@ -31,29 +31,17 @@ class OurWorksResource extends Resource
                     Forms\Components\Textarea::make('description_text')
                         ->label('Description'),
 
-<<<<<<< HEAD
                     Forms\Components\Repeater::make('client_logos')
                         ->label('Clients Logos')
                         ->schema([
                             Forms\Components\FileUpload::make('logo')
                                 ->label('Logo')
                                 ->image()
-                                ->required(),
+                                ->required()
+                                ->maxSize(20971520),
                         ])
-                        ->collapsible(),
-=======
-                Forms\Components\Repeater::make('client_logos')
-                    ->label('Clients Logos')
-                    ->schema([
-                        Forms\Components\FileUpload::make('logo')
-                            ->label('Logo')
-                            ->image()
-                            ->required()
-                    ->maxSize(20971520),
-                    ])
-                    ->collapsible()
-                    ->columnSpanFull(),
->>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
+                        ->collapsible()
+                        ->columnSpanFull(),
 
                     Forms\Components\TextInput::make('banner_text')
                         ->label('Banner Text'),
@@ -81,20 +69,8 @@ class OurWorksResource extends Resource
                         ->schema([
                             Forms\Components\FileUpload::make('image')
                                 ->label('Program Image')
-                                ->image(),
-
-<<<<<<< HEAD
-                            Forms\Components\TextInput::make('name')
-                                ->label('Program Name'),
-=======
-                Forms\Components\Repeater::make('program_list')
-                    ->label('Programs List')
-                    ->schema([
-                        Forms\Components\FileUpload::make('image')
-                            ->label('Program Image')
-                            ->image()
-                    ->maxSize(20971520),
->>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
+                                ->image()
+                                ->maxSize(20971520),
 
                             Forms\Components\Textarea::make('description')
                                 ->label('Program Description'),
@@ -102,11 +78,12 @@ class OurWorksResource extends Resource
                             Forms\Components\TextInput::make('episode_duration')
                                 ->label('Episode Duration'),
                         ])
-                        ->collapsible(),
+                        ->collapsible()
+                        ->columnSpanFull(),
                 ])
-                ->columns(1),
         ]);
     }
+
 
     public static function table(Table $table): Table
     {

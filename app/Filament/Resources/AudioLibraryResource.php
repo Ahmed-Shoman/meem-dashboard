@@ -27,18 +27,12 @@ class AudioLibraryResource extends Resource
                     ->maxSize(20971520),
 
                 Forms\Components\FileUpload::make('sound')
-<<<<<<< HEAD
-    ->label('Audio File')
-    ->acceptedFileTypes(['audio/*'])
-    ->nullable()
-    ->required(),
-
-=======
                     ->label('Audio File')
-                    ->acceptedFileTypes(['audio/*'])->nullable()
+                    ->acceptedFileTypes(['audio/*'])
+                    ->nullable()
                     ->required()
                     ->maxSize(20971520),
->>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
+
                 Forms\Components\TextInput::make('sound_time')
                     ->label('Audio Duration')
                     ->required(),
@@ -55,8 +49,8 @@ class AudioLibraryResource extends Resource
                     ->label('Sub Description')
                     ->columnSpanFull(),
 
-                    Forms\Components\Toggle::make('is_active')
-                    ->label('مفعل')
+                Forms\Components\Toggle::make('is_active')
+                    ->label('Active')
                     ->default(true),
             ]);
     }
