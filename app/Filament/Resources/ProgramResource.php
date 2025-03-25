@@ -30,7 +30,7 @@ class ProgramResource extends Resource
 
                 Forms\Components\FileUpload::make('image')
                     ->label('صورة الغلاف')
-                    ->directory('uploads')
+                    ->directory('uploads/logos')
                     ->image()
                     ->required()
                     ->maxSize(20971520),
