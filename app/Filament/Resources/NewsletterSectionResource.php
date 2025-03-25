@@ -33,7 +33,8 @@ class NewsletterSectionResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('Image')
                     ->image()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('cta_button_text')
                     ->label('CTA Button Text')

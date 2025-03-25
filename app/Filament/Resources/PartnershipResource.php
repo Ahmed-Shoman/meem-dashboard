@@ -40,7 +40,8 @@ class PartnershipResource extends Resource
                         Forms\Components\FileUpload::make('image')
                             ->label('Image')
                             ->image()
-                            ->required(),
+                            ->required()
+                    ->maxSize(20971520),
                     ])
                     ->columnSpanFull(),
             ]);

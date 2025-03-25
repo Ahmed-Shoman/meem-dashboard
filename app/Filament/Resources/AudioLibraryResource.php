@@ -23,14 +23,22 @@ class AudioLibraryResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('Cover Image')
                     ->image()
-                    ->required(),
+                    ->required()
+                    ->maxSize(20971520),
 
                 Forms\Components\FileUpload::make('sound')
+<<<<<<< HEAD
     ->label('Audio File')
     ->acceptedFileTypes(['audio/*'])
     ->nullable()
     ->required(),
 
+=======
+                    ->label('Audio File')
+                    ->acceptedFileTypes(['audio/*'])->nullable()
+                    ->required()
+                    ->maxSize(20971520),
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
                 Forms\Components\TextInput::make('sound_time')
                     ->label('Audio Duration')
                     ->required(),

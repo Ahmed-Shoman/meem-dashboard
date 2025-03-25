@@ -22,9 +22,19 @@ class StudioBookingResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Studio Booking Info')
                     ->schema([
+<<<<<<< HEAD
                         Forms\Components\TextInput::make('title')
                             ->label('Title')
                             ->required(),
+=======
+                        Forms\Components\FileUpload::make('image')
+                            ->label('Image')
+                            ->image()
+                            ->required()
+                        ->maxSize(20971520),
+                    ])
+                    ->collapsible(),
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
 
                         Forms\Components\Textarea::make('description1')
                             ->label('Description 1'),

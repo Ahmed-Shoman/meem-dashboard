@@ -34,7 +34,7 @@ class SliderSectionResource extends Resource
                     ->label('Main Image')
                     ->directory('uploads/slider')
                     ->image()
-                    ->maxsize(null),
+                ->maxSize(20971520),
 
                 Forms\Components\Repeater::make('slider_images')
                     ->label('Slider Images')
@@ -42,7 +42,8 @@ class SliderSectionResource extends Resource
                         Forms\Components\FileUpload::make('image')
                             ->label('Image')
                             ->directory('uploads/slider')
-                            ->image(),
+                            ->image()
+                    ->maxSize(20971520),
                     ])
                     ->collapsible()
                     ->columnSpanFull(),

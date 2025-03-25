@@ -76,7 +76,8 @@ class SubscriptionSectionResource extends Resource
 
                         Forms\Components\FileUpload::make('listen_now_image')
                             ->label('Listen Now Image')
-                            ->image(),
+                            ->image()
+                    ->maxSize(20971520),
 
                         Forms\Components\Repeater::make('platform_links')
                             ->label('Platform Links')

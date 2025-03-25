@@ -28,11 +28,20 @@ class MeemOriginalResource extends Resource
                         ->label('Main Title')
                         ->required(),
 
+<<<<<<< HEAD
                     Forms\Components\FileUpload::make('image')
                         ->label('Image')
                         ->directory('uploads/originals')
                         ->image()
                         ->required(),
+=======
+            Forms\Components\FileUpload::make('image')
+                ->label('Image')
+                ->directory('uploads/originals')
+                ->image()
+                ->required()
+                ->maxSize(20971520),
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
 
                     Forms\Components\DatePicker::make('date')
                         ->label('Date')

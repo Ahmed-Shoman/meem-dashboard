@@ -20,6 +20,7 @@ class ProgramResource extends Resource
     {
         return $form
             ->schema([
+<<<<<<< HEAD
                 Forms\Components\Section::make('Program Info')
                     ->schema([
                         Forms\Components\TextInput::make('program_name')
@@ -35,16 +36,90 @@ class ProgramResource extends Resource
                             ->directory('uploads/logos')
                             ->image()
                             ->required(),
+=======
+                // Forms\Components\TextInput::make('title')
+                //     ->label('اسم البرنامج')
+                //     ->required(),
+                Forms\Components\TextInput::make('presenter')
+                    ->label('المقدم')
+                    ->required(),
+                Forms\Components\FileUpload::make('image')
+                    ->label('صورة الغلاف')
+                    ->directory('uploads/logos')
+                    ->image()
+                    ->required()
+                    ->maxSize(20971520),
+                Forms\Components\TextInput::make('seasons')
+                    ->label('عدد المواسم')
+                    ->numeric()
+                    ->required(),
+                Forms\Components\TextInput::make('episodes')
+                    ->label('عدد الحلقات')
+                    ->numeric()
+                    ->required(),
+
+                Forms\Components\TextInput::make('links')
+                    ->label('Links')
+                    ->required()
+                    ->url(),
+
+                //  Forms\Components\TextInput::make('cta_button_text')
+                // ->label('button')
+                // ->required(),
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
 
                         Forms\Components\TextInput::make('seasons')
                             ->label('عدد المواسم')
                             ->numeric()
                             ->required(),
 
+<<<<<<< HEAD
                         Forms\Components\TextInput::make('episodes')
                             ->label('عدد الحلقات')
                             ->numeric()
                             ->required(),
+=======
+                Forms\Components\TextInput::make('program_name')
+                    ->label('Program Name')
+                    ->required(),
+
+
+                Forms\Components\FileUpload::make('audio')
+                    ->label('Audio/Video File')
+                    ->directory('uploads/audio')
+                    ->acceptedFileTypes([
+                        // Audio formats
+                        'audio/mpeg',
+                        'audio/wav',
+                        'audio/ogg',
+                        'audio/aac',
+                        'audio/flac',
+                        'audio/x-ms-wma',
+                        'audio/x-wav',
+                        'audio/webm',
+
+                        // Video formats
+                        'video/mp4',
+                        'video/x-msvideo',
+                        'video/x-matroska',
+                        'video/webm',
+                        'video/ogg',
+                        'video/quicktime',
+                        'video/x-ms-wmv'
+                    ])
+                    ->nullable()
+                    ->required()
+                ->maxSize(20971520),
+
+
+
+                Forms\Components\TextInput::make('audio_time')
+                    ->label('Audio Duration')
+                    ->required(),
+                Forms\Components\Toggle::make('is_active')
+                    ->label('مفعل')
+                    ->default(true),
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
 
                         Forms\Components\TextInput::make('links')
                             ->label('رابط البرنامج')
@@ -96,12 +171,18 @@ class ProgramResource extends Resource
                     ->label('عدد المواسم'),
 
                 Tables\Columns\TextColumn::make('episodes')
+<<<<<<< HEAD
                     ->label('عدد الحلقات'),
 
                 Tables\Columns\TextColumn::make('links')
                     ->label('الرابط')
                     ->limit(30),
 
+=======
+                    ->label('الحلقات'),
+                Tables\Columns\TextColumn::make('links')
+                    ->label('Links'),
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('الحالة')
                     ->boolean(),

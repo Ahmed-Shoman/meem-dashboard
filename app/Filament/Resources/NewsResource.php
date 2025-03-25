@@ -39,6 +39,7 @@ class NewsResource extends Resource
                         ->label('News Date')
                         ->required(),
 
+<<<<<<< HEAD
                     Forms\Components\FileUpload::make('image')
                         ->label('News Image')
                         ->image()
@@ -50,6 +51,15 @@ class NewsResource extends Resource
                 ->columns(1)
                 ->columnSpanFull(),
         ]);
+=======
+                Forms\Components\FileUpload::make('image')
+                    ->label('News Image')
+                    ->directory('uploads/news')
+                    ->image()
+                    ->required()
+                ->maxSize(20971520),
+            ]);
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
     }
 
     public static function table(Table $table): Table

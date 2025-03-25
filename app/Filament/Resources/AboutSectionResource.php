@@ -20,6 +20,7 @@ class AboutSectionResource extends Resource
     {
         return $form
             ->schema([
+<<<<<<< HEAD
                 Forms\Components\Section::make('About Section Settings')
                     ->schema([
                         Forms\Components\TextInput::make('title')
@@ -62,13 +63,51 @@ class AboutSectionResource extends Resource
 
                         Forms\Components\FileUpload::make('image')
                             ->label('خلفية الصندوق')
+=======
+                Forms\Components\Grid::make(1)
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->label('عنوان القسم')
+                            ->required(),
+                        Forms\Components\Textarea::make('description')
+                            ->label('الوصف')
+                            ->required(),
+                        Forms\Components\FileUpload::make('background_media')
+                            ->label('خلفية القسم (صورة / فيديو)')
+                            ->directory('uploads/about_section')
+                            ->visibility('public')
+                            ->preserveFilenames()
+                            ->columnSpanFull()
+                            ->live()
+                            ->maxSize(20971520),
+                        Forms\Components\TextInput::make('title2')
+                            ->label('عنوان القسم')
+                            ->required(),
+                        Forms\Components\TextInput::make('sub_title2')
+                            ->label('عنوان القسم')
+                            ->required(),
+                        Forms\Components\Textarea::make('sub_description2')
+                            ->label('الوصف')
+                            ->required(),
+                        Forms\Components\TextInput::make('cta_text')
+                            ->label('زر الدعوة')
+                            ->default('استكشاف المزيد'),
+
+                        Forms\Components\FileUpload::make('image')
+                            ->label('box background')
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
                             ->image()
                             ->directory('uploads/logos')
                             ->visibility('public')
                             ->preserveFilenames()
+<<<<<<< HEAD
                             ->columnSpanFull(),
                     ])
                     ->columns(1),
+=======
+                            ->maxSize(20971520)
+                    ]),
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
             ]);
     }
 

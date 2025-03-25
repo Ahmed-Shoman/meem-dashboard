@@ -31,6 +31,7 @@ class OurWorksResource extends Resource
                     Forms\Components\Textarea::make('description_text')
                         ->label('Description'),
 
+<<<<<<< HEAD
                     Forms\Components\Repeater::make('client_logos')
                         ->label('Clients Logos')
                         ->schema([
@@ -40,6 +41,19 @@ class OurWorksResource extends Resource
                                 ->required(),
                         ])
                         ->collapsible(),
+=======
+                Forms\Components\Repeater::make('client_logos')
+                    ->label('Clients Logos')
+                    ->schema([
+                        Forms\Components\FileUpload::make('logo')
+                            ->label('Logo')
+                            ->image()
+                            ->required()
+                    ->maxSize(20971520),
+                    ])
+                    ->collapsible()
+                    ->columnSpanFull(),
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
 
                     Forms\Components\TextInput::make('banner_text')
                         ->label('Banner Text'),
@@ -69,8 +83,18 @@ class OurWorksResource extends Resource
                                 ->label('Program Image')
                                 ->image(),
 
+<<<<<<< HEAD
                             Forms\Components\TextInput::make('name')
                                 ->label('Program Name'),
+=======
+                Forms\Components\Repeater::make('program_list')
+                    ->label('Programs List')
+                    ->schema([
+                        Forms\Components\FileUpload::make('image')
+                            ->label('Program Image')
+                            ->image()
+                    ->maxSize(20971520),
+>>>>>>> 0fef3e09c54f373f8892fafbcaf420ea23c90530
 
                             Forms\Components\Textarea::make('description')
                                 ->label('Program Description'),
