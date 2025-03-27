@@ -14,10 +14,7 @@ class Program extends Model
         'image',
         'seasons',
         'episodes',
-        'links',
         'program_name',
-        'audio',
-        'audio_time',
         'is_active',
     ];
 

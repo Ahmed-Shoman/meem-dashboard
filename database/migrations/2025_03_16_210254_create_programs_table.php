@@ -13,9 +13,6 @@ $table->string('image');
 $table->integer('seasons')->default(1);
 $table->integer('episodes')->default(1);
 $table->text('program_name');
-$table->string('links');
-$table->string('audio');
-$table->string('audio_time');
 $table->boolean('is_active')->default(true); // ✅ تمت الإضافة
 $table->timestamps();
 

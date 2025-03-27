@@ -45,40 +45,40 @@ class ProgramResource extends Resource
                     ->numeric()
                     ->required(),
 
-                Forms\Components\TextInput::make('links')
-                    ->label('رابط البرنامج')
-                    ->required()
-                    ->url(),
+                // Forms\Components\TextInput::make('links')
+                //     ->label('رابط البرنامج')
+                //     ->required()
+                //     ->url(),
 
-                Forms\Components\FileUpload::make('audio')
-                    ->label('ملف صوتي / فيديو')
-                    ->directory('uploads/audio')
-                    ->acceptedFileTypes([
-                        // Audio formats
-                        'audio/mpeg',
-                        'audio/wav',
-                        'audio/ogg',
-                        'audio/aac',
-                        'audio/flac',
-                        'audio/x-ms-wma',
-                        'audio/x-wav',
-                        'audio/webm',
-                        // Video formats
-                        'video/mp4',
-                        'video/x-msvideo',
-                        'video/x-matroska',
-                        'video/webm',
-                        'video/ogg',
-                        'video/quicktime',
-                        'video/x-ms-wmv'
-                    ])
-                    ->nullable()
-                    ->required()
-                    ->maxSize(20971520),
+                // Forms\Components\FileUpload::make('audio')
+                //     ->label('ملف صوتي / فيديو')
+                //     ->directory('uploads/audio')
+                //     ->acceptedFileTypes([
+                //         // Audio formats
+                //         'audio/mpeg',
+                //         'audio/wav',
+                //         'audio/ogg',
+                //         'audio/aac',
+                //         'audio/flac',
+                //         'audio/x-ms-wma',
+                //         'audio/x-wav',
+                //         'audio/webm',
+                //         // Video formats
+                //         'video/mp4',
+                //         'video/x-msvideo',
+                //         'video/x-matroska',
+                //         'video/webm',
+                //         'video/ogg',
+                //         'video/quicktime',
+                //         'video/x-ms-wmv'
+                //     ])
+                //     ->nullable()
+                //     ->required()
+                //     ->maxSize(20971520),
 
-                Forms\Components\TextInput::make('audio_time')
-                    ->label('مدة الصوت / الفيديو')
-                    ->required(),
+                // Forms\Components\TextInput::make('audio_time')
+                //     ->label('مدة الصوت / الفيديو')
+                //     ->required(),
 
                 Forms\Components\Toggle::make('is_active')
                     ->label('مفعل')
