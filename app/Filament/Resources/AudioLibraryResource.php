@@ -13,52 +13,55 @@ use Filament\Tables\Table;
 class AudioLibraryResource extends Resource
 {
     protected static ?string $model = AudioLibrary::class;
-    protected static ?string $navigationIcon = 'heroicon-o-information-circle';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack'; // تغيير الأيقونة لتطابق OurWorksResource
     protected static ?string $navigationGroup = 'Meems Programs Section';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('program_id')
-                    ->label('البرنامج')
-                    ->relationship('program', 'program_name') // يعرض أسماء البرامج
-                    ->required()
-                    ->searchable()
-                    ->preload(),
+                Forms\Components\Section::make('Main Section') // إضافة قسم رئيسي مثل OurWorksResource
+                    ->schema([
+                        Forms\Components\Select::make('program_id')
+                            ->label('البرنامج')
+                            ->relationship('program', 'program_name')
+                            ->required()
+                            ->searchable()
+                            ->preload(),
 
-                Forms\Components\FileUpload::make('image')
-                    ->label('Cover Image')
-                    ->image()
-                    ->required()
-                    ->maxSize(20971520),
+                        Forms\Components\FileUpload::make('image')
+                            ->label('Cover Image')
+                            ->image()
+                            ->required()
+                            ->maxSize(20971520),
 
-                Forms\Components\FileUpload::make('sound')
-                    ->label('Audio File')
-                    ->acceptedFileTypes(['audio/*'])
-                    ->nullable()
-                    ->required()
-                    ->maxSize(20971520),
+                        Forms\Components\FileUpload::make('sound')
+                            ->label('Audio File')
+                            ->acceptedFileTypes(['audio/*'])
+                            ->nullable()
+                            ->required()
+                            ->maxSize(20971520),
 
-                Forms\Components\TextInput::make('sound_time')
-                    ->label('Audio Duration')
-                    ->required(),
+                        Forms\Components\TextInput::make('sound_time')
+                            ->label('Audio Duration')
+                            ->required(),
 
-                Forms\Components\TextInput::make('category')
-                    ->label('Category')
-                    ->required(),
+                        Forms\Components\TextInput::make('category')
+                            ->label('Category')
+                            ->required(),
 
-                Forms\Components\Textarea::make('description')
-                    ->label('Description')
-                    ->columnSpanFull(),
+                        Forms\Components\Textarea::make('description')
+                            ->label('Title')
+                            ->columnSpanFull(),
 
-                Forms\Components\Textarea::make('sub_description')
-                    ->label('Sub Description')
-                    ->columnSpanFull(),
+                        Forms\Components\Textarea::make('sub_description')
+                            ->label('Description')
+                            ->columnSpanFull(),
 
-                Forms\Components\Toggle::make('is_active')
-                    ->label('Active')
-                    ->default(true),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label('Active')
+                            ->default(true),
+                    ]),
             ]);
     }
 
@@ -69,7 +72,7 @@ class AudioLibraryResource extends Resource
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Cover Image'),
 
-                Tables\Columns\TextColumn::make('program.program_name') // عرض اسم البرنامج
+                Tables\Columns\TextColumn::make('program.program_name')
                     ->label('البرنامج')
                     ->searchable()
                     ->sortable(),
@@ -81,6 +84,22 @@ class AudioLibraryResource extends Resource
                 Tables\Columns\TextColumn::make('sound_time')
                     ->label('Audio Duration'),
 
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Title')
+                    ->limit(50), // إضافة حد مثل OurWorksResource
+
+                Tables\Columns\TextColumn::make('sub_description')
+                    ->label('Description')
+                    ->limit(50), // إضافة حد للتناسق
+
+                Tables\Columns\TextColumn::make('sound')
+                    ->label('Audio File')
+                    ->limit(50), // إضافة عمود للملف الصوتي مع حد
+
+                Tables\Columns\IconColumn::make('is_active')
+                    ->label('Active')
+                    ->boolean(), // تغيير إلى IconColumn مثل OurWorksResource
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created At')
                     ->dateTime()
@@ -91,7 +110,7 @@ class AudioLibraryResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make(), // إضافة Bulk Action مثل OurWorksResource
             ]);
     }
 
