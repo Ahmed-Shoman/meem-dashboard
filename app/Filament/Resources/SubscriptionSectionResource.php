@@ -45,14 +45,25 @@ class SubscriptionSectionResource extends Resource
                             ->label('Plan Price')
                             ->required(),
 
-                              Forms\Components\Textarea::make('feature_list')
-                            ->label('Feature List'),
-
-
 
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
+
+                      Forms\Components\Repeater::make('feature_list')
+                    ->label('Features List')
+                    ->schema([
+                        Forms\Components\Textarea::make('feature_list')
+                            ->label('Features List')
+
+                    ])
+                    ->columnSpanFull(),
+
+
+
+
+
+
 
                 // FAQs Section (Repeater)
                 Forms\Components\Repeater::make('faqs')
