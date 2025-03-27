@@ -12,6 +12,7 @@ class AudioLibrary extends Model
     protected $table = 'audio_library';
 
     protected $fillable = [
+        'program_id', 
         'image',
         'sound',
         'sound_time',
@@ -20,4 +21,9 @@ class AudioLibrary extends Model
         'sub_description',
         'is_active'
     ];
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
 }

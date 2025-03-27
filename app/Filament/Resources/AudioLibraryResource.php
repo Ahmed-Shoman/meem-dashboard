@@ -20,6 +20,13 @@ class AudioLibraryResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('program_id')
+                    ->label('البرنامج')
+                    ->relationship('program', 'program_name') // يعرض أسماء البرامج
+                    ->required()
+                    ->searchable()
+                    ->preload(),
+
                 Forms\Components\FileUpload::make('image')
                     ->label('Cover Image')
                     ->image()
@@ -61,6 +68,11 @@ class AudioLibraryResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Cover Image'),
+
+                Tables\Columns\TextColumn::make('program.program_name') // عرض اسم البرنامج
+                    ->label('البرنامج')
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('category')
                     ->label('Category')

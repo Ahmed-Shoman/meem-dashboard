@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('audio_library', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('program_id')->constrained('programs')->onDelete('cascade'); // إضافة العلاقة
             $table->string('image'); // صورة الغلاف
             $table->string('sound'); // ملف الصوت
             $table->string('sound_time'); // مدة الصوت
