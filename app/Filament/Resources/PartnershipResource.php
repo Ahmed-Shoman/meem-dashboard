@@ -41,11 +41,15 @@ class PartnershipResource extends Resource
                             ->label('Image')
                             ->image()
                             ->required()
-                    ->maxSize(20971520),
+                    ->maxSize(20971520)
+
                     ])
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                   -> collapsible(),
             ]);
+
     }
+
 
     public static function table(Table $table): Table
     {

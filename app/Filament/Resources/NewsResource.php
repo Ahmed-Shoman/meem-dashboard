@@ -47,6 +47,15 @@ class NewsResource extends Resource
                             ->visibility('public')
                             ->required()
                             ->maxSize(20971520),
+
+                            Forms\Components\Select::make('category')
+    ->label('Category')
+    ->options([
+        'news' => 'News',
+        'originals' => 'Originals',
+    ])
+    ->nullable(),
+
                     ])
                     ->columns(1)
                     ->columnSpanFull(),
@@ -73,6 +82,11 @@ class NewsResource extends Resource
                     ->label('Date')
                     ->date()
                     ->sortable(),
+
+                    Tables\Columns\TextColumn::make('category')
+    ->label('Category')
+    ->searchable()
+    ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created At')

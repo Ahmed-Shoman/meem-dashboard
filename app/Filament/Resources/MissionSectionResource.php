@@ -39,15 +39,7 @@ class MissionSectionResource extends Resource
                     ->label('Description')
                     ->columnSpanFull(),
 
-                Forms\Components\TextInput::make('title2')
-                    ->label('Secondary Title')
-                    ->columnSpanFull(),
-
-                Forms\Components\Textarea::make('description2')
-                    ->label('Secondary Description')
-                    ->columnSpanFull(),
-
-                Forms\Components\Repeater::make('points')
+                       Forms\Components\Repeater::make('points')
                     ->label('Mission Points')
                     ->schema([
                         Forms\Components\TextInput::make('title')
@@ -65,14 +57,19 @@ class MissionSectionResource extends Resource
                             ->label('Point Number')
                             ->numeric()
                             ->required(),
-
-
-
-
-
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
+
+                Forms\Components\TextInput::make('title2')
+                    ->label('Secondary Title')
+                    ->columnSpanFull(),
+
+                Forms\Components\Textarea::make('description2')
+                    ->label('Secondary Description')
+                    ->columnSpanFull(),
+
+
             ]);
     }
 

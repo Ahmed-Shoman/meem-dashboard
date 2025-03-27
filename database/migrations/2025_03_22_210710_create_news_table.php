@@ -18,6 +18,8 @@ return new class extends Migration
     $table->text('description')->nullable();
     $table->date('date')->nullable();
     $table->string('image')->nullable();
+    $table->enum('category',['news','originals'])->nullable();
+
     $table->timestamps();
 });
 
