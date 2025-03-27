@@ -41,7 +41,7 @@ return new class extends Migration {
 
 
             // قائمة البرامج
-            $table->json('program_list')->nullable(); // تم تغيير الاسم ليكون أكثر وضوحًا
+            // $table->json('program_list')->nullable(); // تم تغيير الاسم ليكون أكثر وضوحًا
 
             $table->timestamps();
         });

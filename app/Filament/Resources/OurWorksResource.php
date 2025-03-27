@@ -64,22 +64,22 @@ class OurWorksResource extends Resource
                     Forms\Components\TextInput::make('programs_stat_description')
                         ->label('Programs Sub Stat'),
 
-                    Forms\Components\Repeater::make('program_list')
-                        ->label('Programs List')
-                        ->schema([
-                            Forms\Components\FileUpload::make('image')
-                                ->label('Program Image')
-                                ->image()
-                                ->maxSize(20971520),
+                    // Forms\Components\Repeater::make('program_list')
+                    //     ->label('Programs List')
+                    //     ->schema([
+                    //         Forms\Components\FileUpload::make('image')
+                    //             ->label('Program Image')
+                    //             ->image()
+                    //             ->maxSize(20971520),
 
-                            Forms\Components\Textarea::make('description')
-                                ->label('Program Description'),
+                    //         Forms\Components\Textarea::make('description')
+                    //             ->label('Program Description'),
 
-                            Forms\Components\TextInput::make('episode_duration')
-                                ->label('Episode Duration'),
-                        ])
-                        ->collapsible()
-                        ->columnSpanFull(),
+                    //         Forms\Components\TextInput::make('episode_duration')
+                    //             ->label('Episode Duration'),
+                    //     ])
+                    //     ->collapsible()
+                    //     ->columnSpanFull(),
                 ])
         ]);
     }

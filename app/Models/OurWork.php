@@ -23,12 +23,12 @@ class OurWork extends Model
         'episodes_stat_description',
         'programs_stat',
         'programs_stat_description',
-        'program_list',
+        // 'program_list',
         'banner_text',
     ];
 
         protected $casts = [
         'client_logos' => 'array', // شريط العملاء (اللوجوهات)
-        'program_list' => 'array', // قائمة البرامج
+        // 'program_list' => 'array', // قائمة البرامج
     ];
 }
