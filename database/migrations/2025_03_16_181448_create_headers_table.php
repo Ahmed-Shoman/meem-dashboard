@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('headers', function (Blueprint $table) {
             $table->id();
             $table->string('logo')->nullable();
-            $table->json('links')->nullable();
-            $table->string('cta_text')->nullable();
+            // $table->json('links')->nullable();
+            // $table->string('cta_text')->nullable();
             $table->timestamps();
         });
     }

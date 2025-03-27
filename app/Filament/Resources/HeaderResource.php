@@ -37,25 +37,25 @@ class HeaderResource extends Resource
                             ->maxSize(20971520),
 
 
-                        Forms\Components\Repeater::make('links')
-                            ->label('Navigation Links')
-                            ->schema([
-                                Forms\Components\TextInput::make('text')
-                                    ->label('Link Text')
-                                    ->required()
-                                    ->columnSpanFull(),
+                        // Forms\Components\Repeater::make('links')
+                        //     ->label('Navigation Links')
+                        //     ->schema([
+                        //         Forms\Components\TextInput::make('text')
+                        //             ->label('Link Text')
+                        //             ->required()
+                        //             ->columnSpanFull(),
 
 
-                            ])
-                            ->collapsible()
-                            ->columns(1) // جعل كل الإدخالات في سطر واحد
+                        //     ])
+                        //     ->collapsible()
+                        //     ->columns(1) // جعل كل الإدخالات في سطر واحد
 
-                            ->columnSpanFull(), // جعل الحقل يأخذ العرض بالكامل
+                        //     ->columnSpanFull(), // جعل الحقل يأخذ العرض بالكامل
 
-                        Forms\Components\TextInput::make('cta_text')
-                            ->label('CTA Button Text')
-                            ->required()
-                            ->columnSpanFull(),
+                        // Forms\Components\TextInput::make('cta_text')
+                        //     ->label('CTA Button Text')
+                        //     ->required()
+                        //     ->columnSpanFull(),
 
 
                     ])
@@ -71,17 +71,17 @@ class HeaderResource extends Resource
                 Tables\Columns\ImageColumn::make('logo')
                     ->label('Logo'),
 
-                Tables\Columns\TextColumn::make('cta_text')
-                    ->label('CTA Button Text'),
+                // Tables\Columns\TextColumn::make('cta_text')
+                //     ->label('CTA Button Text'),
 
-                Tables\Columns\TextColumn::make('cta_link')
-                    ->label('CTA Button Link')
-                    ->limit(30),
+                // Tables\Columns\TextColumn::make('cta_link')
+                //     ->label('CTA Button Link')
+                //     ->limit(30),
 
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->dateTime()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->label('Created At')
+                //     ->dateTime()
+                //     ->sortable(),
             ])
             ->filters([
                 //

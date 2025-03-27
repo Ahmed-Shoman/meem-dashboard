@@ -13,11 +13,11 @@ class Header extends Model
 
     protected $fillable = [
         'logo',
-        'links',
-        'cta_text',
-        'cta_link',
+        // 'links',
+        // 'cta_text',
+        // 'cta_link',
     ];
-    protected $casts = [
-        'links' => 'array',
-    ];
+    // protected $casts = [
+    //     'links' => 'array',
+    // ];
 }
