@@ -14,9 +14,9 @@ return new class extends Migration {
             $table->string('main_title');
 
             //plan details
-            $table->string('plan_name')->nullable();
-            $table->text('plan_description')->nullable();
-            $table->string('plan_price')->nullable();
+            // $table->string('plan_name')->nullable();
+            // $table->text('plan_description')->nullable();
+            // $table->string('plan_price')->nullable();
             $table->json('plan_details')->nullable();
 
             $table->json('feature_list')->nullable();
