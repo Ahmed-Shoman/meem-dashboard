@@ -44,6 +44,12 @@ class SubscriptionSectionResource extends Resource
                         Forms\Components\TextInput::make('plan_price')
                             ->label('Plan Price')
                             ->required(),
+
+                              Forms\Components\Textarea::make('feature_list')
+                            ->label('Feature List'),
+
+
+
                     ])
                     ->collapsible()
                     ->columnSpanFull(),

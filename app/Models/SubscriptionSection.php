@@ -20,11 +20,13 @@ class SubscriptionSection extends Model
         'listen_now_text',
         'platform_links',
         'listen_now_image',
+        'feature_list'
     ];
 
     protected $casts = [
         'plan_details' => 'array',
         'faqs' => 'array',
         'platform_links' => 'array',
+        'feature_list'=>'array',
     ];
 }

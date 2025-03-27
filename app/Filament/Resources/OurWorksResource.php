@@ -27,7 +27,7 @@ class OurWorksResource extends Resource
 
                     Forms\Components\TextInput::make('subtitle')
                         ->label('Subtitle'),
-
+ 
                          Forms\Components\Repeater::make('client_logos')
                         ->label('Clients Logos')
                         ->schema([
