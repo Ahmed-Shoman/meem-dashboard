@@ -27,7 +27,7 @@ class OurWorksResource extends Resource
 
                     Forms\Components\TextInput::make('subtitle')
                         ->label('Subtitle'),
- 
+
                          Forms\Components\Repeater::make('client_logos')
                         ->label('Clients Logos')
                         ->schema([
@@ -37,13 +37,16 @@ class OurWorksResource extends Resource
                                 ->required()
                                 ->maxSize(20971520),
 
-                    Forms\Components\Textarea::make('description_text')
-                        ->label('Description'),
+
 
 
                         ])
                         ->collapsible()
                         ->columnSpanFull(),
+
+
+                         Forms\Components\Textarea::make('description_text')
+                        ->label('Description'),
 
                     Forms\Components\TextInput::make('banner_text')
                         ->label('Banner Text'),
