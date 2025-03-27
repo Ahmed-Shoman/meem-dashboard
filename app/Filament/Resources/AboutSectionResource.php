@@ -14,7 +14,7 @@ class AboutSectionResource extends Resource
 {
     protected static ?string $model = AboutSection::class;
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';
-    protected static ?string $navigationGroup = 'Home Page Sections';
+    protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
     public static function form(Form $form): Form
     {

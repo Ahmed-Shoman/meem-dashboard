@@ -14,7 +14,7 @@ class ProgramResource extends Resource
 {
     protected static ?string $model = Program::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack'; // Changed to match OurWorksResource
-    protected static ?string $navigationGroup = 'Home Page Sections';
+    protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
     public static function form(Form $form): Form
     {

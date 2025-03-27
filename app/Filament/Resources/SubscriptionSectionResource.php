@@ -15,7 +15,7 @@ class SubscriptionSectionResource extends Resource
 {
     protected static ?string $model = SubscriptionSection::class;
     protected static ?string $navigationIcon = 'heroicon-o-bell';
-    protected static ?string $navigationGroup = 'Home Page Sections';
+    protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
 
 
@@ -45,16 +45,18 @@ class SubscriptionSectionResource extends Resource
                             ->label('Plan Price')
                             ->required(),
 
+                          Forms\Components\Repeater::make('feature_list')
+                    ->label('Features List')
+                    ->schema([
+                        Forms\Components\Textarea::make('feature_list')
+                            ->label('Features List')
+
 
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
 
-                      Forms\Components\Repeater::make('feature_list')
-                    ->label('Features List')
-                    ->schema([
-                        Forms\Components\Textarea::make('feature_list')
-                            ->label('Features List')
+
 
                     ])
                     ->columnSpanFull(),
