@@ -28,10 +28,7 @@ class OurWorksResource extends Resource
                     Forms\Components\TextInput::make('subtitle')
                         ->label('Subtitle'),
 
-                    Forms\Components\Textarea::make('description_text')
-                        ->label('Description'),
-
-                    Forms\Components\Repeater::make('client_logos')
+                         Forms\Components\Repeater::make('client_logos')
                         ->label('Clients Logos')
                         ->schema([
                             Forms\Components\FileUpload::make('logo')
@@ -39,6 +36,11 @@ class OurWorksResource extends Resource
                                 ->image()
                                 ->required()
                                 ->maxSize(20971520),
+
+                    Forms\Components\Textarea::make('description_text')
+                        ->label('Description'),
+
+
                         ])
                         ->collapsible()
                         ->columnSpanFull(),
