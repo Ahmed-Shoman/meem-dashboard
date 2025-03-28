@@ -35,6 +35,14 @@ class ProgramResource extends Resource
                             ->label('اسم المقدم / المقدمة للبرنامج')
                             ->required(),
 
+
+                        Forms\Components\FileUpload::make('presenter_image')
+                            ->label('صورة مقدم البرنامج')
+                            ->directory('uploads/presenters')
+                            ->image()
+                            ->nullable()
+                            ->maxSize(20971520),
+
                         Forms\Components\Textarea::make('program_description')
                             ->label('وصف مفصل عن البرنامج وما سيقدمه')
                             ->required(),
@@ -76,6 +84,11 @@ class ProgramResource extends Resource
                     ->label('مقدم البرنامج')
                     ->sortable()
                     ->searchable(),
+
+                Tables\Columns\ImageColumn::make('presenter_image')
+                    ->label('صورة مقدم البرنامج')
+                    ->size(50),
+
 
                 Tables\Columns\TextColumn::make('seasons')
                     ->label('عدد المواسم'),
