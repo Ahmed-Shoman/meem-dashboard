@@ -34,39 +34,19 @@ class HeaderResource extends Resource
                         Forms\Components\FileUpload::make('logo')
                             ->label('ارفاق صورة الشعار لقناة ميم')
                             ->image()
+                            ->disk('public')
                             ->directory('uploads/logos')
                             ->preserveFilenames()
-                            ->columnSpanFull()
                             ->live()
+                            ->columnSpanFull()
                             ->visibility('public')
-                            ->maxSize(20971520),
-
-
-                        // Forms\Components\Repeater::make('links')
-                        //     ->label('Navigation Links')
-                        //     ->schema([
-                        //         Forms\Components\TextInput::make('text')
-                        //             ->label('Link Text')
-                        //             ->required()
-                        //             ->columnSpanFull(),
-
-
-                        //     ])
-                        //     ->collapsible()
-                        //     ->columns(1) // جعل كل الإدخالات في سطر واحد
-
-                        //     ->columnSpanFull(), // جعل الحقل يأخذ العرض بالكامل
-
-                        // Forms\Components\TextInput::make('cta_text')
-                        //     ->label('CTA Button Text')
-                        //     ->required()
-                        //     ->columnSpanFull(),
-
-
+                            ->maxSize(20971520)
+                            ->nullable()
                     ])
-                    ->columns(1), // يجعل كل العناصر تحت بعضها مبا
+                    ->columns(1),
             ]);
     }
+
 
 
     public static function table(Table $table): Table
@@ -74,19 +54,10 @@ class HeaderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
-                    ->label('الشعار'),
-
-                // Tables\Columns\TextColumn::make('cta_text')
-                //     ->label('CTA Button Text'),
-
-                // Tables\Columns\TextColumn::make('cta_link')
-                //     ->label('CTA Button Link')
-                //     ->limit(30),
-
-                // Tables\Columns\TextColumn::make('created_at')
-                //     ->label('Created At')
-                //     ->dateTime()
-                //     ->sortable(),
+                    ->label('الشعار')
+                    ->disk('public')
+                    ->url(fn($record) => url('storage/' . $record->logo))
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -96,7 +67,6 @@ class HeaderResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ]);
     }
-
 
     public static function getPages(): array
     {
