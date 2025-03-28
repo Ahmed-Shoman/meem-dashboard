@@ -19,7 +19,11 @@ class AudioLibrary extends Model
         'category',
         'description',
         'sub_description',
-        'is_active'
+        'is_active',
+        'episode_number',
+        'guest_name',
+        'youtube_link',
+        'apple_podcast_link',
     ];
 
     public function program()

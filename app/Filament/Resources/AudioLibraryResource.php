@@ -25,7 +25,7 @@ class AudioLibraryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('قم باضافة الحلقات الي البرنامج الذي تريده:') 
+                Forms\Components\Section::make('قم باضافة الحلقات الي البرنامج الذي تريده:')
                     ->schema([
                         Forms\Components\Select::make('program_id')
                             ->label('اختار البرنامج الذي تتبع له الحلقه')
@@ -34,9 +34,33 @@ class AudioLibraryResource extends Resource
                             ->searchable()
                             ->preload(),
 
+
                         Forms\Components\Textarea::make('description')
                             ->label('عنوان الحلقه الاساسي')
                             ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('category')
+                            ->label('موضوع الحلقة')
+                            ->required(),
+
+                        Forms\Components\TextInput::make('episode_number')
+                            ->label('رقم الحلقة')
+                            ->numeric()
+                            ->required(),
+
+                        Forms\Components\TextInput::make('guest_name')
+                            ->label('اسم الضيف')
+                            ->required(),
+
+                        Forms\Components\TextInput::make('youtube_link')
+                            ->label('رابط الحلقة علي يوتيوب')
+                            ->url()
+                            ->required(),
+
+                        Forms\Components\TextInput::make('apple_podcast_link')
+                            ->label('رابط الحلقة علي أبل بودكاست')
+                            ->url()
+                            ->required(),
 
                         Forms\Components\FileUpload::make('image')
                             ->label('صورة الغلاف الخارجي للحلقة')
@@ -59,10 +83,6 @@ class AudioLibraryResource extends Resource
                             ->label('مدة الحلقه - مثل: 20:20')
                             ->required(),
 
-                        Forms\Components\TextInput::make('category')
-                            ->label('نوع الحلقة - (دراما - رياضه - مغامرة - وثائقي)')
-                            ->required(),
-
                         Forms\Components\Toggle::make('is_active')
                             ->label('حالة ظهور الحلقة - (تظهر - لا تظهر)')
                             ->default(true),
@@ -74,29 +94,47 @@ class AudioLibraryResource extends Resource
     {
         return $table
             ->columns([
+
+                Tables\Columns\TextColumn::make('episode_number')
+                    ->label('رقم الحلقة')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('program.program_name')
                     ->label('برنامج الحلقة')
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('category')
-                    ->label(label: 'نوع الحلقة')
+                    ->label(label: 'موضوع الحلقة')
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('guest_name')
+                    ->label('اسم الضيف')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('youtube_link')
+                    ->label('رابط الحلقة علي يوتيوب')
+                    ->limit(30)
+                    ->url(fn($record) => $record->youtube_link, true),
+
+                Tables\Columns\TextColumn::make('apple_podcast_link')
+                    ->label('رابط الحلقة علي أبل بودكاست')
+                    ->limit(30)
+                    ->url(fn($record) => $record->apple_podcast_link, true),
 
                 Tables\Columns\TextColumn::make('sound_time')
                     ->label('زمن الحلقة'),
 
                 Tables\Columns\TextColumn::make('description')
                     ->label('عنوان الحلقة')
-                    ->limit(50), 
+                    ->limit(50),
 
                 Tables\Columns\TextColumn::make('sub_description')
                     ->label('وصف الحلقة')
-                    ->limit(50), // إضافة حد للتناسق
+                    ->limit(50),
 
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('الحالة')
-                    ->boolean(), 
+                    ->boolean(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('تاريخ اضافة الحلقه')
@@ -108,7 +146,7 @@ class AudioLibraryResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(), 
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
