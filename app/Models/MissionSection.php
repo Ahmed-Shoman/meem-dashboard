@@ -15,7 +15,7 @@ class MissionSection extends Model
         'points',
         'title2',
         'description2',
-        'subtitle'
+
     ];
 
     protected $casts = [

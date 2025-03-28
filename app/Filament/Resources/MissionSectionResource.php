@@ -42,7 +42,7 @@ class MissionSectionResource extends Resource
                        Forms\Components\Repeater::make('points')
                     ->label('Mission Points')
                     ->schema([
-                        Forms\Components\TextInput::make('title')
+                Forms\Components\TextInput::make('title')
                             ->label('Point Title')
                             ->required(),
 
@@ -50,10 +50,10 @@ class MissionSectionResource extends Resource
                             ->label('Subtitle')
                             ->required(),
 
-                        Forms\Components\Textarea::make('description')
+                Forms\Components\Textarea::make('description')
                             ->label('Point Description'),
 
-                        Forms\Components\TextInput::make('number')
+                Forms\Components\TextInput::make('number')
                             ->label('Point Number')
                             ->numeric()
                             ->required(),
