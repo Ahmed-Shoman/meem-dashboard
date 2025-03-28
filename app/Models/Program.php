@@ -12,6 +12,9 @@ class Program extends Model
     protected $fillable = [
         'presenter',
         'presenter_image',
+        'instagram',
+        'snapchat',
+        'x',
         'image',
         'seasons',
         'episodes',

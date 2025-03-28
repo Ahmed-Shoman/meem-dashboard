@@ -43,6 +43,23 @@ class ProgramResource extends Resource
                             ->nullable()
                             ->maxSize(20971520),
 
+                        Forms\Components\TextInput::make('instagram')
+                            ->label(label: 'حساب انستجرام للمقدم')
+                            ->placeholder('https://www.instagram.com/username')
+                            ->url()
+                            ->nullable(),
+
+                        Forms\Components\TextInput::make('snapchat')
+                            ->label('حساب سناب شات للمقدم')
+                            ->placeholder('https://www.snapchat.com/add/username')
+                            ->nullable(),
+
+                        Forms\Components\TextInput::make('x')
+                            ->label('حساب اكس - تويتر للمقدم')
+                            ->placeholder('https://twitter.com/username')
+                            ->url()
+                            ->nullable(),
+
                         Forms\Components\Textarea::make('program_description')
                             ->label('وصف مفصل عن البرنامج وما سيقدمه')
                             ->required(),
@@ -89,6 +106,20 @@ class ProgramResource extends Resource
                     ->label('صورة مقدم البرنامج')
                     ->size(50),
 
+                Tables\Columns\TextColumn::make('instagram')
+                    ->label('انستجرام')
+                    ->limit(30)
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('snapchat')
+                    ->label('سناب شات')
+                    ->limit(30)
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('x')
+                    ->label('تويتر')
+                    ->limit(30)
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('seasons')
                     ->label('عدد المواسم'),
