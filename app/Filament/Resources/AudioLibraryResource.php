@@ -14,52 +14,57 @@ class AudioLibraryResource extends Resource
 {
     protected static ?string $model = AudioLibrary::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack'; // تغيير الأيقونة لتطابق OurWorksResource
-    protected static ?string $navigationGroup = 'Meems Programs Section';
+    protected static ?string $navigationGroup = 'برامج ميم';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'اضافة الحلقات';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Main Section') // إضافة قسم رئيسي مثل OurWorksResource
+                Forms\Components\Section::make('قم باضافة الحلقات الي البرنامج الذي تريده:') 
                     ->schema([
                         Forms\Components\Select::make('program_id')
-                            ->label('البرنامج')
+                            ->label('اختار البرنامج الذي تتبع له الحلقه')
                             ->relationship('program', 'program_name')
                             ->required()
                             ->searchable()
                             ->preload(),
 
+                        Forms\Components\Textarea::make('description')
+                            ->label('عنوان الحلقه الاساسي')
+                            ->columnSpanFull(),
+
                         Forms\Components\FileUpload::make('image')
-                            ->label('Cover Image')
+                            ->label('صورة الغلاف الخارجي للحلقة')
                             ->image()
                             ->required()
                             ->maxSize(20971520),
 
                         Forms\Components\FileUpload::make('sound')
-                            ->label('Audio File')
+                            ->label('ارفاق الملف الصوتي للحلقة')
                             ->acceptedFileTypes(['audio/*'])
                             ->nullable()
                             ->required()
                             ->maxSize(20971520),
 
+                        Forms\Components\Textarea::make('sub_description')
+                            ->label('وصف مفصل عن محتوي الحلقة')
+                            ->columnSpanFull(),
+
                         Forms\Components\TextInput::make('sound_time')
-                            ->label('Audio Duration')
+                            ->label('مدة الحلقه - مثل: 20:20')
                             ->required(),
 
                         Forms\Components\TextInput::make('category')
-                            ->label('Category')
+                            ->label('نوع الحلقة - (دراما - رياضه - مغامرة - وثائقي)')
                             ->required(),
 
-                        Forms\Components\Textarea::make('description')
-                            ->label('Title')
-                            ->columnSpanFull(),
-
-                        Forms\Components\Textarea::make('sub_description')
-                            ->label('Description')
-                            ->columnSpanFull(),
-
                         Forms\Components\Toggle::make('is_active')
-                            ->label('Active')
+                            ->label('حالة ظهور الحلقة - (تظهر - لا تظهر)')
                             ->default(true),
                     ]),
             ]);
@@ -69,39 +74,32 @@ class AudioLibraryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Cover Image'),
-
                 Tables\Columns\TextColumn::make('program.program_name')
-                    ->label('البرنامج')
+                    ->label('برنامج الحلقة')
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('category')
-                    ->label('Category')
+                    ->label(label: 'نوع الحلقة')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('sound_time')
-                    ->label('Audio Duration'),
+                    ->label('زمن الحلقة'),
 
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Title')
-                    ->limit(50), // إضافة حد مثل OurWorksResource
+                    ->label('عنوان الحلقة')
+                    ->limit(50), 
 
                 Tables\Columns\TextColumn::make('sub_description')
-                    ->label('Description')
+                    ->label('وصف الحلقة')
                     ->limit(50), // إضافة حد للتناسق
 
-                Tables\Columns\TextColumn::make('sound')
-                    ->label('Audio File')
-                    ->limit(50), // إضافة عمود للملف الصوتي مع حد
-
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('Active')
-                    ->boolean(), // تغيير إلى IconColumn مثل OurWorksResource
+                    ->label('الحالة')
+                    ->boolean(), 
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label('تاريخ اضافة الحلقه')
                     ->dateTime()
                     ->sortable(),
             ])
@@ -110,7 +108,7 @@ class AudioLibraryResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(), // إضافة Bulk Action مثل OurWorksResource
+                Tables\Actions\DeleteBulkAction::make(), 
             ]);
     }
 

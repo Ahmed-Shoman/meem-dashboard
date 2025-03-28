@@ -19,27 +19,32 @@ class StorySectionResource extends Resource
 {
     protected static ?string $model = StorySection::class;
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
-    protected static ?string $navigationGroup = 'About us Page Sections';
+    protected static ?string $navigationGroup = 'أقسام صفحة من نحن';
     protected static ?string $label = 'Story Section';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'قسم صفحة من نحن';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
-                    ->label('Title')
+                    ->label('عنوان القسم الاول في صفحة من نحن')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\Textarea::make('description')
-                    ->label('Description')
+                    ->label('وصف القسم الاول في صفحة من نحن')
                     ->columnSpanFull(),
 
                 Forms\Components\FileUpload::make('image')
-                    ->label('Story Image')
+                    ->label('صورة القسم الاول في صفحة من نحن')
                     ->image()
                     ->columnSpanFull()
-                ->maxSize(20971520),
+                    ->maxSize(20971520),
             ]);
     }
 
@@ -48,18 +53,15 @@ class StorySectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Title')
+                    ->label('العنوان')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Description')
+                    ->label('الوصف')
                     ->limit(50),
 
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Story Image'),
-
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label('تاريخ الاضافة')
                     ->dateTime(),
             ])
             ->actions([

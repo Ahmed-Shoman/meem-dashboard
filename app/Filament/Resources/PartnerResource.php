@@ -15,35 +15,40 @@ class PartnerResource extends Resource
 {
     protected static ?string $model = Partner::class;
     protected static ?string $navigationIcon = 'heroicon-o-users';
-       protected static ?string $navigationGroup = 'About us Page Sections';
+    protected static ?string $navigationGroup = 'أقسام صفحة من نحن';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'شركاؤنا';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
-                    ->label('Title')
+                    ->label('عنوان قسم الشركاء')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\Textarea::make('description')
-                    ->label('Description')
+                    ->label('وصف بسيط عن قسم الشركاء')
                     ->columnSpanFull(),
 
                 Forms\Components\Repeater::make('logos')
-                    ->label('Logos')
+                    ->label('شعارات الشركات او الداعمين')
                     ->schema([
                         Forms\Components\FileUpload::make('logo')
-                            ->label('Logo Image')
+                            ->label('ارفاق صورة الشعار')
                             ->image()
                             ->required()
-                    ->maxSize(20971520),
+                            ->maxSize(20971520),
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('cta_text')
-                    ->label('Button Text'),
+                    ->label('نص الزر الخاص بقسم الشركاء'),
 
             ]);
     }
@@ -53,21 +58,18 @@ class PartnerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Title')
+                    ->label('العنوان')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Description')
+                    ->label('الوصف')
                     ->limit(50),
 
-                // Tables\Columns\ImageColumn::make('logos')
-                //     ->label('Logos'),
-
                 Tables\Columns\TextColumn::make('cta_text')
-                    ->label('CTA Button Text'),
+                    ->label('نص الزر'),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label('تاريخ الاضافة')
                     ->dateTime()
                     ->sortable(),
             ])

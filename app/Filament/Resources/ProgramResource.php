@@ -16,79 +16,70 @@ class ProgramResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack'; // Changed to match OurWorksResource
     protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
+    public static function getNavigationLabel(): string
+    {
+        return 'اضافة البرامج';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Main Section') // Added section like OurWorksResource
+                Forms\Components\Section::make('اضافة البرامج التابعة لقناة ميم') // Added section like OurWorksResource
                     ->schema([
                         Forms\Components\TextInput::make('program_name')
-                            ->label('Program Name')
+                            ->label('اسم البرنامج')
                             ->required(),
 
                         Forms\Components\TextInput::make('presenter')
-                            ->label('Presenter')
+                            ->label('اسم المقدم / المقدمة للبرنامج')
+                            ->required(),
+
+                        Forms\Components\Textarea::make('program_description')
+                            ->label('وصف مفصل عن البرنامج وما سيقدمه')
                             ->required(),
 
                         Forms\Components\FileUpload::make('image')
-                            ->label('Cover Image')
+                            ->label('صورة الغلاف الخارجي للبرنامج')
                             ->directory('uploads/logos')
                             ->image()
                             ->required()
                             ->maxSize(20971520), // 20MB limit, consistent with OurWorksResource
 
                         Forms\Components\TextInput::make('seasons')
-                            ->label('Number of Seasons')
+                            ->label('عدد مواسم البرنامج')
                             ->numeric()
-                            ->default(1) // Added default like OurWorksResource
                             ->required(),
 
                         Forms\Components\TextInput::make('episodes')
-                            ->label('Number of Episodes')
+                            ->label('عدد حلقات البرنامج')
                             ->numeric()
-                            ->default(1) // Added default
                             ->required(),
 
                         Forms\Components\FileUpload::make('audio')
-                            ->label('Audio/Video File')
+                            ->label('ارفاق الملف الصوتي المشوق للبرنامج - اعلان البرنامج')
                             ->directory('uploads/audio')
                             ->acceptedFileTypes([
                                 // Audio formats
-                                'audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/aac',
-                                'audio/flac', 'audio/x-ms-wma', 'audio/x-wav', 'audio/webm',
-                                // Video formats
-                                'video/mp4', 'video/x-msvideo', 'video/x-matroska',
-                                'video/webm', 'video/ogg', 'video/quicktime', 'video/x-ms-wmv'
+                                'audio/mpeg',
+                                'audio/wav',
+                                'audio/ogg',
+                                'audio/aac',
+                                'audio/flac',
+                                'audio/x-ms-wma',
+                                'audio/x-wav',
+                                'audio/webm',
                             ])
                             ->nullable() // Kept nullable, removed conflicting required()
                             ->maxSize(20971520),
 
                         Forms\Components\TextInput::make('audio_time')
-                            ->label('Audio/Video Duration')
+                            ->label('مدة زمن الملف الصوتي للاعلان عن البرنامج')
                             ->required(),
 
                         Forms\Components\Toggle::make('is_active')
-                            ->label('Active')
+                            ->label('حالة البرنامج - (نشط - غير نشط)')
                             ->default(true),
-
-                        Forms\Components\Textarea::make('program_description')
-                            ->label('Program Description')
-                            ->required(), // Changed to Textarea for better UX with descriptions
-
-                        // Optional Repeater, inspired by client_logos in OurWorksResource
-                        Forms\Components\Repeater::make('additional_media')
-                            ->label('Additional Media')
-                            ->schema([
-                                Forms\Components\FileUpload::make('media_file')
-                                    ->label('Media File')
-                                    ->directory('uploads/media')
-                                    ->acceptedFileTypes([
-                                        'audio/mpeg', 'audio/wav', 'video/mp4', 'video/webm', 'image/jpeg', 'image/png'
-                                    ])
-                                    ->maxSize(20971520),
-                            ])
-                            ->collapsible()
-                            ->columnSpanFull(),
                     ]),
             ]);
     }
@@ -97,44 +88,36 @@ class ProgramResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Cover Image')
-                    ->circular(), // Added for visual polish, optional
-
                 Tables\Columns\TextColumn::make('program_name')
-                    ->label('Program Name')
+                    ->label('اسم البرنامج')
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('presenter')
-                    ->label('Presenter')
+                    ->label('مقدم البرنامج')
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('seasons')
-                    ->label('Seasons'),
+                    ->label('عدد المواسم'),
 
                 Tables\Columns\TextColumn::make('episodes')
-                    ->label('Episodes'),
+                    ->label('عدد الحلقات'),
 
                 Tables\Columns\TextColumn::make('audio_time')
-                    ->label('Duration'),
+                    ->label('مدة الحلقه التعريفية'),
 
                 Tables\Columns\TextColumn::make('program_description')
-                    ->label('Description')
+                    ->label('وصف البرنامج')
                     ->limit(50) // Added limit like OurWorksResource
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('audio')
-                    ->label('Audio/Video File')
-                    ->limit(50), // Added limit for consistency
-
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('Active')
+                    ->label('حالة النشاط')
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label('تاريخ الاضافة')
                     ->dateTime()
                     ->sortable(), // Added like OurWorksResource
             ])

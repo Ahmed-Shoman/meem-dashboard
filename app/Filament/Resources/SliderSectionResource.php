@@ -14,39 +14,45 @@ class SliderSectionResource extends Resource
 {
     protected static ?string $model = SliderSection::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
-    protected static ?string $navigationGroup = 'Services Section';
+    protected static ?string $navigationGroup = 'أقسام صفحة خدماتنا';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'صور قسم الخدمات';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
-                    ->label('Title')
+                    ->label('العنوان الاساسي لقسم الخدمات')
                     ->required(),
 
                 Forms\Components\TextInput::make('subtitle')
-                    ->label('Subtitle'),
+                    ->label('عنوان بسيط لقسم الخدمات'),
 
                 Forms\Components\Textarea::make('description')
-                    ->label('Description'),
+                    ->label('وصف مناسب لقسم الخدمات'),
 
-                Forms\Components\FileUpload::make('image')
-                    ->label('Main Image')
-                    ->directory('uploads/slider')
-                    ->image()
-                ->maxSize(20971520),
 
                 Forms\Components\Repeater::make('slider_images')
-                    ->label('Slider Images')
+                    ->label('صور السلايدر المتحرك')
                     ->schema([
                         Forms\Components\FileUpload::make('image')
-                            ->label('Image')
+                            ->label('ارفاق صورة')
                             ->directory('uploads/slider')
                             ->image()
-                    ->maxSize(20971520),
+                            ->maxSize(20971520),
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
+
+                Forms\Components\FileUpload::make('image')
+                    ->label('صورة الغلاف الخارجي للقسم')
+                    ->directory('uploads/slider')
+                    ->image()
+                    ->maxSize(20971520),
             ]);
     }
 
@@ -55,15 +61,12 @@ class SliderSectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Title')
+                    ->label('العنوان')
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Main Image'),
-
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label('تاريخ الاضافة')
                     ->dateTime()
                     ->sortable(),
             ])

@@ -17,7 +17,12 @@ class ContentSectionResource extends Resource
     protected static ?string $model = ContentSection::class;
     protected static ?string $navigationIcon = 'heroicon-o-document-text'; // تغيير الأيقونة
 
-    protected static ?string $navigationGroup = 'Meems Programs Section';
+    protected static ?string $navigationGroup = 'برامج ميم';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'قسم صفحة برامج ميم';
+    }
 
 
     public static function form(Form $form): Form
@@ -25,12 +30,12 @@ class ContentSectionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
-                    ->label('Main Title')
+                    ->label('العنوان الاساسي لصفحة برامج ميم')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\Textarea::make('description')
-                    ->label('Description')
+                    ->label('وصف القسم الاول في صفحة برامج ميم')
                     ->columnSpanFull(),
             ]);
     }
@@ -40,16 +45,16 @@ class ContentSectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Title')
+                    ->label('العنوان')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Description')
+                    ->label('الوصف')
                     ->limit(50)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label('تاريخ الاضافة')
                     ->dateTime()
                     ->sortable(),
             ])

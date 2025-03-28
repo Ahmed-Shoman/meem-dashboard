@@ -23,53 +23,57 @@ class MissionSectionResource extends Resource
 {
     protected static ?string $model = MissionSection::class;
     protected static ?string $navigationIcon = 'heroicon-o-lifebuoy';
-       protected static ?string $navigationGroup = 'About us Page Sections';
+    protected static ?string $navigationGroup = 'أقسام صفحة من نحن';
     protected static ?string $label = 'Mission Section';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'مهام وأدوار ميم';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('main_title')
-                    ->label('Main Title')
+                    ->label('العنوان الاساسي لقسم مهمة ودور وروية ميم')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\Textarea::make('description')
-                    ->label('Description')
+                    ->label('الوصف للعنوان الاساسي لقسم المهام والادوار')
                     ->columnSpanFull(),
 
-                       Forms\Components\Repeater::make('points')
-                    ->label('Mission Points')
+                Forms\Components\Repeater::make('points')
+                    ->label('أدوار ومهام التي تقدمها ميم')
                     ->schema([
-                Forms\Components\TextInput::make('title')
-                            ->label('Point Title')
-                            ->required(),
-
-                               Forms\Components\TextInput::make('subtitle')
-                            ->label('Subtitle')
-                            ->required(),
-
-                Forms\Components\Textarea::make('description')
-                            ->label('Point Description'),
-
-                Forms\Components\TextInput::make('number')
-                            ->label('Point Number')
+                        Forms\Components\TextInput::make('number')
+                            ->label('رقم الدور - يرجي الالتزام بالترتيب وايضا الصيغه مثل: 01 - 02 - 03')
                             ->numeric()
                             ->required(),
+
+                        Forms\Components\TextInput::make('title')
+                            ->label('عنوان الدور أو المهمه او الرؤيه او الرساله')
+                            ->required(),
+
+                        Forms\Components\TextInput::make('subtitle')
+                            ->label('عنوان صغير عن معني الدور - الرساله - الرؤيه')
+                            ->required(),
+
+                        Forms\Components\Textarea::make('description')
+                            ->label('وصف مفصل عن الدور - الرؤيه - الرساله'),
+
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('title2')
-                    ->label('Secondary Title')
+                    ->label('العنوان الثاني في قسم مهام ميم ')
                     ->columnSpanFull(),
 
                 Forms\Components\Textarea::make('description2')
-                    ->label('Secondary Description')
+                    ->label('وصف بسيط للعنوان الثاني في قسم مهام ميم')
                     ->columnSpanFull(),
-
-
             ]);
     }
 
@@ -78,23 +82,15 @@ class MissionSectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('main_title')
-                    ->label('Main Title')
-                    ->searchable(),
-
-                Tables\Columns\TextColumn::make('title2')
-                    ->label('Secondary Title')
+                    ->label('العنوان')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Description')
-                    ->limit(50),
-
-                Tables\Columns\TextColumn::make('description2')
-                    ->label('Secondary Description')
+                    ->label('الوصف')
                     ->limit(50),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label('تاريخ الانشاء')
                     ->dateTime(),
             ])
             ->actions([

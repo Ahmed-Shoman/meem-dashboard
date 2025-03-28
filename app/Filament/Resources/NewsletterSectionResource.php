@@ -14,7 +14,12 @@ class NewsletterSectionResource extends Resource
 {
     protected static ?string $model = NewsletterSection::class;
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
-     protected static ?string $navigationGroup = 'About us Page Sections';
+    protected static ?string $navigationGroup = 'أقسام صفحة من نحن';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'اشتراك النشرة';
+    }
 
 
     public static function form(Form $form): Form
@@ -22,22 +27,22 @@ class NewsletterSectionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('main_title')
-                    ->label('Main Title')
+                    ->label('عنوان قسم الاشتراك في النشرة البريدية')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\Textarea::make('description')
-                    ->label('Description')
+                    ->label('وصف بسيط عن قسم الاشتراك في النشرة البريدية')
                     ->columnSpanFull(),
 
                 Forms\Components\FileUpload::make('image')
-                    ->label('Image')
+                    ->label('صورة معبره عن دور القسم وهويته')
                     ->image()
                     ->columnSpanFull()
-                ->maxSize(20971520),
+                    ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('cta_button_text')
-                    ->label('CTA Button Text')
+                    ->label('نص الزر في قسم الاشتراك في النشرة البريدية - مثل: اشترك الأن')
                     ->columnSpanFull(),
             ]);
     }
@@ -47,18 +52,15 @@ class NewsletterSectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('main_title')
-                    ->label('Main Title')
+                    ->label('عنوان القسم')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Description')
+                    ->label('وصف القسم')
                     ->limit(50),
 
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Image'),
-
                 Tables\Columns\TextColumn::make('cta_button_text')
-                    ->label('CTA Button Text'),
+                    ->label('نص الزر'),
             ])
             ->filters([])
             ->actions([

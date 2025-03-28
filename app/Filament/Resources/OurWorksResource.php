@@ -16,75 +16,59 @@ class OurWorksResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
+    public static function getNavigationLabel(): string
+    {
+        return 'أعمالنا';
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\Section::make('Main Section')
+            Forms\Components\Section::make('قسم أعمالنا والاقسام التي تليه')
                 ->schema([
                     Forms\Components\TextInput::make('main_title')
-                        ->label('Main Title')
+                        ->label('عنوان قسم أعمالنا')
                         ->required(),
 
                     Forms\Components\TextInput::make('subtitle')
-                        ->label('Subtitle'),
+                        ->label('وصف بسيط عن قسم أعمالنا'),
 
-                         Forms\Components\Repeater::make('client_logos')
-                        ->label('Clients Logos')
+                    Forms\Components\Repeater::make('client_logos')
+                        ->label('شعارات الشركات او الداعمين ')
                         ->schema([
                             Forms\Components\FileUpload::make('logo')
-                                ->label('Logo')
+                                ->label('الشعار')
                                 ->image()
                                 ->required()
                                 ->maxSize(20971520),
-
-
-
-
                         ])
                         ->collapsible()
                         ->columnSpanFull(),
 
 
-                         Forms\Components\Textarea::make('description_text')
-                        ->label('Description'),
-
-                    Forms\Components\TextInput::make('banner_text')
-                        ->label('Banner Text'),
+                    Forms\Components\Textarea::make('description_text')
+                        ->label('جملة معبرة عن أرقام ونجاحات ميم'),
 
                     Forms\Components\TextInput::make('listeners_stat')
-                        ->label('Listeners Stat'),
+                        ->label('عنوان احصائيات عدد المستعمين'),
 
                     Forms\Components\TextInput::make('listeners_stat_description')
-                        ->label('Listeners Sub Stat'),
+                        ->label('وصف بسيط عن النجاح في زيادة أعداد المستعمين'),
 
                     Forms\Components\TextInput::make('episodes_stat')
-                        ->label('Episodes Stat'),
+                        ->label('عنوان عن احصائيات اعداد الحلقات'),
 
                     Forms\Components\TextInput::make('episodes_stat_description')
-                        ->label('Episodes Sub Stat'),
+                        ->label('وصف بسيط معبر عن النجاح في زيادة أعداد وتنوع الحلقات'),
 
                     Forms\Components\TextInput::make('programs_stat')
-                        ->label('Programs Stat'),
+                        ->label('عنوان عن احصائيات انواع البرامج'),
 
                     Forms\Components\TextInput::make('programs_stat_description')
-                        ->label('Programs Sub Stat'),
+                        ->label('وصف بسيط ومعبر عن النجاحات في البرامج والتعاقد مع مقدميمن متميزين'),
 
-                    // Forms\Components\Repeater::make('program_list')
-                    //     ->label('Programs List')
-                    //     ->schema([
-                    //         Forms\Components\FileUpload::make('image')
-                    //             ->label('Program Image')
-                    //             ->image()
-                    //             ->maxSize(20971520),
-
-                    //         Forms\Components\Textarea::make('description')
-                    //             ->label('Program Description'),
-
-                    //         Forms\Components\TextInput::make('episode_duration')
-                    //             ->label('Episode Duration'),
-                    //     ])
-                    //     ->collapsible()
-                    //     ->columnSpanFull(),
+                    Forms\Components\TextInput::make('banner_text')
+                        ->label('جملة قوية قبل قسم الحلقات لتجذب انتباه الزوار'),
                 ])
         ]);
     }
@@ -94,17 +78,12 @@ class OurWorksResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('main_title')->label('Main Title')->searchable(),
-                Tables\Columns\TextColumn::make('subtitle')->label('Subtitle')->searchable(),
-                Tables\Columns\TextColumn::make('description_text')->label('Description')->limit(50)->searchable(),
-                Tables\Columns\TextColumn::make('listeners_stat')->label('Listeners Stat'),
-                Tables\Columns\TextColumn::make('listeners_stat_description')->label('Listeners Sub Stat'),
-                Tables\Columns\TextColumn::make('episodes_stat')->label('Episodes Stat'),
-                Tables\Columns\TextColumn::make('episodes_stat_description')->label('Episodes Sub Stat'),
-                Tables\Columns\TextColumn::make('programs_stat')->label('Programs Stat'),
-                Tables\Columns\TextColumn::make('programs_stat_description')->label('Programs Sub Stat'),
-                Tables\Columns\TextColumn::make('banner_text')->label('Banner Text'),
-                Tables\Columns\TextColumn::make('created_at')->label('Created At')->dateTime()->sortable(),
+                Tables\Columns\TextColumn::make('main_title')->label('العنوان الاساسي للقسم')->searchable(),
+                Tables\Columns\TextColumn::make('listeners_stat')->label('نجاحات المستمعين'),
+                Tables\Columns\TextColumn::make('episodes_stat')->label('نجاحات الحلقات'),
+                Tables\Columns\TextColumn::make('programs_stat')->label('نجاحات البرامج'),
+                Tables\Columns\TextColumn::make('banner_text')->label('جملة قبل قسم الحلقات'),
+                Tables\Columns\TextColumn::make('created_at')->label('تاريخ الاضافة')->dateTime()->sortable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

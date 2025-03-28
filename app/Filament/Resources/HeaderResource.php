@@ -19,15 +19,20 @@ class HeaderResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-numbered-list';
     protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
+    public static function getNavigationLabel(): string
+    {
+        return 'قسم شعار الموقع';
+    }
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Header Settings')
+                Forms\Components\Section::make('اضافة شعار القناة')
                     ->schema([
                         Forms\Components\FileUpload::make('logo')
-                            ->label('Logo')
+                            ->label('ارفاق صورة الشعار لقناة ميم')
                             ->image()
                             ->directory('uploads/logos')
                             ->preserveFilenames()
@@ -59,7 +64,7 @@ class HeaderResource extends Resource
 
 
                     ])
-                    ->columns(1), // يجعل كل العناصر تحت بعضها مباشرة
+                    ->columns(1), // يجعل كل العناصر تحت بعضها مبا
             ]);
     }
 
@@ -69,7 +74,7 @@ class HeaderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
-                    ->label('Logo'),
+                    ->label('الشعار'),
 
                 // Tables\Columns\TextColumn::make('cta_text')
                 //     ->label('CTA Button Text'),

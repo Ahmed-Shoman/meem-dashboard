@@ -16,33 +16,38 @@ class StudioBookingResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-bookmark';
     protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
+    public static function getNavigationLabel(): string
+    {
+        return 'قسم حجز الاستوديو';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Studio Booking Info')
+                Forms\Components\Section::make('اضافة تفاصيل ومعلومات حجز الاستوديو')
                     ->schema([
                         Forms\Components\TextInput::make('title')
-                            ->label('Title')
+                            ->label('عنوان قسم حجز الاستوديو')
                             ->required(),
 
                         Forms\Components\FileUpload::make('image')
-                            ->label('Image')
+                            ->label('صورة قسم حجز الاستوديو')
                             ->image()
                             ->required()
                             ->maxSize(20971520),
 
                         Forms\Components\Textarea::make('description1')
-                            ->label('Description 1'),
+                            ->label('وصف بسيط للتحفيز علي حجز استوديو ميم'),
 
                         Forms\Components\Textarea::make('description2')
-                            ->label('Description 2'),
+                            ->label('وصف بسيط ثاني للتحفيز علي حجز استوديو ميم'),
 
                         Forms\Components\Repeater::make('studio_images')
-                            ->label('Studio Images')
+                            ->label('صور من الاستوديو الخاص بنا')
                             ->schema([
                                 Forms\Components\FileUpload::make('image')
-                                    ->label('Image')
+                                    ->label('ارفاق الصورة')
                                     ->image()
                                     ->required(),
                             ])
@@ -50,17 +55,17 @@ class StudioBookingResource extends Resource
                             ->columnSpanFull(),
 
                         Forms\Components\Repeater::make('equipment_list')
-                            ->label('Equipment List')
+                            ->label('مزايا حجز استوديو ميم')
                             ->schema([
                                 Forms\Components\TextInput::make('equipment_name')
-                                    ->label('Equipment Name')
+                                    ->label('اكتب الميزة')
                                     ->required(),
                             ])
                             ->collapsible()
                             ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('cta_button_text')
-                            ->label('CTA Button Text'),
+                            ->label('نص زر حجز الاستوديو - مثل: احجز الان'),
                     ])
                     ->columns(1)
                     ->collapsible(),
@@ -72,11 +77,11 @@ class StudioBookingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Title')
+                    ->label('العنوان')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('cta_button_text')
-                    ->label('CTA Button'),
+                    ->label('نص الزر قسم حجز الاستوديو'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -14,31 +14,36 @@ class CustomerReviewResource extends Resource
 {
     protected static ?string $model = CustomerReview::class;
     protected static ?string $navigationIcon = 'heroicon-o-numbered-list';
-    protected static ?string $navigationGroup = 'Services Section';
+    protected static ?string $navigationGroup = 'أقسام صفحة خدماتنا';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'اضافة أراء العملاء';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->label('اسم العميل')
+                    ->required(),
+
                 Forms\Components\Textarea::make('opinion')
-                    ->label('Customer Opinion')
+                    ->label('رأي العميل')
                     ->required()
                     ->columnSpanFull(),
 
-                Forms\Components\TextInput::make('name')
-                    ->label('Customer Name')
-                    ->required(),
-
                 Forms\Components\TextInput::make('role')
-                    ->label('Customer Role')
+                    ->label('وظيفة العميل')
                     ->nullable(),
 
                 Forms\Components\FileUpload::make('avatar')
-                    ->label('Customer Avatar')
+                    ->label('الصورة الشخصية للعميل أو شعار جهة العمل')
                     ->directory('uploads/avatars')
                     ->image()
                     ->nullable()
-                ->maxSize(20971520),
+                    ->maxSize(20971520),
             ]);
     }
 
@@ -46,19 +51,17 @@ class CustomerReviewResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('avatar')
-                    ->label('Avatar'),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Customer Name')
+                    ->label('الاسم')
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('role')
-                    ->label('Role'),
+                    ->label('الوظيفة'),
 
                 Tables\Columns\TextColumn::make('opinion')
-                    ->label('Opinion')
+                    ->label('الرأي')
                     ->limit(100),
             ])
             ->actions([

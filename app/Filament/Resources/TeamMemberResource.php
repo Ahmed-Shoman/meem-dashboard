@@ -18,29 +18,34 @@ class TeamMemberResource extends Resource
 {
     protected static ?string $model = TeamMember::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-circle';
-    protected static ?string $navigationGroup = 'About us Page Sections';
+    protected static ?string $navigationGroup = 'أقسام صفحة من نحن';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'أعضاء فريق ميم';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Full Name')
+                    ->label('اسم عضو الفريق')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('position')
-                    ->label('Position')
+                    ->label('دور - وظيفته في الفريق')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\FileUpload::make('image')
-                    ->label('Profile Image')
+                    ->label('الصورة الشخصيه لعضو الفريق')
                     ->image()
                     ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('linkedin')
-                    ->label('LinkedIn Profile')
+                    ->label('رابط لينكدان لعضو الفريق')
                     ->url()
                     ->nullable(),
             ]);
@@ -50,19 +55,17 @@ class TeamMemberResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Profile Image'),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Full Name')
+                    ->label('الاسم')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('position')
-                    ->label('Position')
+                    ->label('الوظيفه')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('linkedin')
-                    ->label('LinkedIn')
+                    ->label('رابط لينكدان')
 
             ])
             ->filters([])

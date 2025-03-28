@@ -17,44 +17,40 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
+    public static function getNavigationLabel(): string
+    {
+        return 'اضافة الخدمات';
+    }
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                // Forms\Components\TextInput::make('title')
-                //     ->label('Service Title')
-                //     ->required(),
+                Forms\Components\TextInput::make('service_name')
+                    ->label('عنوان الخدمة')
+                    ->required()
+                    ->columnSpanFull(),
+
                 Forms\Components\Textarea::make('description')
-                    ->label('Service Description'),
-
-                    //  Forms\Components\TextInput::make('button_title')
-                    // ->label('Button Text')
-                    // ->required(),
-
-                     Forms\Components\TextInput::make('service_name')
-                    ->label('Service Name')
-                    ->required(),
-
-            ]);
+                    ->label('وصف قوي ومناسب للخدمة المقدمة')
+                    ->columnSpanFull(),
+            ])
+            ->columns(1);
     }
+
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
-                    ->label('Title')
+                Tables\Columns\TextColumn::make('service_name')
+                    ->label('اسم الخدمة')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Description')
+                    ->label('الوصف')
                     ->limit(50),
-                     Tables\Columns\TextColumn::make('service_name')
-                    ->label('Service Name')
-                    ->searchable(),
-                     Tables\Columns\TextColumn::make('button_title')
-                    ->label('Button Title')
-                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

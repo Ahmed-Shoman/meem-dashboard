@@ -14,33 +14,38 @@ class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
-    protected static ?string $navigationGroup = 'Meem Articles Section';
+    protected static ?string $navigationGroup = 'أقسام صفحة الأخبار';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'اضافة الاخبار';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('News Info')
+                Forms\Components\Section::make('اضافة أخبار وقصص نجاح قناة ميم')
                     ->schema([
                         Forms\Components\TextInput::make('main_title')
-                            ->label('Main Title')
+                            ->label('عنوان الخبر')
                             ->required()
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('subtitle')
-                            ->label('Subtitle')
+                            ->label('وصف بسيط عن الخبر')
                             ->maxLength(255),
 
                         Forms\Components\Textarea::make('description')
-                            ->label('Description')
+                            ->label('وصف مفصل وشامل كل شي عن الخبر أو قصه النجاح')
                             ->rows(5),
 
                         Forms\Components\DatePicker::make('date')
-                            ->label('News Date')
+                            ->label('تاريخ اضافة الخبر')
                             ->required(),
 
                         Forms\Components\FileUpload::make('image')
-                            ->label('News Image')
+                            ->label('صورة الغلاف الخارجي للخبر')
                             ->directory('uploads/news')
                             ->image()
                             ->preserveFilenames()
@@ -48,13 +53,13 @@ class NewsResource extends Resource
                             ->required()
                             ->maxSize(20971520),
 
-                            Forms\Components\Select::make('category')
-    ->label('Category')
-    ->options([
-        'news' => 'News',
-        'originals' => 'Originals',
-    ])
-    ->nullable(),
+                        Forms\Components\Select::make('category')
+                            ->label('نوع الخبر يمكنك الاختيار بين: ')
+                            ->options([
+                                'news' => 'خبر',
+                                'originals' => 'قصة نجاح',
+                            ])
+                            ->nullable(),
 
                     ])
                     ->columns(1)
@@ -83,10 +88,10 @@ class NewsResource extends Resource
                     ->date()
                     ->sortable(),
 
-                    Tables\Columns\TextColumn::make('category')
-    ->label('Category')
-    ->searchable()
-    ->sortable(),
+                Tables\Columns\TextColumn::make('category')
+                    ->label('Category')
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created At')

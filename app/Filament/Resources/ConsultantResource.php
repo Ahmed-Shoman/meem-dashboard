@@ -14,7 +14,12 @@ class ConsultantResource extends Resource
 {
     protected static ?string $model = Consultant::class;
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
-       protected static ?string $navigationGroup = 'About us Page Sections';
+    protected static ?string $navigationGroup = 'أقسام صفحة من نحن';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'اضافة المستشارين';
+    }
 
 
     public static function form(Form $form): Form
@@ -22,21 +27,21 @@ class ConsultantResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Full Name')
+                    ->label('اسم الاستشاري')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\Textarea::make('bio')
-                    ->label('Bio')
+                    ->label('نبذه بسيطه عن الاستشاري')
                     ->columnSpanFull(),
 
                 Forms\Components\FileUpload::make('image')
-                    ->label('Profile Image')
+                    ->label('الصورة الشخصيه للاستشاري')
                     ->image()
-                ->maxSize(20971520),
+                    ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('linkedin')
-                    ->label('LinkedIn Profile')
+                    ->label('رابط صفحة لينكدان الخاصة بالاستشاري')
                     ->url()
                     ->nullable(),
             ]);
@@ -46,19 +51,16 @@ class ConsultantResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Profile Image'),
-
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Full Name')
+                    ->label('الاسم')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('bio')
-                    ->label('Bio')
+                    ->label('نبذه تعريفيه')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('linkedin')
-                    ->label('LinkedIn')
+                    ->label('رابط لينكدان')
 
             ])
             ->filters([])

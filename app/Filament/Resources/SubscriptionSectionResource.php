@@ -17,6 +17,11 @@ class SubscriptionSectionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-bell';
     protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
+    public static function getNavigationLabel(): string
+    {
+        return 'قسم خطط الاشتراك';
+    }
+
 
 
 
@@ -26,37 +31,33 @@ class SubscriptionSectionResource extends Resource
             ->schema([
                 // Main Title
                 Forms\Components\TextInput::make('main_title')
-                    ->label('Main Title')
+                    ->label('عنوان قسم الاشتراكات والخطط')
                     ->required()
                     ->columnSpanFull(),
 
                 // Plans (Repeater)
                 Forms\Components\Repeater::make('plan_details')
-                    ->label('Subscription Plans')
+                    ->label('خطة الاشتراك معنا')
                     ->schema([
                         Forms\Components\TextInput::make('plan_name')
-                            ->label('Plan Name')
+                            ->label('اسم الخطة')
                             ->required(),
 
                         Forms\Components\Textarea::make('plan_description')
-                            ->label('Plan Description'),
+                            ->label('وصف بسيط عن الخطة'),
 
                         Forms\Components\TextInput::make('plan_price')
-                            ->label('Plan Price')
+                            ->label('سعر الاشتراك في الخطة')
                             ->required(),
 
-                          Forms\Components\Repeater::make('feature_list')
-                    ->label('Features List')
-                    ->schema([
-                        Forms\Components\Textarea::make('feature_list')
-                            ->label('Features List')
-
-
-                    ])
-                    ->collapsible()
-                    ->columnSpanFull(),
-
-
+                        Forms\Components\Repeater::make('feature_list')
+                            ->label('مزايا التي سيحصل عليها المستخد عند الاشتراك في الخطه')
+                            ->schema([
+                                Forms\Components\Textarea::make('feature_list')
+                                    ->label('الميزة: ')
+                            ])
+                            ->collapsible()
+                            ->columnSpanFull(),
 
                     ])
                     ->columnSpanFull(),
@@ -69,44 +70,44 @@ class SubscriptionSectionResource extends Resource
 
                 // FAQs Section (Repeater)
                 Forms\Components\Repeater::make('faqs')
-                    ->label('FAQs')
+                    ->label('الاسئلة المتكررة')
                     ->schema([
                         Forms\Components\TextInput::make('question')
-                            ->label('Question')
+                            ->label('السؤال')
                             ->required(),
 
                         Forms\Components\Textarea::make('answer')
-                            ->label('Answer')
+                            ->label('الاجابة')
                             ->required(),
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
 
                 // Listen Now Section
-                Forms\Components\Section::make('Listen Now Section')
+                Forms\Components\Section::make('قسم استمع اليناالان')
                     ->schema([
                         Forms\Components\TextInput::make('listen_now_title')
-                            ->label('Listen Now Title')
+                            ->label('عنوان قسم استمع الينا الان')
                             ->columnSpanFull(),
 
                         Forms\Components\Textarea::make('listen_now_text')
-                            ->label('Listen Now Description')
+                            ->label('وصف بسيط عن قسم استمع الينا الان')
                             ->columnSpanFull(),
 
                         Forms\Components\FileUpload::make('listen_now_image')
-                            ->label('Listen Now Image')
+                            ->label('صورة القسم - استمع الينا الان')
                             ->image()
-                    ->maxSize(20971520),
+                            ->maxSize(20971520),
 
                         Forms\Components\Repeater::make('platform_links')
-                            ->label('Platform Links')
+                            ->label('روابط المنصات التابعه لنا')
                             ->schema([
                                 Forms\Components\TextInput::make('platform_name')
-                                    ->label('Platform Name')
+                                    ->label('اسم المنصه')
                                     ->required(),
 
                                 Forms\Components\TextInput::make('platform_url')
-                                    ->label('Platform URL')
+                                    ->label('رابط البروفايل الخاص بنا علي المنصه')
                                     ->url()
                                     ->required(),
                             ])
@@ -121,34 +122,23 @@ class SubscriptionSectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('main_title')
-                    ->label('Main Title')
+                    ->label('عنوان قسم الاشتراكات')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('plan_name')
-                    ->label('Plan Name')
+                    ->label('اسم الخطة')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('plan_price')
-                    ->label(' Plan Price')
+                    ->label(' سعر الخطة')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('plan_description')
-                    ->label(' plan description')
+                    ->label(' وصف الخطة')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('plan_details')
-                    ->label(' plan details')
-                    ->searchable(),
-
-
-                Tables\Columns\TextColumn::make('listen_now_title')
-                    ->label('Listen Now Title')
-                    ->searchable(),
-
-                Tables\Columns\ImageColumn::make('listen_now_image')
-                    ->label('Listen Now Image'),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label('تاريخ الاضافة')
                     ->dateTime()
                     ->sortable(),
             ])
@@ -159,9 +149,6 @@ class SubscriptionSectionResource extends Resource
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-
-
-
     }
 
     public static function getPages(): array

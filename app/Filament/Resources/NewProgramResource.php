@@ -15,51 +15,57 @@ class NewProgramResource extends Resource
 {
     protected static ?string $model = NewProgram::class;
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationGroup = 'Meems Programs Section';
+    protected static ?string $navigationGroup = 'برامج ميم';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'اضافة البرامج';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
-                    ->label('Program Title')
+                    ->label('اسم وعنوان البرنامج')
                     ->required()
                     ->columnSpanFull(),
 
+                Forms\Components\TextInput::make('producer')
+                    ->label('اسم المقدمه / المقدمة للبرنامج')
+                    ->required(),
+
+
+                Forms\Components\Textarea::make('description')
+                    ->label('وصف مفصل عن البرنامج وما يقدمه')
+                    ->columnSpanFull(),
+
+
+                Forms\Components\FileUpload::make('image')
+                    ->label('ارفاق صورة الغلاف الخارجي للبرنامج')
+                    ->image()
+                    ->required()
+                    ->maxSize(20971520),
+
                 // ✅ Repeater for Category (Stored as JSON)
                 Forms\Components\Repeater::make('category')
-                    ->label('Categories')
+                    ->label('نوع البرنامج')
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label('Category Name')
+                            ->label('أكتب النوع المناسب للبرنامج')
                             ->required(),
                     ])
                     ->collapsible()
                     ->columnSpanFull(),
 
-                Forms\Components\FileUpload::make('image')
-                    ->label('Program Image')
-                    ->image()
-                    ->required()
-                ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('seasons')
-                    ->label('Number of Seasons')
-                    ->numeric()
-                    ->default(1),
+                    ->label('عدد مواسم البرنامج')
+                    ->numeric(),
 
-                Forms\Components\TextInput::make('episodes')
-                    ->label('Number of Episodes')
-                    ->numeric()
-                    ->default(1),
-
-                Forms\Components\TextInput::make('producer')
-                    ->label('Producer Name')
-                    ->required(),
-
-                Forms\Components\Textarea::make('description')
-                    ->label('Program Description')
-                    ->columnSpanFull(),
+                Forms\Components\TextInput::make(name: 'episodes')
+                    ->label('عدد حلقات البرنامج')
+                    ->numeric(),
             ]);
     }
 
@@ -68,30 +74,27 @@ class NewProgramResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Program Title')
+                    ->label('اسم البرنامج')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('category')
-                    ->label('Categories')
+                    ->label('النوع')
                     ->limit(50),
 
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Program Image'),
-
                 Tables\Columns\TextColumn::make('seasons')
-                    ->label('Seasons')
+                    ->label('عدد المواسم')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('episodes')
-                    ->label('Episodes')
+                    ->label('عدد الحلقات')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('producer')
-                    ->label('Producer')
+                    ->label('اسم المقدمه / المقدمه')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label('تاريخ الاضافة')
                     ->dateTime()
                     ->sortable(),
             ])
