@@ -15,11 +15,9 @@ class Program extends Model
         'seasons',
         'episodes',
         'program_name',
-        'audio_time',
         'is_active',
         'program_description',
-        'audio'
-       ];
+    ];
 
     public function episodes()
     {

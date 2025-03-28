@@ -44,7 +44,7 @@ class ProgramResource extends Resource
                             ->directory('uploads/logos')
                             ->image()
                             ->required()
-                            ->maxSize(20971520), // 20MB limit, consistent with OurWorksResource
+                            ->maxSize(20971520),
 
                         Forms\Components\TextInput::make('seasons')
                             ->label('عدد مواسم البرنامج')
@@ -54,27 +54,6 @@ class ProgramResource extends Resource
                         Forms\Components\TextInput::make('episodes')
                             ->label('عدد حلقات البرنامج')
                             ->numeric()
-                            ->required(),
-
-                        Forms\Components\FileUpload::make('audio')
-                            ->label('ارفاق الملف الصوتي المشوق للبرنامج - اعلان البرنامج')
-                            ->directory('uploads/audio')
-                            ->acceptedFileTypes([
-                                // Audio formats
-                                'audio/mpeg',
-                                'audio/wav',
-                                'audio/ogg',
-                                'audio/aac',
-                                'audio/flac',
-                                'audio/x-ms-wma',
-                                'audio/x-wav',
-                                'audio/webm',
-                            ])
-                            ->nullable() // Kept nullable, removed conflicting required()
-                            ->maxSize(20971520),
-
-                        Forms\Components\TextInput::make('audio_time')
-                            ->label('مدة زمن الملف الصوتي للاعلان عن البرنامج')
                             ->required(),
 
                         Forms\Components\Toggle::make('is_active')
@@ -104,12 +83,9 @@ class ProgramResource extends Resource
                 Tables\Columns\TextColumn::make('episodes')
                     ->label('عدد الحلقات'),
 
-                Tables\Columns\TextColumn::make('audio_time')
-                    ->label('مدة الحلقه التعريفية'),
-
                 Tables\Columns\TextColumn::make('program_description')
                     ->label('وصف البرنامج')
-                    ->limit(50) // Added limit like OurWorksResource
+                    ->limit(50)
                     ->searchable(),
 
                 Tables\Columns\IconColumn::make('is_active')
@@ -119,7 +95,7 @@ class ProgramResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('تاريخ الاضافة')
                     ->dateTime()
-                    ->sortable(), // Added like OurWorksResource
+                    ->sortable(),
             ])
             ->filters([])
             ->actions([
