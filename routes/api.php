@@ -206,3 +206,19 @@ Route::get('/facebook-highlight', [FacebookHighlightSectionController::class, 'i
 use App\Http\Controllers\API\OnTheFlyController;
 
 Route::apiResource('on-the-fly', OnTheFlyController::class);
+
+
+use App\Http\Controllers\Api\AudiobookEpisodeController;
+
+Route::get('audiobook-episodes', [AudiobookEpisodeController::class, 'index']);
+Route::post('audiobook-episodes', [AudiobookEpisodeController::class, 'store']);
+Route::put('audiobook-episodes/{id}', [AudiobookEpisodeController::class, 'update']);
+Route::delete('audiobook-episodes/{id}', [AudiobookEpisodeController::class, 'destroy']);
+
+
+use App\Http\Controllers\Api\AudiobookController;
+
+Route::get('audiobooks', [AudiobookController::class, 'index']); // عرض جميع الكتب الصوتية
+Route::post('audiobooks', [AudiobookController::class, 'store']); // إضافة كتاب صوتي
+Route::put('audiobooks/{id}', [AudiobookController::class, 'update']); // تحديث كتاب صوتي
+Route::delete('audiobooks/{id}', [AudiobookController::class, 'destroy']); // حذف كتاب صوتي
