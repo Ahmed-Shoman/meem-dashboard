@@ -208,7 +208,7 @@ use App\Http\Controllers\API\OnTheFlyController;
 Route::apiResource('on-the-fly', OnTheFlyController::class);
 
 
-use App\Http\Controllers\Api\AudiobookEpisodeController;
+use App\Http\Controllers\API\AudiobookEpisodeController;
 
 Route::get('audiobook-episodes', [AudiobookEpisodeController::class, 'index']);
 Route::post('audiobook-episodes', [AudiobookEpisodeController::class, 'store']);
