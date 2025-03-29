@@ -16,6 +16,7 @@ class OnTheFlyController extends Controller
     {
         return response()->json(OnTheFly::all(), Response::HTTP_OK);
     }
+    
 
     /**
      * Store a newly created resource in storage.
