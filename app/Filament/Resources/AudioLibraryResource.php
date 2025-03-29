@@ -29,7 +29,14 @@ class AudioLibraryResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('program_id')
                             ->label('اختار البرنامج الذي تتبع له الحلقه')
-                            ->relationship('program', 'program_name')
+                            ->options(function () {
+                                $programs = \App\Models\Program::pluck('program_name', 'id')->toArray();
+                                $onTheFly = \App\Models\OnTheFly::pluck('program_name', 'id')->toArray();
+
+                                // Convert to new unique keys
+                                $onTheFly = collect($onTheFly)->mapWithKeys(fn($name, $id) => ['OTF-' . $id => $name])->toArray();
+                                return $programs + $onTheFly;
+                            })
                             ->required()
                             ->searchable()
                             ->preload(),

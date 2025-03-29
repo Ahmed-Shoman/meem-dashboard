@@ -199,3 +199,10 @@ Route::get('/meem-originals', [MeemOriginalController::class, 'index']);
 use App\Http\Controllers\API\FacebookHighlightSectionController;
 
 Route::get('/facebook-highlight', [FacebookHighlightSectionController::class, 'index']);
+
+
+// on the fly programs عالطاير
+
+use App\Http\Controllers\Api\OnTheFlyController;
+
+Route::apiResource('on-the-fly', OnTheFlyController::class);
