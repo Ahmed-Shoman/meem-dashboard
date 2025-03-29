@@ -14,6 +14,13 @@ class AudiobookEpisodeResource extends Resource
 
     protected static ?string $navigationLabel = 'الحلقات الصوتية';
 
+    protected static ?string $navigationGroup = 'برامج ميم';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'الحلقات الصوتيه';
+    }
+
     protected static ?string $navigationIcon = 'heroicon-o-play-circle';
 
     public static function form(Forms\Form $form): Forms\Form

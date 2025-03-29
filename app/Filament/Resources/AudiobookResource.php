@@ -13,7 +13,12 @@ class AudiobookResource extends Resource
 {
     protected static ?string $model = Audiobook::class;
 
-    protected static ?string $navigationLabel = 'الكتب الصوتية';
+    protected static ?string $navigationGroup = 'برامج ميم';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'الكتب الصوتية';
+    }
 
     protected static ?string $navigationIcon = 'heroicon-o-bookmark';
 

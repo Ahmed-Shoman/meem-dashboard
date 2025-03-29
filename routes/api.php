@@ -216,7 +216,7 @@ Route::put('audiobook-episodes/{id}', [AudiobookEpisodeController::class, 'updat
 Route::delete('audiobook-episodes/{id}', [AudiobookEpisodeController::class, 'destroy']);
 
 
-use App\Http\Controllers\Api\AudiobookController;
+use App\Http\Controllers\API\AudiobookController;
 
 Route::get('audiobooks', [AudiobookController::class, 'index']); // عرض جميع الكتب الصوتية
 Route::post('audiobooks', [AudiobookController::class, 'store']); // إضافة كتاب صوتي
