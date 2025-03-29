@@ -14,53 +14,84 @@ class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
-    protected static ?string $navigationGroup = 'أقسام صفحة الأخبار';
+    protected static ?string $navigationGroup = 'أقسام صفحة الجريدة';
 
     public static function getNavigationLabel(): string
     {
-        return 'اضافة الاخبار';
+        return 'اضافة المقالات';
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('اضافة أخبار وقصص نجاح قناة ميم')
+                Forms\Components\Section::make('اضافة مقالة جديدة')
                     ->schema([
-                        Forms\Components\TextInput::make('main_title')
-                            ->label('عنوان الخبر')
+                        Forms\Components\TextInput::make('title')
+                            ->label('عنوان المقالة')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->nullable(),
 
-                        Forms\Components\TextInput::make('subtitle')
-                            ->label('وصف بسيط عن الخبر')
-                            ->maxLength(255),
-
-                        Forms\Components\Textarea::make('description')
-                            ->label('وصف مفصل وشامل كل شي عن الخبر أو قصه النجاح')
+                        Forms\Components\Textarea::make('content')
+                            ->label('محتوى المقالة')
+                            ->required()
                             ->rows(5),
 
                         Forms\Components\DatePicker::make('date')
-                            ->label('تاريخ اضافة الخبر')
+                            ->label('تاريخ النشر')
+                            ->nullable()
                             ->required(),
 
                         Forms\Components\FileUpload::make('image')
-                            ->label('صورة الغلاف الخارجي للخبر')
+                            ->label('صورة المقالة')
                             ->directory('uploads/news')
                             ->image()
                             ->preserveFilenames()
                             ->visibility('public')
+                            ->nullable()
                             ->required()
                             ->maxSize(20971520),
 
-                        Forms\Components\Select::make('category')
-                            ->label('نوع الخبر يمكنك الاختيار بين: ')
-                            ->options([
-                                'news' => 'خبر',
-                                'originals' => 'قصة نجاح',
-                            ])
-                            ->nullable(),
+                        Forms\Components\TextInput::make('author_name')
+                            ->label('اسم المؤلف')
+                            ->required()
+                            ->nullable()
+                            ->maxLength(255),
 
+                        Forms\Components\Textarea::make('author_bio')
+                            ->label('نبذة عن المؤلف')
+                            ->required()
+                            ->nullable()
+                            ->rows(3),
+
+                        Forms\Components\FileUpload::make('author_profile_picture')
+                            ->label('صورة المؤلف')
+                            ->directory('uploads/authors')
+                            ->image()
+                            ->required()
+                            ->preserveFilenames()
+                            ->visibility('public')
+                            ->nullable()
+                            ->maxSize(20971520),
+
+                        Forms\Components\TextInput::make('author_instagram')
+                            ->label('رابط Instagram')
+                            ->nullable()
+                            ->url()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('author_snapchat')
+                            ->label('رابط Snapchat')
+                            ->nullable()
+                            ->url()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('author_x_twitter')
+                            ->label('رابط X/Twitter')
+                            ->nullable()
+                            ->url()
+                            ->maxLength(255),
                     ])
                     ->columns(1)
                     ->columnSpanFull(),
@@ -72,30 +103,23 @@ class NewsResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Image'),
+                    ->label('صورة المقالة')
+                    ->sortable(),
 
-                Tables\Columns\TextColumn::make('main_title')
-                    ->label('Main Title')
+                Tables\Columns\TextColumn::make('title')
+                    ->label('عنوان المقالة')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('subtitle')
-                    ->label('Subtitle')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('author_name')
+                    ->label('اسم المؤلف')
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('date')
-                    ->label('Date')
+                    ->label('تاريخ النشر')
                     ->date()
                     ->sortable(),
-
-                Tables\Columns\TextColumn::make('category')
-                    ->label('Category')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->dateTime(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

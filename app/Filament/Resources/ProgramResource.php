@@ -52,7 +52,8 @@ class ProgramResource extends Resource
                         Forms\Components\TextInput::make('snapchat')
                             ->label('حساب سناب شات للمقدم')
                             ->placeholder('https://www.snapchat.com/add/username')
-                            ->nullable(),
+                            ->nullable()
+                            ->url(),
 
                         Forms\Components\TextInput::make('x')
                             ->label('حساب اكس - تويتر للمقدم')
