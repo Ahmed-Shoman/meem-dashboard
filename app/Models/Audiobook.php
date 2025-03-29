@@ -11,17 +11,21 @@ class Audiobook extends Model
 
     protected $fillable = [
         'presenter',
+        'presenter_image',
+        'instagram',
+        'snapchat',
+        'x',
         'image',
         'seasons',
         'episodes',
         'program_name',
-        'audio',
-        'audio_duration',
         'is_active',
         'description',
     ];
 
-    // العلاقة مع الحلقات الصوتية
+    /**
+     * Relationship: An audiobook has many episodes.
+     */
     public function episodes()
     {
         return $this->hasMany(AudiobookEpisode::class);

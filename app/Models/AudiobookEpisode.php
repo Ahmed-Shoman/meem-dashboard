@@ -11,6 +11,10 @@ class AudiobookEpisode extends Model
 
     protected $fillable = [
         'audiobook_id',
+        'episode_number',
+        'guest_name',
+        'youtube_link',
+        'apple_podcast_link',
         'cover_image',
         'audio_file',
         'audio_duration',

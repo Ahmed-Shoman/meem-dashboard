@@ -18,7 +18,7 @@ class AudioLibraryResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'اضافة الحلقات';
+        return 'اضافة حلقات البرامج';
     }
 
     public static function form(Form $form): Form
