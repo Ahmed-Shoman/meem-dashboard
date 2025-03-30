@@ -189,4 +189,11 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+
+    'providers' => [
+    // ...
+    App\Providers\FilamentServiceProvider::class,
+],
+
+
 ];

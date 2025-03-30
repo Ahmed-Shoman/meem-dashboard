@@ -5,15 +5,22 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProgramResource\Pages;
 use App\Models\Program;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class ProgramResource extends Resource
 {
     protected static ?string $model = Program::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack'; // Changed to match OurWorksResource
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
     public static function getNavigationLabel(): string
@@ -25,7 +32,7 @@ class ProgramResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('اضافة البرامج التابعة لقناة ميم') // Added section like OurWorksResource
+                Forms\Components\Section::make('اضافة البرامج التابعة لقناة ميم')
                     ->schema([
                         Forms\Components\TextInput::make('program_name')
                             ->label('اسم البرنامج')
@@ -35,7 +42,6 @@ class ProgramResource extends Resource
                             ->label('اسم المقدم / المقدمة للبرنامج')
                             ->required(),
 
-
                         Forms\Components\FileUpload::make('presenter_image')
                             ->label('صورة مقدم البرنامج')
                             ->directory('uploads/presenters')
@@ -44,7 +50,7 @@ class ProgramResource extends Resource
                             ->maxSize(20971520),
 
                         Forms\Components\TextInput::make('instagram')
-                            ->label(label: 'حساب انستجرام للمقدم')
+                            ->label('حساب انستجرام للمقدم')
                             ->placeholder('https://www.instagram.com/username')
                             ->url()
                             ->nullable(),
@@ -92,6 +98,13 @@ class ProgramResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(function () {
+                $query = Program::query();
+                if (!auth()->user()->isAdmin()) {
+                    $query->where('id', auth()->user()->program_id);
+                }
+                return $query;
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('program_name')
                     ->label('اسم البرنامج')
@@ -144,11 +157,14 @@ class ProgramResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->visible(fn ($record) => auth()->user()->isAdmin() || auth()->user()->program_id === $record->id),
+                Tables\Actions\DeleteAction::make()
+                    ->visible(fn ($record) => auth()->user()->can('delete', $record)),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(), // Added like OurWorksResource
+                Tables\Actions\DeleteBulkAction::make()
+                    ->visible(fn () => auth()->user()->isAdmin()),
             ]);
     }
 
@@ -159,5 +175,15 @@ class ProgramResource extends Resource
             'create' => Pages\CreateProgram::route('/create'),
             'edit' => Pages\EditProgram::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()->isAdmin();
+    }
+
+    public static function canViewAny(): bool
+    {
+        return true;
     }
 }

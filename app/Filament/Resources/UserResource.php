@@ -44,9 +44,19 @@ class UserResource extends Resource
                             ->password()
                             ->label('كلمة المرور')
                             ->required(fn (string $operation) => $operation === 'create')
-                            ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                            ->dehydrateStateUsing(function ($state, callable $set) {
+                                if (filled($state)) {
+                                    $set('plain_password', $state);
+                                    return bcrypt($state);
+                                }
+                                return null;
+                            })
                             ->dehydrated(fn ($state) => filled($state))
                             ->placeholder('اترك الحقل فارغًا لعدم التغيير'),
+                        TextInput::make('plain_password')
+                            ->label('كلمة المرور (نص واضح)')
+                            ->disabled()
+                            ->visibleOn('edit'),
                     ])
                     ->columns(2),
 
@@ -66,32 +76,63 @@ class UserResource extends Resource
                     ])
                     ->columns(1),
 
-                Section::make('نوع الدور')
+                Section::make('البرنامج المرتبط')
                     ->schema([
-                        TextInput::make('role_type')
-                            ->label('نوع الدور')
-                            ->required()
-                            ->default('user')
-                            ->reactive()
-                            ->afterStateUpdated(function ($state, callable $set) {
-                                $set('role', [
-                                    'type' => $state,
-                                    'permissions' => $state === 'admin' ? ['create', 'edit', 'delete'] : ['view'],
-                                ]);
-                            }),
-                        Forms\Components\Hidden::make('role')
-                            ->default(['type' => 'user', 'permissions' => ['view']]),
+                        Select::make('program_id')
+                            ->label('اختر البرنامج')
+                            ->relationship('program', 'program_name')
+                            ->options(
+                                \App\Models\Program::all()->pluck('program_name', 'id')->toArray()
+                            )
+                            ->searchable()
+                            ->nullable()
+                            ->disabled(fn () => !auth()->user()->isAdmin())
+                            ->placeholder('اختر برنامجًا من القائمة'),
                     ])
-                    ->columns(1),
+                    ->visible(fn () => auth()->user()->isAdmin()),
+
+                Section::make('حالة المشرف')
+                    ->schema([
+                        Forms\Components\Toggle::make('is_admin')
+                            ->label('مشرف؟')
+                            ->default(false)
+                            ->visible(fn () => auth()->user()->isAdmin()),
+                    ])
+                    ->visible(fn () => auth()->user()->isAdmin()),
 
                 Section::make('وسائل التواصل الاجتماعي')
                     ->schema([
                         Repeater::make('social_accounts')
-                            ->label('وسائل التواصل الاجتماعي')
+                            ->label('وسائل التواصل الاجتماعي / البودكاست')
                             ->schema([
-                                TextInput::make('platform')
+                                Select::make('platform')
                                     ->label('المنصة')
-                                    ->required(),
+                                    ->required()
+                                    ->options([
+                                        'social' => [
+                                            'facebook' => 'فيسبوك',
+                                            'twitter' => 'تويتر',
+                                            'instagram' => 'إنستاجرام',
+                                            'linkedin' => 'لينكدإن',
+                                            'youtube' => 'يوتيوب',
+                                            'tiktok' => 'تيك توك',
+                                            'snapchat' => 'سناب شات',
+                                            'whatsapp' => 'واتساب',
+                                            'telegram' => 'تليجرام',
+                                            'threads' => 'ثريدز',
+                                        ],
+                                        'podcast' => [
+                                            'spotify' => 'سبوتيفاي',
+                                            'apple_podcasts' => 'آبل بودكاست',
+                                            'google_podcasts' => 'جوجل بودكاست',
+                                            'soundcloud' => 'ساوند كلاود',
+                                            'castbox' => 'كاست بوكس',
+                                            'deezer' => 'ديزر',
+                                            'stitcher' => 'ستيتشر',
+                                            'audible' => 'أوديبل',
+                                        ],
+                                    ])
+                                    ->searchable(),
                                 TextInput::make('url')
                                     ->label('الرابط')
                                     ->url()
@@ -103,25 +144,19 @@ class UserResource extends Resource
                             ->columns(2),
                     ])
                     ->columns(1),
-
-                Section::make('البرنامج المرتبط')
-                    ->schema([
-                        Select::make('program_id')
-                            ->label('اختر البرنامج')
-                            ->relationship('program', 'program_name')
-                            ->options(
-                                \App\Models\Program::all()->pluck('program_name', 'id')->toArray()
-                            )
-                            ->searchable()
-                            ->nullable()
-                            ->placeholder('اختر برنامجًا من القائمة'),
-                    ]),
             ]);
     }
 
     public static function table(Tables\Table $table): Tables\Table
     {
         return $table
+            ->query(function () {
+                $query = User::query();
+                if (!auth()->user()->isAdmin()) {
+                    $query->where('program_id', auth()->user()->program_id);
+                }
+                return $query;
+            })
             ->columns([
                 TextColumn::make('name')
                     ->label('الاسم')
@@ -134,10 +169,6 @@ class UserResource extends Resource
                 ImageColumn::make('image')
                     ->label('الصورة')
                     ->circular(),
-                TextColumn::make('role.type')
-                    ->label('نوع الدور')
-                    ->default('غير محدد')
-                    ->sortable(),
                 TextColumn::make('program.program_name')
                     ->label('البرنامج المرتبط')
                     ->default('غير مرتبط')
@@ -148,11 +179,11 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->visible(fn ($record) => auth()->user()->can('update', $record)),
+                Tables\Actions\DeleteAction::make()->visible(fn ($record) => auth()->user()->can('delete', $record)),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()->visible(fn () => auth()->user()->isAdmin()),
             ]);
     }
 
@@ -163,5 +194,15 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()->isAdmin();
+    }
+
+    public static function canViewAny(): bool
+    {
+        return true;
     }
 }
