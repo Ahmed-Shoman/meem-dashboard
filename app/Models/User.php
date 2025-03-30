@@ -10,7 +10,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'image', 'bio', 'is_admin', 'role', 'social_media'
+        'name', 'email', 'password', 'image', 'bio', 'is_admin', 'role', 'social_media', 'program_id'
     ];
 
     protected $casts = [
@@ -22,5 +22,10 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->is_admin;
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'program_id');
     }
 }

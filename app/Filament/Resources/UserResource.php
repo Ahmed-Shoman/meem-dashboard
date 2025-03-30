@@ -9,14 +9,12 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Repeater;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Forms\Form;
 
 class UserResource extends Resource
@@ -31,7 +29,6 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                // قسم المعلومات الأساسية
                 Section::make('المعلومات الأساسية')
                     ->schema([
                         TextInput::make('name')
@@ -45,14 +42,14 @@ class UserResource extends Resource
                             ->unique(),
                         TextInput::make('password')
                             ->password()
-                            ->required(fn (string $operation) => $operation === 'create')
                             ->label('كلمة المرور')
-                            ->dehydrateStateUsing(fn ($state) => bcrypt($state))
-                            ->dehydrated(fn ($state) => filled($state)),
+                            ->required(fn (string $operation) => $operation === 'create')
+                            ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                            ->dehydrated(fn ($state) => filled($state))
+                            ->placeholder('اترك الحقل فارغًا لعدم التغيير'),
                     ])
                     ->columns(2),
 
-                // قسم المعلومات الإضافية
                 Section::make('المعلومات الإضافية')
                     ->schema([
                         FileUpload::make('image')
@@ -66,64 +63,59 @@ class UserResource extends Resource
                             ->label('السيرة الذاتية')
                             ->nullable()
                             ->rows(3),
-                        Toggle::make('is_admin')
-                            ->label('مدير؟')
-                            ->default(false),
                     ])
-                    ->columns(2),
+                    ->columns(1),
 
-                // قسم نوع الدور
                 Section::make('نوع الدور')
                     ->schema([
-                        Select::make('role_type') // حقل مؤقت لاختيار نوع الدور
+                        TextInput::make('role_type')
                             ->label('نوع الدور')
-                            ->options([
-                                'admin' => 'مدير',
-                                'user' => 'مستخدم',
-                                'editor' => 'محرر',
-                            ])
                             ->required()
                             ->default('user')
                             ->reactive()
                             ->afterStateUpdated(function ($state, callable $set) {
-                                // تحديث حقل role (JSON) بناءً على القيمة المختارة
                                 $set('role', [
                                     'type' => $state,
                                     'permissions' => $state === 'admin' ? ['create', 'edit', 'delete'] : ['view'],
                                 ]);
                             }),
-                        // حقل مخفي لتخزين role كـ JSON
                         Forms\Components\Hidden::make('role')
                             ->default(['type' => 'user', 'permissions' => ['view']]),
                     ])
-                    ->columns(2),
+                    ->columns(1),
 
-                // قسم وسائل التواصل الاجتماعي
                 Section::make('وسائل التواصل الاجتماعي')
                     ->schema([
-                        Select::make('social_media_platform')
-                            ->label('منصة التواصل الاجتماعي')
-                            ->options([
-                                'facebook' => 'فيسبوك',
-                                'twitter' => 'تويتر',
-                                'instagram' => 'إنستاجرام',
-                                'linkedin' => 'لينكدإن',
+                        Repeater::make('social_accounts')
+                            ->label('وسائل التواصل الاجتماعي')
+                            ->schema([
+                                TextInput::make('platform')
+                                    ->label('المنصة')
+                                    ->required(),
+                                TextInput::make('url')
+                                    ->label('الرابط')
+                                    ->url()
+                                    ->required()
+                                    ->placeholder('https://example.com'),
                             ])
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(function ($state, callable $set) {
-                                // إعادة تعيين الرابط عندما يتم تغيير المنصة
-                                $set('social_media_url', '');
-                            }),
-
-                        // حقل رابط المنصة
-                        TextInput::make('social_media_url')
-                            ->label('رابط المنصة')
-                            ->required()
-                            ->url()
-                            ->placeholder('https://example.com'),
+                            ->addActionLabel('إضافة منصة')
+                            ->defaultItems(1)
+                            ->columns(2),
                     ])
-                    ->columns(2),
+                    ->columns(1),
+
+                Section::make('البرنامج المرتبط')
+                    ->schema([
+                        Select::make('program_id')
+                            ->label('اختر البرنامج')
+                            ->relationship('program', 'program_name')
+                            ->options(
+                                \App\Models\Program::all()->pluck('program_name', 'id')->toArray()
+                            )
+                            ->searchable()
+                            ->nullable()
+                            ->placeholder('اختر برنامجًا من القائمة'),
+                    ]),
             ]);
     }
 
@@ -142,24 +134,15 @@ class UserResource extends Resource
                 ImageColumn::make('image')
                     ->label('الصورة')
                     ->circular(),
-                TextColumn::make('bio')
-                    ->label('السيرة الذاتية')
-                    ->limit(50)
-                    ->tooltip(fn ($record) => $record->bio),
-                // IconColumn::make('is_admin')
-                //     ->label('مدير؟')
-                //     ->boolean(),
                 TextColumn::make('role.type')
                     ->label('نوع الدور')
                     ->default('غير محدد')
                     ->sortable(),
-                TextColumn::make('social_media_platform')
-                    ->label('منصة التواصل الاجتماعي')
-                    ->sortable(),
-                TextColumn::make('social_media_url')
-                    ->label('رابط المنصة')
-                    ->url(fn ($state) => $state)  // عرض الرابط في شكل URL قابل للنقر
-                    ->openUrlInNewTab(),
+                TextColumn::make('program.program_name')
+                    ->label('البرنامج المرتبط')
+                    ->default('غير مرتبط')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
@@ -181,19 +164,4 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
-
-    // public static function getNavigationGroup(): ?string
-    // {
-    //     return 'إدارة المستخدمين';
-    // }
-
-    // public static function getNavigationLabel(): ?string
-    // {
-    //     return 'المستخدمين';
-    // }
-
-    // public static function canViewAny(): bool
-    // {
-    //     return auth()->user()->isAdmin();
-    // }
 }

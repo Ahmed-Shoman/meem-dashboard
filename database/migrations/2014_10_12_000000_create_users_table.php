@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('is_admin')->default(false);
             $table->json('role')->nullable();
             $table->json('social_media')->nullable();
+           // $table->foreignId('program_id')->nullable()->constrained('programs')->onDelete('set null');
             $table->timestamps();
         });
     }
