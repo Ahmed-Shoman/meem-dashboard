@@ -99,8 +99,6 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
-
     /*
     |--------------------------------------------------------------------------
     | Faker Locale
@@ -172,9 +170,24 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FilamentServiceProvider::class, // ✅ Add it here instead
+
     ])->toArray(),
 
     /*
+    |-------------------------------------------------------------------------- 
+    | Class Aliases
+    |-------------------------------------------------------------------------- 
+    */
+
+    'aliases' => Facade::defaultAliases()->merge([
+        // 'Example' => App\Facades\Example::class,
+    ])->toArray(),
+];
+
+
+
+/*
     |--------------------------------------------------------------------------
     | Class Aliases
     |--------------------------------------------------------------------------
@@ -184,16 +197,3 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-
-    'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
-    ])->toArray(),
-
-
-    'providers' => [
-    // ...
-    App\Providers\FilamentServiceProvider::class,
-],
-
-
-];

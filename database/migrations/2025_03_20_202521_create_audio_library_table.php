@@ -9,14 +9,18 @@ return new class extends Migration {
     {
         Schema::create('audio_library', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('program_id')->constrained('programs')->onDelete('cascade'); // إضافة العلاقة
-            $table->string('image'); // صورة الغلاف
-            $table->string('sound'); // ملف الصوت
-            $table->string('sound_time'); // مدة الصوت
-            $table->string('category'); // التصنيف
-            $table->text('description')->nullable(); // الوصف
-            $table->text('sub_description')->nullable(); // الوصف الفرعي
-            $table->boolean('is_active')->nullable()->default(true);
+            $table->foreignId('program_id')->constrained()->onDelete('cascade');
+            $table->integer('episode_number')->nullable();
+            $table->string('guest_name')->nullable();
+            $table->string('youtube_link')->nullable();
+            $table->text('apple_podcast_link')->nullable();
+            $table->string('image');
+            $table->string('sound');
+            $table->string('sound_time');
+            $table->string('category');
+            $table->text('description')->nullable();
+            $table->text('sub_description')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

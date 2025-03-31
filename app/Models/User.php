@@ -10,18 +10,18 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'image', 'bio', 'program_id', 'is_admin'
+        'name', 'email', 'password', 'image', 'bio', 'program_id', 'is_admin','plain_password'
     ];
 
     protected $casts = [
         'is_admin' => 'boolean',
     ];
 
-    // التحقق مما إذا كان المستخدم Admin
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->is_admin;
     }
+
 
     // العلاقة مع البرنامج
     public function program()

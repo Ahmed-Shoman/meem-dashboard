@@ -3,9 +3,10 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration {
-    public function up(): void
+    public function up()
     {
         Schema::create('on_the_fly', function (Blueprint $table) {
             $table->id();
@@ -22,9 +23,11 @@ return new class extends Migration {
             $table->string('x')->nullable();
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE on_the_fly AUTO_INCREMENT = 1001;");
     }
 
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('on_the_fly');
     }

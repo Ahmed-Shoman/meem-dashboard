@@ -13,12 +13,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('plain_password')->nullable();
             $table->string('image')->nullable();
             $table->text('bio')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->json('role')->nullable();
             $table->json('social_media')->nullable();
-           // $table->foreignId('program_id')->nullable()->constrained('programs')->onDelete('set null');
+            $table->foreignId('program_id')->nullable()->constrained('programs')->onDelete('set null');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

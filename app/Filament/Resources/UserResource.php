@@ -29,36 +29,21 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('المعلومات الأساسية')
-                    ->schema([
-                        TextInput::make('name')
-                            ->required()
-                            ->label('الاسم')
-                            ->maxLength(255),
-                        TextInput::make('email')
-                            ->required()
-                            ->email()
-                            ->label('الإيميل')
-                            ->unique(),
-                        TextInput::make('password')
-                            ->password()
-                            ->label('كلمة المرور')
-                            ->required(fn (string $operation) => $operation === 'create')
-                            ->dehydrateStateUsing(function ($state, callable $set) {
-                                if (filled($state)) {
-                                    $set('plain_password', $state);
-                                    return bcrypt($state);
-                                }
-                                return null;
-                            })
-                            ->dehydrated(fn ($state) => filled($state))
-                            ->placeholder('اترك الحقل فارغًا لعدم التغيير'),
-                        TextInput::make('plain_password')
-                            ->label('كلمة المرور (نص واضح)')
-                            ->disabled()
-                            ->visibleOn('edit'),
-                    ])
-                    ->columns(2),
+            Section::make('المعلومات الأساسية')
+                ->schema([
+                    TextInput::make('name')
+                        ->required()
+                        ->label('الاسم')
+                        ->maxLength(255),
+                    TextInput::make('email')
+                        ->required()
+                        ->email()
+                        ->label('الإيميل'),
+                    TextInput::make('plain_password')
+                        ->required()
+                        ->password()
+                        ->label('كلمة المرور'),
+                ]),
 
                 Section::make('المعلومات الإضافية')
                     ->schema([
@@ -81,11 +66,23 @@ class UserResource extends Resource
                         Select::make('program_id')
                             ->label('اختر البرنامج')
                             ->relationship('program', 'program_name')
-                            ->options(
-                                \App\Models\Program::all()->pluck('program_name', 'id')->toArray()
-                            )
-                            ->searchable()
+
+                        ->options(function () {
+                            $programs = \App\Models\Program::pluck('program_name', 'id')->toArray();
+                            $onTheFly = \App\Models\OnTheFly::pluck('program_name', 'id')->toArray();
+                            $articles = \App\Models\News::pluck('title', 'id')->toArray();
+                            $audioBooks = \App\Models\Audiobook::pluck('program_name', 'id')->toArray(); 
+
+                            // Convert to new unique keys
+                            $onTheFly = collect($onTheFly)->mapWithKeys(fn($name, $id) => ['OTF-' . $id => $name])->toArray();
+                            $articles = collect($articles)->mapWithKeys(fn($name, $id) => ['ART-' . $id => $name])->toArray();
+                            $audioBooks = collect($audioBooks)->mapWithKeys(fn($name, $id) => ['AUD-' . $id => $name])->toArray();
+
+                            return array_merge($programs, $onTheFly, $articles, $audioBooks);
+                        })
+
                             ->nullable()
+                            ->preload()
                             ->disabled(fn () => !auth()->user()->isAdmin())
                             ->placeholder('اختر برنامجًا من القائمة'),
                     ])
@@ -147,45 +144,47 @@ class UserResource extends Resource
             ]);
     }
 
-    public static function table(Tables\Table $table): Tables\Table
-    {
-        return $table
-            ->query(function () {
-                $query = User::query();
-                if (!auth()->user()->isAdmin()) {
-                    $query->where('program_id', auth()->user()->program_id);
-                }
-                return $query;
-            })
-            ->columns([
-                TextColumn::make('name')
-                    ->label('الاسم')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('email')
-                    ->label('الإيميل')
-                    ->searchable()
-                    ->sortable(),
-                ImageColumn::make('image')
-                    ->label('الصورة')
-                    ->circular(),
-                TextColumn::make('program.program_name')
-                    ->label('البرنامج المرتبط')
-                    ->default('غير مرتبط')
-                    ->sortable()
-                    ->searchable(),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make()->visible(fn ($record) => auth()->user()->can('update', $record)),
-                Tables\Actions\DeleteAction::make()->visible(fn ($record) => auth()->user()->can('delete', $record)),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make()->visible(fn () => auth()->user()->isAdmin()),
-            ]);
-    }
+public static function table(Tables\Table $table): Tables\Table
+{
+    return $table
+        ->query(function () {
+            $query = User::query();
+            if (!auth()->user()->isAdmin()) {
+                $query->where('program_id', auth()->user()->program_id);
+            }
+            return $query;
+        })
+        ->columns([
+            TextColumn::make('name')
+                ->label('الاسم')
+                ->searchable()
+                ->sortable(),
+            TextColumn::make('email')
+                ->label('الإيميل')
+                ->searchable()
+                ->sortable(),
+            ImageColumn::make('image')
+                ->label('الصورة')
+                ->circular(),
+            TextColumn::make('program.program_name')
+                ->label('البرنامج المرتبط')
+                ->default('غير مرتبط')
+                ->sortable()
+                ->searchable(),
+        ])
+        ->filters([
+            //
+        ])
+        ->actions([
+            Tables\Actions\ViewAction::make(),
+            Tables\Actions\EditAction::make()->visible(fn ($record) => auth()->user()->can('update', $record)),
+            Tables\Actions\DeleteAction::make()->visible(fn ($record) => auth()->user()->can('delete', $record)),
+        ])
+        ->bulkActions([
+            Tables\Actions\DeleteBulkAction::make()->visible(fn () => auth()->user()->isAdmin()),
+        ]);
+}
+
 
     public static function getPages(): array
     {

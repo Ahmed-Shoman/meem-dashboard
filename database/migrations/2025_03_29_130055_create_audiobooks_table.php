@@ -4,23 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up()
     {
-        // إنشاء جدول الكتب الصوتية
         Schema::create('audiobooks', function (Blueprint $table) {
             $table->id();
-            $table->string('presenter'); // اسم المقدم (الراوي)
-            $table->string('image')->nullable(); // صورة الكتاب الصوتي
-            $table->integer('seasons')->default(1); // عدد المواسم
-            $table->integer('episodes')->default(1); // عدد الحلقات
-            $table->string('program_name'); // اسم البرنامج الصوتي
-            $table->string('audio'); // رابط الملف الصوتي
-            $table->string('audio_duration'); // مدة الكتاب الصوتي
-            $table->boolean('is_active')->default(true); // حالة الكتاب الصوتي (نشط أو غير نشط)
-            $table->text('description')->nullable(); // وصف الكتاب الصوتي
-            $table->timestamps(); // الطوابع الزمنية
+            $table->string('presenter');
+            $table->string('presenter_image')->nullable();
+            $table->string('image')->nullable();
+            $table->integer('seasons')->default(1);
+            $table->integer('episodes')->default(1);
+            $table->string('program_name');
+            $table->boolean('is_active')->default(true);
+            $table->text('description')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('snapchat')->nullable();
+            $table->string('x')->nullable();
+            $table->timestamps();
         });
     }
 
