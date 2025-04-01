@@ -4,13 +4,13 @@
     'name' => 'Laravel',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'http://127.0.0.1:8000',
     'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'ar',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:fC4UkFgBqrxLcny9SC5cuD3YJtKDBUt2lBTsMBJtfVA=',
+    'key' => 'base64:snltjG0G5G1dGx7+IGN0vVAugDoOku8SLK4Kmp/BWJI=',
     'cipher' => 'AES-256-CBC',
     'maintenance' => 
     array (
@@ -45,6 +45,7 @@
       24 => 'App\\Providers\\EventServiceProvider',
       25 => 'App\\Providers\\Filament\\AdminPanelProvider',
       26 => 'App\\Providers\\RouteServiceProvider',
+      27 => 'App\\Providers\\FilamentServiceProvider',
     ),
     'aliases' => 
     array (
@@ -199,8 +200,8 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\framework/cache/data',
-        'lock_path' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\framework/cache/data',
+        'lock_path' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -283,7 +284,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'meem_database',
+        'database' => 'meem',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -293,7 +294,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'meem_database',
+        'database' => 'meem',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -313,7 +314,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'meem_database',
+        'database' => 'meem',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -328,7 +329,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'meem_database',
+        'database' => 'meem',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -373,14 +374,14 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\app',
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\app/public',
-        'url' => 'http://localhost/storage',
+        'root' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\app/public',
+        'url' => 'http://127.0.0.1:8000/storage',
         'visibility' => 'public',
         'throw' => false,
       ),
@@ -399,7 +400,7 @@
     ),
     'links' => 
     array (
-      'C:\\xampp\\htdocs\\meem_dashboard\\public\\storage' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\app/public',
+      'C:\\xampp\\htdocs\\meem-dashboard\\public\\storage' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -440,14 +441,14 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\logs/laravel.log',
         'level' => 'debug',
         'replace_placeholders' => true,
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
         'replace_placeholders' => true,
@@ -512,7 +513,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -588,7 +589,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\meem_dashboard\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\meem-dashboard\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -660,7 +661,7 @@
       2 => '127.0.0.1',
       3 => '127.0.0.1:8000',
       4 => '::1',
-      5 => 'localhost',
+      5 => '127.0.0.1:8000',
     ),
     'guard' => 
     array (
@@ -701,7 +702,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -722,9 +723,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\meem_dashboard\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\meem-dashboard\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\meem_dashboard\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\meem-dashboard\\storage\\framework\\views',
   ),
   'blade-heroicons' => 
   array (
@@ -767,13 +768,13 @@
     ),
     'default_filesystem_disk' => 'public',
     'assets_path' => NULL,
-    'cache_path' => 'C:\\xampp\\htdocs\\meem_dashboard\\bootstrap/cache/filament',
+    'cache_path' => 'C:\\xampp\\htdocs\\meem-dashboard\\bootstrap/cache/filament',
     'livewire_loading_delay' => 'default',
   ),
   'livewire' => 
   array (
     'class_namespace' => 'App\\Livewire',
-    'view_path' => 'C:\\xampp\\htdocs\\meem_dashboard\\resources\\views/livewire',
+    'view_path' => 'C:\\xampp\\htdocs\\meem-dashboard\\resources\\views/livewire',
     'layout' => 'components.layouts.app',
     'lazy_placeholder' => NULL,
     'temporary_file_upload' => 
@@ -936,7 +937,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'C:\\xampp\\htdocs\\meem_dashboard',
+    'remote_sites_path' => 'C:\\xampp\\htdocs\\meem-dashboard',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',

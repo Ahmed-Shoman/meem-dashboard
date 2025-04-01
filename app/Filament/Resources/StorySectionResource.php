@@ -24,7 +24,7 @@ class StorySectionResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'قسم صفحة من نحن';
+        return 'القسم الاول صفحة من نحن';
     }
 
     public static function form(Form $form): Form

@@ -14,7 +14,7 @@ class OnTheFlyResource extends Resource
 {
     protected static ?string $model = OnTheFly::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'الصفحة الرئيسية';
+    protected static ?string $navigationGroup = 'برامج ميم';
 
     public static function getNavigationLabel(): string
     {

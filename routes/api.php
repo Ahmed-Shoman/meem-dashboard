@@ -43,13 +43,7 @@ Route::prefix('services')->group(function () {
     Route::delete('/{id}', [ServiceController::class, 'destroy']);
 });
 
-Route::prefix('studio-bookings')->group(function () {
-    Route::get('/', [StudioBookingController::class, 'index']);
-    Route::get('/{id}', [StudioBookingController::class, 'show']);
-    Route::post('/', [StudioBookingController::class, 'store']);
-    Route::put('/{id}', [StudioBookingController::class, 'update']);
-    Route::delete('/{id}', [StudioBookingController::class, 'destroy']);
-});
+
 
 use App\Http\Controllers\API\OurWorksController;
 
@@ -120,39 +114,11 @@ Route::get('/consultants/{id}', [ConsultantController::class, 'show']);
 Route::put('/consultants/{id}', [ConsultantController::class, 'update']);
 Route::delete('/consultants/{id}', [ConsultantController::class, 'destroy']);
 
-
-
-use App\Http\Controllers\API\PartnerController;
-
-Route::get('/partners', [PartnerController::class, 'index']);
-Route::post('/partners', [PartnerController::class, 'store']);
-Route::get('/partners/{id}', [PartnerController::class, 'show']);
-Route::put('/partners/{id}', [PartnerController::class, 'update']);
-Route::delete('/partners/{id}', [PartnerController::class, 'destroy']);
-
-
-
 use App\Http\Controllers\API\NewsletterSectionController;
 
 Route::get('/newsletter-section', [NewsletterSectionController::class, 'index']);
 Route::post('/newsletter-section', [NewsletterSectionController::class, 'store']);
 Route::put('/newsletter-section/{newsletterSection}', [NewsletterSectionController::class, 'update']);
-
-
-use App\Http\Controllers\API\PartnershipController;
-
-Route::get('/partnerships', [PartnershipController::class, 'index']);
-Route::post('/partnerships', [PartnershipController::class, 'store']);
-Route::put('/partnerships/{partnership}', [PartnershipController::class, 'update']);
-Route::delete('/partnerships/{partnership}', [PartnershipController::class, 'destroy']);
-
-
-use App\Http\Controllers\ContentSectionController;
-
-Route::get('/content-section', [ContentSectionController::class, 'index']);
-Route::post('/content-section', [ContentSectionController::class, 'store']);
-Route::put('/content-section/{id}', [ContentSectionController::class, 'update']);
-Route::delete('/content-section/{id}', [ContentSectionController::class, 'destroy']);
 
 
 use App\Http\Controllers\API\AudioLibraryController;
@@ -190,15 +156,6 @@ use App\Http\Controllers\API\NewsController;
 
 Route::get('/news', [NewsController::class, 'index']);
 
-
-
-use App\Http\Controllers\API\MeemOriginalController;
-
-Route::get('/meem-originals', [MeemOriginalController::class, 'index']);
-
-use App\Http\Controllers\API\FacebookHighlightSectionController;
-
-Route::get('/facebook-highlight', [FacebookHighlightSectionController::class, 'index']);
 
 
 // on the fly programs عالطاير
