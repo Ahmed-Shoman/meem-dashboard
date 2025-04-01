@@ -73,6 +73,7 @@ class AudioLibraryResource extends Resource
                             ->label('صورة الغلاف الخارجي للحلقة')
                             ->image()
                             ->required()
+                            ->imageEditor()
                             ->maxSize(20971520),
 
                         Forms\Components\FileUpload::make('sound')

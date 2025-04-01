@@ -195,3 +195,10 @@ Route::prefix('contacts')->group(function () {
 
     Route::delete('{id}', [ContactController::class, 'destroy']);
 });
+
+
+// Contact Section API
+
+use App\Http\Controllers\API\ContactSectionController;
+
+Route::apiResource('contact-sections', ContactSectionController::class);

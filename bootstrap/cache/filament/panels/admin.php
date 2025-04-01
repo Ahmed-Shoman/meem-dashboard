@@ -19,6 +19,9 @@
     'app.filament.resources.contact-resource.pages.create-contact' => 'App\\Filament\\Resources\\ContactResource\\Pages\\CreateContact',
     'app.filament.resources.contact-resource.pages.edit-contact' => 'App\\Filament\\Resources\\ContactResource\\Pages\\EditContact',
     'app.filament.resources.contact-resource.pages.list-contacts' => 'App\\Filament\\Resources\\ContactResource\\Pages\\ListContacts',
+    'app.filament.resources.contact-section-resource.pages.create-contact-section' => 'App\\Filament\\Resources\\ContactSectionResource\\Pages\\CreateContactSection',
+    'app.filament.resources.contact-section-resource.pages.edit-contact-section' => 'App\\Filament\\Resources\\ContactSectionResource\\Pages\\EditContactSection',
+    'app.filament.resources.contact-section-resource.pages.list-contact-sections' => 'App\\Filament\\Resources\\ContactSectionResource\\Pages\\ListContactSections',
     'app.filament.resources.customer-review-resource.pages.create-customer-review' => 'App\\Filament\\Resources\\CustomerReviewResource\\Pages\\CreateCustomerReview',
     'app.filament.resources.customer-review-resource.pages.edit-customer-review' => 'App\\Filament\\Resources\\CustomerReviewResource\\Pages\\EditCustomerReview',
     'app.filament.resources.customer-review-resource.pages.list-customer-reviews' => 'App\\Filament\\Resources\\CustomerReviewResource\\Pages\\ListCustomerReviews',
@@ -43,9 +46,6 @@
     'app.filament.resources.program-resource.pages.create-program' => 'App\\Filament\\Resources\\ProgramResource\\Pages\\CreateProgram',
     'app.filament.resources.program-resource.pages.edit-program' => 'App\\Filament\\Resources\\ProgramResource\\Pages\\EditProgram',
     'app.filament.resources.program-resource.pages.list-programs' => 'App\\Filament\\Resources\\ProgramResource\\Pages\\ListPrograms',
-    'app.filament.resources.section-resource.pages.create-section' => 'App\\Filament\\Resources\\SectionResource\\Pages\\CreateSection',
-    'app.filament.resources.section-resource.pages.edit-section' => 'App\\Filament\\Resources\\SectionResource\\Pages\\EditSection',
-    'app.filament.resources.section-resource.pages.list-sections' => 'App\\Filament\\Resources\\SectionResource\\Pages\\ListSections',
     'app.filament.resources.service-resource.pages.create-service' => 'App\\Filament\\Resources\\ServiceResource\\Pages\\CreateService',
     'app.filament.resources.service-resource.pages.edit-service' => 'App\\Filament\\Resources\\ServiceResource\\Pages\\EditService',
     'app.filament.resources.service-resource.pages.list-services' => 'App\\Filament\\Resources\\ServiceResource\\Pages\\ListServices',
@@ -91,7 +91,7 @@
   ),
   'pageDirectories' => 
   array (
-    0 => 'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament/Pages',
+    0 => 'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament/Pages',
   ),
   'pageNamespaces' => 
   array (
@@ -99,33 +99,32 @@
   ),
   'resources' => 
   array (
-    0 => 'App\\Filament\\Resources\\SectionResource',
-    1 => 'App\\Filament\\Resources\\ContactResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\AboutSectionResource.php' => 'App\\Filament\\Resources\\AboutSectionResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\AudioLibraryResource.php' => 'App\\Filament\\Resources\\AudioLibraryResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\AudiobookEpisodeResource.php' => 'App\\Filament\\Resources\\AudiobookEpisodeResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\AudiobookResource.php' => 'App\\Filament\\Resources\\AudiobookResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\ConsultantResource.php' => 'App\\Filament\\Resources\\ConsultantResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\ContactResource.php' => 'App\\Filament\\Resources\\ContactResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\CustomerReviewResource.php' => 'App\\Filament\\Resources\\CustomerReviewResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\HeaderResource.php' => 'App\\Filament\\Resources\\HeaderResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\MissionSectionResource.php' => 'App\\Filament\\Resources\\MissionSectionResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\NewsResource.php' => 'App\\Filament\\Resources\\NewsResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\NewsletterSectionResource.php' => 'App\\Filament\\Resources\\NewsletterSectionResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\OnTheFlyResource.php' => 'App\\Filament\\Resources\\OnTheFlyResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\OurWorksResource.php' => 'App\\Filament\\Resources\\OurWorksResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\ProgramResource.php' => 'App\\Filament\\Resources\\ProgramResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\SectionResource.php' => 'App\\Filament\\Resources\\SectionResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\ServiceResource.php' => 'App\\Filament\\Resources\\ServiceResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\SliderSectionResource.php' => 'App\\Filament\\Resources\\SliderSectionResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\StorySectionResource.php' => 'App\\Filament\\Resources\\StorySectionResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\SubscriptionSectionResource.php' => 'App\\Filament\\Resources\\SubscriptionSectionResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\TeamMemberResource.php' => 'App\\Filament\\Resources\\TeamMemberResource',
-    'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament\\Resources\\UserResource.php' => 'App\\Filament\\Resources\\UserResource',
+    0 => 'App\\Filament\\Resources\\ContactResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\AboutSectionResource.php' => 'App\\Filament\\Resources\\AboutSectionResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\AudioLibraryResource.php' => 'App\\Filament\\Resources\\AudioLibraryResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\AudiobookEpisodeResource.php' => 'App\\Filament\\Resources\\AudiobookEpisodeResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\AudiobookResource.php' => 'App\\Filament\\Resources\\AudiobookResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\ConsultantResource.php' => 'App\\Filament\\Resources\\ConsultantResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\ContactResource.php' => 'App\\Filament\\Resources\\ContactResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\ContactSectionResource.php' => 'App\\Filament\\Resources\\ContactSectionResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\CustomerReviewResource.php' => 'App\\Filament\\Resources\\CustomerReviewResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\HeaderResource.php' => 'App\\Filament\\Resources\\HeaderResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\MissionSectionResource.php' => 'App\\Filament\\Resources\\MissionSectionResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\NewsResource.php' => 'App\\Filament\\Resources\\NewsResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\NewsletterSectionResource.php' => 'App\\Filament\\Resources\\NewsletterSectionResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\OnTheFlyResource.php' => 'App\\Filament\\Resources\\OnTheFlyResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\OurWorksResource.php' => 'App\\Filament\\Resources\\OurWorksResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\ProgramResource.php' => 'App\\Filament\\Resources\\ProgramResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\ServiceResource.php' => 'App\\Filament\\Resources\\ServiceResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\SliderSectionResource.php' => 'App\\Filament\\Resources\\SliderSectionResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\StorySectionResource.php' => 'App\\Filament\\Resources\\StorySectionResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\SubscriptionSectionResource.php' => 'App\\Filament\\Resources\\SubscriptionSectionResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\TeamMemberResource.php' => 'App\\Filament\\Resources\\TeamMemberResource',
+    'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament\\Resources\\UserResource.php' => 'App\\Filament\\Resources\\UserResource',
   ),
   'resourceDirectories' => 
   array (
-    0 => 'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament/Resources',
+    0 => 'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament/Resources',
   ),
   'resourceNamespaces' => 
   array (
@@ -138,7 +137,7 @@
   ),
   'widgetDirectories' => 
   array (
-    0 => 'C:\\xampp\\htdocs\\meem_dashboard\\app\\Filament/Widgets',
+    0 => 'C:\\xampp\\htdocs\\meem-dashboard\\app\\Filament/Widgets',
   ),
   'widgetNamespaces' => 
   array (

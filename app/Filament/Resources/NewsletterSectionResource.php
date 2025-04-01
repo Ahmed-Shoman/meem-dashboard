@@ -38,6 +38,7 @@ class NewsletterSectionResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('صورة معبره عن دور القسم وهويته')
                     ->image()
+                    ->imageEditor()
                     ->columnSpanFull()
                     ->maxSize(20971520),
 

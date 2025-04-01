@@ -63,6 +63,7 @@ class AudiobookEpisodeResource extends Resource
             Forms\Components\FileUpload::make('cover_image')
                 ->label('صورة الغلاف الخارجي للحلقة')
                 ->image()
+                ->imageEditor()
                 ->nullable()
                 ->columnSpanFull(),
 

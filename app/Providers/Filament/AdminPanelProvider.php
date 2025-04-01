@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Resources\ContactResource;
-use App\Filament\Resources\SectionResource; // استيراد SectionResource
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -33,8 +32,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->resources([
-                SectionResource::class, // إضافة SectionResource يدويًا
-                ContactResource::class, // إضافة القسم الجديد
+                ContactResource::class, 
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources') // اختياري
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

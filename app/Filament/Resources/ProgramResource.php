@@ -47,6 +47,7 @@ class ProgramResource extends Resource
                             ->directory('uploads/presenters')
                             ->image()
                             ->nullable()
+                            ->imageEditor()
                             ->maxSize(20971520),
 
                         Forms\Components\TextInput::make('instagram')
@@ -76,6 +77,7 @@ class ProgramResource extends Resource
                             ->directory('uploads/logos')
                             ->image()
                             ->required()
+                            ->imageEditor()
                             ->maxSize(20971520),
 
                         Forms\Components\TextInput::make('seasons')

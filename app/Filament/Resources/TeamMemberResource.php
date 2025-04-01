@@ -42,6 +42,7 @@ class TeamMemberResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('الصورة الشخصيه لعضو الفريق')
                     ->image()
+                    ->imageEditor()
                     ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('linkedin')

@@ -40,6 +40,7 @@ class AudiobookResource extends Resource
                 ->label('صورة مقدم الكتاب')
                 ->image()
                 ->nullable()
+                ->imageEditor()
                 ->columnSpanFull(),
 
             Forms\Components\Textarea::make('description')
@@ -51,6 +52,7 @@ class AudiobookResource extends Resource
                 ->label('صورة الكتاب الصوتي')
                 ->image()
                 ->nullable()
+                ->imageEditor()
                 ->columnSpanFull(),
 
             Forms\Components\TextInput::make('instagram')

@@ -51,6 +51,7 @@ class UserResource extends Resource
                             ->image()
                             ->label('الصورة')
                             ->nullable()
+                            ->imageEditor()
                             ->maxSize(2048)
                             ->directory('user-images')
                             ->imageEditor(),
@@ -80,10 +81,9 @@ class UserResource extends Resource
 
                             return array_merge($programs, $onTheFly, $articles, $audioBooks);
                         })
-
-                            ->nullable()
                             ->preload()
                             ->disabled(fn () => !auth()->user()->isAdmin())
+                            ->searchable()
                             ->placeholder('اختر برنامجًا من القائمة'),
                     ])
                     ->visible(fn () => auth()->user()->isAdmin()),

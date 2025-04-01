@@ -43,6 +43,7 @@ class CustomerReviewResource extends Resource
                     ->directory('uploads/avatars')
                     ->image()
                     ->nullable()
+                    ->imageEditor()
                     ->maxSize(20971520),
             ]);
     }

@@ -38,6 +38,7 @@ class HeaderResource extends Resource
                             ->directory('uploads/logos')
                             ->preserveFilenames()
                             ->live()
+                            ->imageEditor()
                             ->columnSpanFull()
                             ->visibility('public')
                             ->maxSize(20971520)

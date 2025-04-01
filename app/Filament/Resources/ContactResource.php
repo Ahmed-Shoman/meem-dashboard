@@ -50,7 +50,7 @@ class ContactResource extends Resource
                     ->required()
                     ->rows(5),
                 Forms\Components\TextInput::make('phone_number')
-                    ->label('رقم الهاتف')
+                    ->label('رقم الجوال')
                     ->tel()
                     ->maxLength(20),
             ]);
@@ -74,6 +74,7 @@ class ContactResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

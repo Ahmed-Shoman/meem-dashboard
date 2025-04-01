@@ -39,6 +39,7 @@ class OnTheFlyResource extends Resource
                             ->label('صورة مقدم البرنامج')
                             ->directory('uploads/presenters')
                             ->image()
+                            ->imageEditor()
                             ->nullable()
                             ->maxSize(20971520),
 
@@ -67,6 +68,7 @@ class OnTheFlyResource extends Resource
                             ->label('صورة الغلاف')
                             ->directory('uploads/logos')
                             ->image()
+                            ->imageEditor()
                             ->required()
                             ->maxSize(20971520),
 

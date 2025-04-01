@@ -43,6 +43,7 @@ class SliderSectionResource extends Resource
                             ->label('ارفاق صورة')
                             ->directory('uploads/slider')
                             ->image()
+                            ->imageEditor()
                             ->maxSize(20971520),
                     ])
                     ->collapsible()
@@ -52,6 +53,7 @@ class SliderSectionResource extends Resource
                     ->label('صورة الغلاف الخارجي للقسم')
                     ->directory('uploads/slider')
                     ->image()
+                    ->imageEditor()
                     ->maxSize(20971520),
             ]);
     }

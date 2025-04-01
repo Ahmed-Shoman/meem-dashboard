@@ -38,6 +38,7 @@ class ConsultantResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('الصورة الشخصيه للاستشاري')
                     ->image()
+                    ->imageEditor()
                     ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('linkedin')

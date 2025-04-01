@@ -43,6 +43,7 @@ class StorySectionResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('صورة القسم الاول في صفحة من نحن')
                     ->image()
+                    ->imageEditor()
                     ->columnSpanFull()
                     ->maxSize(20971520),
             ]);

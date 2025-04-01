@@ -57,6 +57,7 @@ class AboutSectionResource extends Resource
                         Forms\Components\FileUpload::make('image')
                             ->label('صورة خلفية الصندوق - صورة')
                             ->image()
+                            ->imageEditor()
                             ->directory('uploads/logos')
                             ->visibility('public')
                             ->preserveFilenames()
