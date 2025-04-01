@@ -17,6 +17,8 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationGroup = 'الصفحة الرئيسية';
 
+    protected static ?string $singularLabel = 'قسم';
+
     public static function getNavigationLabel(): string
     {
         return 'اضافة الخدمات';
