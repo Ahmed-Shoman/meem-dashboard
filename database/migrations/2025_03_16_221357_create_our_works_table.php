@@ -28,15 +28,15 @@ return new class extends Migration {
             // إحصائيات عدد المستمعين
             $table->string('listeners_stat')->nullable(); // إحصائية عدد المستمعين
             $table->string('listeners_stat_description')->nullable(); // نص فرعي يوضح الإحصائية
-
+            $table->string('listeners_stat_subtitle')->nullable();
             // إحصائيات عدد الحلقات
             $table->string('episodes_stat')->nullable(); // إحصائية عدد الحلقات
             $table->string('episodes_stat_description')->nullable(); // نص فرعي يوضح الإحصائية
-
+            $table->string('episodes_stat_subtitle')->nullable();
             // عدد البرامج
             $table->string('programs_stat')->nullable(); // إحصائية عدد البرامج
             $table->string('programs_stat_description')->nullable();
-
+            $table->string('programs_stat_subtitle')->nullable();
             $table->string('banner_text')->nullable();
 
 

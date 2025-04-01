@@ -55,17 +55,27 @@ class OurWorksResource extends Resource
                     Forms\Components\TextInput::make('listeners_stat_description')
                         ->label('وصف بسيط عن النجاح في زيادة أعداد المستعمين'),
 
+                    Forms\Components\TextInput::make('listeners_stat_subtitle')
+                        ->label('عنوان فرعي لاحصائيات عدد المستعمين'),
+                        ////////
                     Forms\Components\TextInput::make('episodes_stat')
                         ->label('عنوان عن احصائيات اعداد الحلقات'),
 
                     Forms\Components\TextInput::make('episodes_stat_description')
                         ->label('وصف بسيط معبر عن النجاح في زيادة أعداد وتنوع الحلقات'),
 
+                    Forms\Components\TextInput::make('episodes_stat_subtitle')
+                        ->label('عنوان فرعي لاحصائيات عدد الحلقات'),
+
                     Forms\Components\TextInput::make('programs_stat')
                         ->label('عنوان عن احصائيات انواع البرامج'),
 
                     Forms\Components\TextInput::make('programs_stat_description')
                         ->label('وصف بسيط ومعبر عن النجاحات في البرامج والتعاقد مع مقدميمن متميزين'),
+
+                    Forms\Components\TextInput::make('programs_stat_subtitle')
+                        ->label('عنوان فرعي لاحصائيات عدد البرامج'),
+
 
                     Forms\Components\TextInput::make('banner_text')
                         ->label('جملة قوية قبل قسم الحلقات لتجذب انتباه الزوار'),
