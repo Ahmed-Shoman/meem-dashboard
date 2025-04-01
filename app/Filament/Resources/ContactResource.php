@@ -16,13 +16,10 @@ class ContactResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
 
-    // تغيير الاسم في القائمة الجانبية إلى "تواصل معنا"
-
-    // تغيير الاسم الجمعي
-    protected static ?string $pluralLabel = 'رسائل التواصل';
+    protected static ?string $pluralLabel = 'طلبات التواصل';
 
     // تغيير الاسم المفرد
-    protected static ?string $singularLabel = 'رسالة تواصل';
+    protected static ?string $singularLabel = 'طلب تواصل';
 
     public static function form(Form $form): Form
     {
@@ -31,27 +28,28 @@ class ContactResource extends Resource
                 Forms\Components\TextInput::make('subject')
                     ->label('الموضوع')
                     ->required()
-                    ->maxLength(255),
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('first_name')
                     ->label('الاسم الأول')
                     ->required()
-                    ->maxLength(255),
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('last_name')
                     ->label('الاسم الأخير')
                     ->required()
-                    ->maxLength(255),
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('email')
                     ->label('البريد الإلكتروني')
                     ->email()
                     ->required()
-                    ->maxLength(255),
+                    ->columnSpanFull(),
                 Forms\Components\Textarea::make('message')
                     ->label('الرسالة')
                     ->required()
+                    ->columnSpanFull()
                     ->rows(5),
                 Forms\Components\TextInput::make('phone_number')
                     ->label('رقم الجوال')
-                    ->tel()
+                    ->columnSpanFull()
                     ->maxLength(20),
             ]);
     }

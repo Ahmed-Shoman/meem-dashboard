@@ -202,3 +202,10 @@ Route::prefix('contacts')->group(function () {
 use App\Http\Controllers\API\ContactSectionController;
 
 Route::apiResource('contact-sections', ContactSectionController::class);
+
+
+// Contact Requests API
+
+use App\Http\Controllers\API\ContactRequestController;
+
+Route::apiResource('contact-requests', ContactRequestController::class);
