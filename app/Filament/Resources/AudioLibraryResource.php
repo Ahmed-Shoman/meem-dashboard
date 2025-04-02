@@ -2,18 +2,29 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AudioLibraryResource\Pages;
-use App\Models\AudioLibrary;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Program;
+use App\Models\OnTheFly;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\AudioLibrary;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use App\Filament\Resources\AudioLibraryResource\Pages;
 
 class AudioLibraryResource extends Resource
 {
     protected static ?string $model = AudioLibrary::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack'; // تغيير الأيقونة لتطابق OurWorksResource
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'برامج ميم';
 
     public static function getNavigationLabel(): string
@@ -25,73 +36,110 @@ class AudioLibraryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('قم باضافة الحلقات الي البرنامج الذي تريده:')
+                Section::make('قم باضافة الحلقات الي البرنامج الذي تريده:')
                     ->schema([
-                        Forms\Components\Select::make('program_id')
-                            ->label('اختار البرنامج الذي تتبع له الحلقه')
+                        Select::make('program_id')
+                            ->label('اختار البرنامج الذي تتبع له الحلقة')
                             ->options(function () {
-                                $programs = \App\Models\Program::pluck('program_name', 'id')->toArray();
-                                $onTheFly = \App\Models\OnTheFly::pluck('program_name', 'id')->toArray();
-
-                                // Convert to new unique keys
-                                $onTheFly = collect($onTheFly)->mapWithKeys(fn($name, $id) => ['OTF-' . $id => $name])->toArray();
-                                return $programs + $onTheFly;
+                                $user = auth()->user();
+                                if (!$user) return [];
+                                
+                                $assignablePrograms = collect($user->assignable ?? []);
+                                $options = [];
+                                
+                                $podcastProgramNames = $assignablePrograms->where('assignable_type')->pluck('program_name')->all();
+                                $podcastPrograms = Program::whereIn('program_name', $podcastProgramNames)
+                                    ->pluck('program_name', 'id')
+                                    ->mapWithKeys(fn($name, $id) => [$id => "بودكاست: {$name}"])
+                                    ->toArray();
+                                    
+                                $onTheFlyProgramNames = $assignablePrograms->where('assignable_type')->pluck('program_name')->all();
+                                $onTheFlyPrograms = OnTheFly::whereIn('program_name', $onTheFlyProgramNames)
+                                    ->pluck('program_name', 'id')
+                                    ->mapWithKeys(fn($name, $id) => [$id => "عالطاير: {$name}"])
+                                    ->toArray();
+                                    
+                                return array_merge($podcastPrograms, $onTheFlyPrograms) ?: ['' => 'لا توجد برامج متاحة'];
                             })
                             ->required()
-                            ->searchable()
-                            ->preload(),
+                            ->preload()
+                            ->live() // Add live() to make it reactive
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                if ($state) {
+                                    // Check both models to determine the type
+                                    $program = Program::find($state);
+                                    $onTheFly = OnTheFly::find($state);
+                                    
+                                    if ($program) {
+                                        $set('episode_type', 'بودكاست');
+                                    } elseif ($onTheFly) {
+                                        $set('episode_type', 'عالطاير');
+                                    }
+                                }
+                            }),
 
+                        Forms\Components\Hidden::make('episode_type')
+                            ->required()
+                            ->dehydrated(true),
+                            
+                        Forms\Components\Hidden::make('user_id')
+                            ->default(fn() => auth()->id())
+                            ->dehydrated(true),
 
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->label('عنوان الحلقه الاساسي')
+                            ->required() // Added required
                             ->columnSpanFull(),
 
-                        Forms\Components\TextInput::make('category')
+                        TextInput::make('category')
                             ->label('موضوع الحلقة')
                             ->required(),
 
-                        Forms\Components\TextInput::make('episode_number')
+                        TextInput::make('episode_number')
                             ->label('رقم الحلقة')
                             ->numeric()
                             ->required(),
 
-                        Forms\Components\TextInput::make('guest_name')
+                        TextInput::make('guest_name')
                             ->label('اسم الضيف')
                             ->required(),
 
-                        Forms\Components\TextInput::make('youtube_link')
+                        TextInput::make('youtube_link')
                             ->label('رابط الحلقة علي يوتيوب')
                             ->url()
-                            ->required(),
+                            ->required()
+                            ->columnSpanFull(), // Added to make it full width
 
-                        Forms\Components\TextInput::make('apple_podcast_link')
+                        TextInput::make('apple_podcast_link')
                             ->label('رابط الحلقة علي أبل بودكاست')
                             ->url()
-                            ->required(),
+                            ->required()
+                            ->columnSpanFull(), // Added to make it full width
 
-                        Forms\Components\FileUpload::make('image')
+                        FileUpload::make('image')
                             ->label('صورة الغلاف الخارجي للحلقة')
                             ->image()
                             ->required()
                             ->imageEditor()
+                            ->directory('audio-library-images') // Added directory
                             ->maxSize(20971520),
 
-                        Forms\Components\FileUpload::make('sound')
+                        FileUpload::make('sound')
                             ->label('ارفاق الملف الصوتي للحلقة')
                             ->acceptedFileTypes(['audio/*'])
-                            ->nullable()
                             ->required()
+                            ->directory('audio-library-files') // Added directory
                             ->maxSize(20971520),
 
-                        Forms\Components\Textarea::make('sub_description')
+                        Textarea::make('sub_description')
                             ->label('وصف مفصل عن محتوي الحلقة')
                             ->columnSpanFull(),
 
-                        Forms\Components\TextInput::make('sound_time')
+                        TextInput::make('sound_time')
                             ->label('مدة الحلقه - مثل: 20:20')
                             ->required(),
 
-                        Forms\Components\Toggle::make('is_active')
+                        Toggle::make('is_active')
                             ->label('حالة ظهور الحلقة - (تظهر - لا تظهر)')
                             ->default(true),
                     ]),
@@ -102,61 +150,105 @@ class AudioLibraryResource extends Resource
     {
         return $table
             ->columns([
-
-                Tables\Columns\TextColumn::make('episode_number')
+                TextColumn::make('episode_number')
                     ->label('رقم الحلقة')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('program.program_name')
+
+                TextColumn::make('program_id')
                     ->label('برنامج الحلقة')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->formatStateUsing(function ($record) {
+                        if ($record->episode_type === 'بودكاست') {
+                            return Program::find($record->program_id)?->program_name ?? 'غير معروف';
+                        } elseif ($record->episode_type === 'عالطاير') {
+                            return OnTheFly::find($record->program_id)?->program_name ?? 'غير معروف';
+                        }
+                        return 'غير محدد';
+                    }),
 
-                Tables\Columns\TextColumn::make('category')
-                    ->label(label: 'موضوع الحلقة')
+                TextColumn::make('category')
+                    ->label('موضوع الحلقة')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('guest_name')
+                TextColumn::make('guest_name')
                     ->label('اسم الضيف')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('youtube_link')
+                TextColumn::make('youtube_link')
                     ->label('رابط الحلقة علي يوتيوب')
                     ->limit(30)
                     ->url(fn($record) => $record->youtube_link, true),
 
-                Tables\Columns\TextColumn::make('apple_podcast_link')
+                TextColumn::make('apple_podcast_link')
                     ->label('رابط الحلقة علي أبل بودكاست')
                     ->limit(30)
                     ->url(fn($record) => $record->apple_podcast_link, true),
 
-                Tables\Columns\TextColumn::make('sound_time')
+                TextColumn::make('sound_time')
                     ->label('زمن الحلقة'),
 
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('عنوان الحلقة')
                     ->limit(50),
 
-                Tables\Columns\TextColumn::make('sub_description')
+                TextColumn::make('sub_description')
                     ->label('وصف الحلقة')
                     ->limit(50),
 
-                Tables\Columns\IconColumn::make('is_active')
+                IconColumn::make('is_active')
                     ->label('الحالة')
                     ->boolean(),
 
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('تاريخ اضافة الحلقه')
+                TextColumn::make('created_at')
+                    ->label('تاريخ اضافة الحلقة')
                     ->dateTime()
                     ->sortable(),
             ])
+            ->filters([
+                // You might want to add filters here
+            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->visible(fn($record) => static::canEdit($record)),
+                Tables\Actions\DeleteAction::make()
+                    ->visible(fn($record) => static::canDelete($record)),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()
+                    ->visible(fn() => auth()->user()?->isAdmin()),
             ]);
     }
+
+    private static function userHasAccessToRecord(Model $record): bool
+    {
+        $user = auth()->user();
+        return $user && ($record->user_id === $user->id || $user->isAdmin());
+    }
+
+
+    public static function canViewAny(): bool
+    {
+        return true;
+    }
+
+    public static function canCreate(): bool
+{
+    return true; // Ensure this is returning true
+}
+
+public static function canEdit(Model $record): bool
+{
+    $user = auth()->user();
+    return $user && ($user->isAdmin() || static::userHasAccessToRecord($record));
+}
+
+public static function canDelete(Model $record): bool
+{
+    $user = auth()->user();
+    return $user && ($user->isAdmin() || static::userHasAccessToRecord($record));
+}
 
     public static function getPages(): array
     {

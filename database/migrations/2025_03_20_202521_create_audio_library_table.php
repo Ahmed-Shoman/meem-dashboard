@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->text('sub_description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->string('episode_type');
         });
     }
 

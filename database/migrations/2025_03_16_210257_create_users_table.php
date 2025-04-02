@@ -10,16 +10,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->string('password');
-            $table->string('plain_password')->nullable();
+            $table->string('password')->nullable();
             $table->string('image')->nullable();
             $table->text('bio')->nullable();
             $table->boolean('is_admin')->default(false);
-            $table->json('role')->nullable();
+            $table->string('role')->nullable();
             $table->json('social_media')->nullable();
-            $table->foreignId('program_id')->nullable()->constrained('programs')->onDelete('set null');
+
+            // Change 'assignable' to a JSON column that holds the program data
+            $table->json('assignable')->nullable(); 
+
             $table->rememberToken();
             $table->timestamps();
         });

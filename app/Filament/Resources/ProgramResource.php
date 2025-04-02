@@ -16,6 +16,8 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class ProgramResource extends Resource
 {
@@ -25,7 +27,7 @@ class ProgramResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'اضافة البرامج';
+        return 'اضافة البودكاست';
     }
 
     public static function form(Form $form): Form
@@ -97,95 +99,117 @@ class ProgramResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->query(function () {
-                $query = Program::query();
-                if (!auth()->user()->isAdmin()) {
-                    $query->where('id', auth()->user()->program_id);
-                }
-                return $query;
-            })
-            ->columns([
-                Tables\Columns\TextColumn::make('program_name')
-                    ->label('اسم البرنامج')
-                    ->sortable()
-                    ->searchable(),
+    public static function query(EloquentBuilder $query): EloquentBuilder
+{
+    $user = auth()->user();
 
-                Tables\Columns\TextColumn::make('presenter')
-                    ->label('مقدم البرنامج')
-                    ->sortable()
-                    ->searchable(),
+    if (!$user->isAdmin()) {
+        // Get program IDs assigned to the user
+        $programIds = collect($user->assignable)->pluck('program_id')->map(fn ($id) => (int) $id)->toArray();
 
-                Tables\Columns\ImageColumn::make('presenter_image')
-                    ->label('صورة مقدم البرنامج')
-                    ->size(50),
-
-                Tables\Columns\TextColumn::make('instagram')
-                    ->label('انستجرام')
-                    ->limit(30)
-                    ->searchable(),
-
-                Tables\Columns\TextColumn::make('snapchat')
-                    ->label('سناب شات')
-                    ->limit(30)
-                    ->searchable(),
-
-                Tables\Columns\TextColumn::make('x')
-                    ->label('تويتر')
-                    ->limit(30)
-                    ->searchable(),
-
-                Tables\Columns\TextColumn::make('seasons')
-                    ->label('عدد المواسم'),
-
-                Tables\Columns\TextColumn::make('episodes')
-                    ->label('عدد الحلقات'),
-
-                Tables\Columns\TextColumn::make('program_description')
-                    ->label('وصف البرنامج')
-                    ->limit(50)
-                    ->searchable(),
-
-                Tables\Columns\IconColumn::make('is_active')
-                    ->label('حالة النشاط')
-                    ->boolean(),
-
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('تاريخ الاضافة')
-                    ->dateTime()
-                    ->sortable(),
-            ])
-            ->filters([])
-            ->actions([
-                Tables\Actions\EditAction::make()
-                    ->visible(fn ($record) => auth()->user()->isAdmin() || auth()->user()->program_id === $record->id),
-                Tables\Actions\DeleteAction::make()
-                    ->visible(fn ($record) => auth()->user()->can('delete', $record)),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make()
-                    ->visible(fn () => auth()->user()->isAdmin()),
-            ]);
+        return $query->whereIn('id', $programIds);
     }
 
-    public static function getPages(): array
+    return $query;
+}
+
+public static function table(Table $table): Table
+{
+    return $table
+        ->columns([
+            Tables\Columns\TextColumn::make('program_name')
+                ->label('اسم البرنامج')
+                ->sortable()
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('presenter')
+                ->label('مقدم البرنامج')
+                ->sortable()
+                ->searchable(),
+
+            Tables\Columns\ImageColumn::make('presenter_image')
+                ->label('صورة مقدم البرنامج')
+                ->size(50),
+
+            Tables\Columns\TextColumn::make('instagram')
+                ->label('انستجرام')
+                ->limit(30)
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('snapchat')
+                ->label('سناب شات')
+                ->limit(30)
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('x')
+                ->label('تويتر')
+                ->limit(30)
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('seasons')
+                ->label('عدد المواسم'),
+
+            Tables\Columns\TextColumn::make('episodes')
+                ->label('عدد الحلقات'),
+
+            Tables\Columns\TextColumn::make('program_description')
+                ->label('وصف البرنامج')
+                ->limit(50)
+                ->searchable(),
+
+            Tables\Columns\IconColumn::make('is_active')
+                ->label('حالة النشاط')
+                ->boolean(),
+
+            Tables\Columns\TextColumn::make('created_at')
+                ->label('تاريخ الإضافة')
+                ->dateTime()
+                ->sortable(),
+        ])
+        ->filters([])
+        ->actions([
+            Tables\Actions\ViewAction::make()
+    ->visible(fn () => true),
+
+            Tables\Actions\EditAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can edit
+
+            Tables\Actions\DeleteAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can delete
+        ])
+        ->bulkActions([
+            Tables\Actions\DeleteBulkAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can bulk delete
+        ]);
+}
+
+public static function canCreate(): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can create
+}
+
+public static function canEdit(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can edit
+}
+
+public static function canDelete(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can delete
+}
+
+public static function canView(Model $record): bool
+{
+    return true;
+}
+
+
+        public static function getPages(): array
     {
         return [
             'index' => Pages\ListPrograms::route('/'),
             'create' => Pages\CreateProgram::route('/create'),
             'edit' => Pages\EditProgram::route('/{record}/edit'),
         ];
-    }
-
-    public static function canCreate(): bool
-    {
-        return auth()->user()->isAdmin();
-    }
-
-    public static function canViewAny(): bool
-    {
-        return true;
     }
 }

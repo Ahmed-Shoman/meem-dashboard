@@ -9,16 +9,19 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class AboutSectionResource extends Resource
 {
     protected static ?string $model = AboutSection::class;
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';
-    protected static ?string $navigationGroup = 'الصفحة الرئيسية';
+    protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
+
+    protected static ?int $navigationSort = 5; 
 
     public static function getNavigationLabel(): string
     {
-        return 'قسم من نحن ';
+        return 'قسم من نحن في صفحة قصتنا';
     }
 
     public static function form(Form $form): Form
@@ -81,11 +84,34 @@ class AboutSectionResource extends Resource
                     ->label('زر المزيد'),
 
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ]);
+                    ->actions([
+            Tables\Actions\ViewAction::make(), // View action for all users
+            Tables\Actions\EditAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible edit
+            Tables\Actions\DeleteAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible delete
+        ]);
     }
+
+    public static function canCreate(): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can create
+}
+
+public static function canEdit(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can edit
+}
+
+public static function canDelete(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can delete
+}
+
+public static function canViewAny(): bool
+{
+    return true; // All users can view
+}
 
     public static function getPages(): array
     {

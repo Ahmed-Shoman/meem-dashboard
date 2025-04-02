@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Model;
 
 class OnTheFlyResource extends Resource
 {
@@ -40,7 +42,7 @@ class OnTheFlyResource extends Resource
                             ->directory('uploads/presenters')
                             ->image()
                             ->imageEditor()
-                            ->nullable()
+                            ->required()
                             ->maxSize(20971520),
 
                         Forms\Components\TextInput::make('instagram')
@@ -89,68 +91,108 @@ class OnTheFlyResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('program_name')
-                    ->label('اسم البرنامج')
-                    ->sortable()
-                    ->searchable(),
+public static function table(Table $table): Table
+{
+    return $table
+        ->columns([
+            Tables\Columns\TextColumn::make('program_name')
+                ->label('اسم البرنامج')
+                ->sortable()
+                ->searchable(),
 
-                Tables\Columns\TextColumn::make('presenter')
-                    ->label('مقدم البرنامج')
-                    ->sortable()
-                    ->searchable(),
+            Tables\Columns\TextColumn::make('presenter')
+                ->label('مقدم البرنامج')
+                ->sortable()
+                ->searchable(),
 
-                Tables\Columns\ImageColumn::make('presenter_image')
-                    ->label('صورة مقدم البرنامج')
-                    ->size(50),
+            Tables\Columns\ImageColumn::make('presenter_image')
+                ->label('صورة مقدم البرنامج')
+                ->size(50),
 
-                Tables\Columns\TextColumn::make('instagram')
-                    ->label('انستجرام')
-                    ->limit(30)
-                    ->searchable(),
+            Tables\Columns\TextColumn::make('instagram')
+                ->label('انستجرام')
+                ->limit(30)
+                ->searchable(),
 
-                Tables\Columns\TextColumn::make('snapchat')
-                    ->label('سناب شات')
-                    ->limit(30)
-                    ->searchable(),
+            Tables\Columns\TextColumn::make('snapchat')
+                ->label('سناب شات')
+                ->limit(30)
+                ->searchable(),
 
-                Tables\Columns\TextColumn::make('x')
-                    ->label('تويتر')
-                    ->limit(30)
-                    ->searchable(),
+            Tables\Columns\TextColumn::make('x')
+                ->label('تويتر')
+                ->limit(30)
+                ->searchable(),
 
-                Tables\Columns\TextColumn::make('seasons')
-                    ->label('عدد المواسم'),
+            Tables\Columns\TextColumn::make('seasons')
+                ->label('عدد المواسم'),
 
-                Tables\Columns\TextColumn::make('episodes')
-                    ->label('عدد الحلقات'),
+            Tables\Columns\TextColumn::make('episodes')
+                ->label('عدد الحلقات'),
 
-                Tables\Columns\TextColumn::make('program_description')
-                    ->label('وصف البرنامج')
-                    ->limit(50)
-                    ->searchable(),
+            Tables\Columns\TextColumn::make('program_description')
+                ->label('وصف البرنامج')
+                ->limit(50)
+                ->searchable(),
 
-                Tables\Columns\IconColumn::make('is_active')
-                    ->label('حالة النشاط')
-                    ->boolean(),
+            Tables\Columns\IconColumn::make('is_active')
+                ->label('حالة النشاط')
+                ->boolean(),
 
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('تاريخ الإضافة')
-                    ->dateTime()
-                    ->sortable(),
-            ])
-            ->filters([])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            Tables\Columns\TextColumn::make('created_at')
+                ->label('تاريخ الإضافة')
+                ->dateTime()
+                ->sortable(),
+        ])
+        ->filters([])
+        ->actions([
+            Tables\Actions\ViewAction::make(), // View is available for all users
+
+            Tables\Actions\EditAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can edit
+
+            Tables\Actions\DeleteAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can delete
+        ])
+        ->bulkActions([
+            Tables\Actions\DeleteBulkAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can bulk delete
+        ]);
+}
+
+public static function query(EloquentBuilder $query): EloquentBuilder
+{
+    $user = auth()->user();
+
+    if (!$user->isAdmin()) {
+        return $query->whereJsonContains('assignable', [
+            'program_id' => $user->assignable->pluck('program_id')->toArray(),
+        ]);
     }
+
+    return $query;
+}
+
+public static function canCreate(): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can create
+}
+
+public static function canEdit(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can edit
+}
+
+public static function canDelete(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can delete
+}
+
+public static function canViewAny(): bool
+{
+    return true; // All users can view
+}
+
 
     public static function getPages(): array
     {

@@ -20,7 +20,6 @@ use App\Http\Controllers\API\StudioBookingController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-
 });
 
  //program api
@@ -182,21 +181,6 @@ Route::delete('audiobooks/{id}', [AudiobookController::class, 'destroy']); // ح
 
 
 
-use App\Http\Controllers\ContactController;
-
-Route::prefix('contacts')->group(function () {
-    Route::post('/', [ContactController::class, 'store']);
-
-    Route::get('/', [ContactController::class, 'index']);
-
-    Route::get('{id}', [ContactController::class, 'show']);
-
-    Route::put('{id}', [ContactController::class, 'update']);
-
-    Route::delete('{id}', [ContactController::class, 'destroy']);
-});
-
-
 // Contact Section API
 
 use App\Http\Controllers\API\ContactSectionController;
@@ -205,7 +189,28 @@ Route::apiResource('contact-sections', ContactSectionController::class);
 
 
 // Contact Requests API
-
 use App\Http\Controllers\API\ContactRequestController;
 
-Route::apiResource('contact-requests', ContactRequestController::class);
+Route::prefix('contact-requests')->group(function () {
+    Route::get('/', [ContactRequestController::class, 'index']);
+    Route::post('/', [ContactRequestController::class, 'store']); 
+    Route::get('{contact}', [ContactRequestController::class, 'show']); 
+    Route::put('{contact}', [ContactRequestController::class, 'update']);
+    Route::delete('{contact}', [ContactRequestController::class, 'destroy']); 
+});
+
+
+// Users API
+use App\Http\Controllers\API\UserController;
+
+
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);          
+    Route::post('/', [UserController::class, 'store']);          // Create a new user
+    Route::get('{user}', [UserController::class, 'show']);       // Get a specific user
+    Route::put('{user}', [UserController::class, 'update']);     // Update a specific user
+    Route::delete('{user}', [UserController::class, 'destroy']); // Delete a specific user
+});
+
+
+

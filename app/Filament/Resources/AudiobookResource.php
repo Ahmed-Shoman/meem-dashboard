@@ -9,6 +9,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\ViewAction;
+use Illuminate\Database\Eloquent\Model;
 
 class AudiobookResource extends Resource
 {
@@ -40,6 +42,7 @@ class AudiobookResource extends Resource
                 ->label('صورة مقدم الكتاب')
                 ->image()
                 ->nullable()
+                ->required()
                 ->imageEditor()
                 ->columnSpanFull(),
 
@@ -52,6 +55,7 @@ class AudiobookResource extends Resource
                 ->label('صورة الكتاب الصوتي')
                 ->image()
                 ->nullable()
+                ->required()
                 ->imageEditor()
                 ->columnSpanFull(),
 
@@ -89,61 +93,86 @@ class AudiobookResource extends Resource
                 ->label('حالة النشاط')
                 ->default(true)
                 ->columnSpanFull(),
-
-
         ]);
     }
 
 
 
-    public static function table(Tables\Table $table): Tables\Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('program_name')
-                    ->label('اسم الكتاب')
-                    ->searchable(),
 
-                Tables\Columns\TextColumn::make('presenter')
-                    ->label('مقدم الكتاب')
-                    ->searchable(),
 
-                Tables\Columns\ImageColumn::make('presenter_image')
-                    ->label('صورة مقدم الكتاب'),
+public static function table(Tables\Table $table): Tables\Table
+{
+    return $table
+        ->columns([
+            Tables\Columns\TextColumn::make('program_name')
+                ->label('اسم الكتاب')
+                ->searchable(),
 
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('صورة الغلاف للكتاب الصوتي'),
+            Tables\Columns\TextColumn::make('presenter')
+                ->label('مقدم الكتاب')
+                ->searchable(),
 
-                Tables\Columns\TextColumn::make('seasons')
-                    ->label('عدد الاجزاء'),
+            Tables\Columns\ImageColumn::make('presenter_image')
+                ->label('صورة مقدم الكتاب'),
 
-                Tables\Columns\TextColumn::make('episodes')
-                    ->label('عدد الحلقات الصوتيه'),
+            Tables\Columns\ImageColumn::make('image')
+                ->label('صورة الغلاف للكتاب الصوتي'),
 
-                Tables\Columns\TextColumn::make('instagram')
-                    ->label('انستجرام')
-                    ->url(fn($record) => $record->instagram)
-                    ->openUrlInNewTab(),
+            Tables\Columns\TextColumn::make('seasons')
+                ->label('عدد الاجزاء'),
 
-                Tables\Columns\TextColumn::make('snapchat')
-                    ->label('سناب شات')
-                    ->url(fn($record) => $record->snapchat)
-                    ->openUrlInNewTab(),
+            Tables\Columns\TextColumn::make('episodes')
+                ->label('عدد الحلقات الصوتيه'),
 
-                Tables\Columns\TextColumn::make('x')
-                    ->label('تويتر')
-                    ->url(fn($record) => $record->x)
-                    ->openUrlInNewTab(),
+            Tables\Columns\TextColumn::make('instagram')
+                ->label('انستجرام')
+                ->url(fn($record) => $record->instagram)
+                ->openUrlInNewTab(),
 
-                Tables\Columns\IconColumn::make('is_active')
-                    ->label('حالة النشاط')
-                    ->boolean(),
-            ])
-            ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
-            ]);
-    }
+            Tables\Columns\TextColumn::make('snapchat')
+                ->label('سناب شات')
+                ->url(fn($record) => $record->snapchat)
+                ->openUrlInNewTab(),
+
+            Tables\Columns\TextColumn::make('x')
+                ->label('تويتر')
+                ->url(fn($record) => $record->x)
+                ->openUrlInNewTab(),
+
+            Tables\Columns\IconColumn::make('is_active')
+                ->label('حالة النشاط')
+                ->boolean(),
+        ])
+        ->actions([
+            ViewAction::make(), // View action for all users
+            EditAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible edit
+
+            DeleteAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible delete
+        ]);
+}
+
+public static function canCreate(): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can create
+}
+
+public static function canEdit(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can edit
+}
+
+public static function canDelete(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can delete
+}
+
+public static function canViewAny(): bool
+{
+    return true; // All users can view
+}
+
 
 
     public static function getPages(): array

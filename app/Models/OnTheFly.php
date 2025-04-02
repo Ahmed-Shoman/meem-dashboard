@@ -9,7 +9,7 @@ class OnTheFly extends Model
 {
     use HasFactory;
 
-    protected $table = 'on_the_fly'; 
+    protected $table = 'on_the_fly';
 
     protected $fillable = [
         'presenter',

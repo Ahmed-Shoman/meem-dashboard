@@ -12,12 +12,15 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
 
 class HeaderResource extends Resource
 {
     protected static ?string $model = Header::class;
     protected static ?string $navigationIcon = 'heroicon-o-numbered-list';
-    protected static ?string $navigationGroup = 'الصفحة الرئيسية';
+    protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
+
+    protected static ?int $navigationSort = 1; 
 
     public static function getNavigationLabel(): string
     {
@@ -50,25 +53,47 @@ class HeaderResource extends Resource
 
 
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\ImageColumn::make('logo')
-                    ->label('الشعار')
-                    ->disk('public')
-                    ->url(fn($record) => url('storage/' . $record->logo))
-                    ->sortable(),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ]);
-    }
+public static function table(Tables\Table $table): Tables\Table
+{
+    return $table
+        ->columns([
+            Tables\Columns\ImageColumn::make('logo')
+                ->label('الشعار')
+                ->disk('public')
+                ->url(fn($record) => url('storage/' . $record->logo))
+                ->sortable(),
+        ])
+        ->filters([
+            //
+        ])
+        ->actions([
+            Tables\Actions\ViewAction::make(), // View action for all users
+            Tables\Actions\EditAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible edit
+            Tables\Actions\DeleteAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible delete
+        ]);
+}
 
+public static function canCreate(): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can create
+}
+
+public static function canEdit(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can edit
+}
+
+public static function canDelete(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can delete
+}
+
+public static function canViewAny(): bool
+{
+    return true; // All users can view
+}
     public static function getPages(): array
     {
         return [

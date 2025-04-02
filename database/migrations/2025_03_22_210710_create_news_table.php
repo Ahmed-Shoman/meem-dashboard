@@ -9,15 +9,17 @@ return new class extends Migration {
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('program_name')->index();
             $table->string('author_name')->nullable();
             $table->text('author_bio')->nullable();
             $table->string('author_profile_picture')->nullable();
             $table->string('author_instagram')->nullable();
             $table->string('author_snapchat')->nullable();
             $table->string('author_x_twitter')->nullable();
+            $table->string('type')->default('news');
             $table->text('content');
-            $table->date('date')->nullable();
+            $table->date('date')->nullable()->index();
             $table->string('image')->nullable();
             $table->timestamps();
         });

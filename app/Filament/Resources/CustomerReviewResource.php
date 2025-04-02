@@ -9,12 +9,15 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class CustomerReviewResource extends Resource
 {
     protected static ?string $model = CustomerReview::class;
     protected static ?string $navigationIcon = 'heroicon-o-numbered-list';
-    protected static ?string $navigationGroup = 'أقسام صفحة خدماتنا';
+    protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
+
+    protected static ?int $navigationSort = 10; 
 
     public static function getNavigationLabel(): string
     {
@@ -65,11 +68,35 @@ class CustomerReviewResource extends Resource
                     ->label('الرأي')
                     ->limit(100),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ]);
+                    ->actions([
+            Tables\Actions\ViewAction::make(), // View action for all users
+            Tables\Actions\EditAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible edit
+            Tables\Actions\DeleteAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible delete
+        ]);
     }
+
+
+    public static function canCreate(): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can create
+}
+
+public static function canEdit(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can edit
+}
+
+public static function canDelete(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can delete
+}
+
+public static function canViewAny(): bool
+{
+    return true; // All users can view
+}
 
     public static function getPages(): array
     {

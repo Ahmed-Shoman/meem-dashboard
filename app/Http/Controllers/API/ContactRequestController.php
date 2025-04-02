@@ -33,21 +33,25 @@ class ContactRequestController extends Controller
 
         $contact = Contact::create($validated);
 
-        return response()->json($contact, Response::HTTP_CREATED);
+        return response()->json([
+            'success' => true,
+            'message' => 'Contact request submitted successfully.',
+            'data' => $contact
+        ], Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified contact request.
      */
-    public function show(Contact $contactRequest)
+    public function show(Contact $contact)
     {
-        return response()->json($contactRequest);
+        return response()->json($contact);
     }
 
     /**
      * Update the specified contact request in storage.
      */
-    public function update(Request $request, Contact $contactRequest)
+    public function update(Request $request, Contact $contact)
     {
         $validated = $request->validate([
             'subject' => 'sometimes|string|max:255',
@@ -58,18 +62,25 @@ class ContactRequestController extends Controller
             'phone_number' => 'nullable|string|max:20',
         ]);
 
-        $contactRequest->update($validated);
+        $contact->update($validated);
 
-        return response()->json($contactRequest);
+        return response()->json([
+            'success' => true,
+            'message' => 'Contact request updated successfully.',
+            'data' => $contact
+        ]);
     }
 
     /**
      * Remove the specified contact request from storage.
      */
-    public function destroy(Contact $contactRequest)
+    public function destroy(Contact $contact)
     {
-        $contactRequest->delete();
+        $contact->delete();
 
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        return response()->json([
+            'success' => true,
+            'message' => 'Contact request deleted successfully.'
+        ], Response::HTTP_NO_CONTENT);
     }
 }

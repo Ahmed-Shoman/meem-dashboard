@@ -9,17 +9,18 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class ContactResource extends Resource
 {
     protected static ?string $model = Contact::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
+    protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
+    protected static ?int $navigationSort = 9; 
     protected static ?string $pluralLabel = 'طلبات التواصل';
 
-    // تغيير الاسم المفرد
-    protected static ?string $singularLabel = 'طلب تواصل';
 
     public static function form(Form $form): Form
     {
@@ -69,15 +70,37 @@ class ContactResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ViewAction::make(),
-            ])
+                    ->actions([
+            Tables\Actions\ViewAction::make(), // View action for all users
+            Tables\Actions\EditAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible edit
+            Tables\Actions\DeleteAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible delete
+        ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
+
+    public static function canCreate(): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can create
+}
+
+public static function canEdit(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can edit
+}
+
+public static function canDelete(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can delete
+}
+
+public static function canViewAny(): bool
+{
+    return true; // All users can view
+}
 
     public static function getPages(): array
     {

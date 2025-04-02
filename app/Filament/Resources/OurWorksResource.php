@@ -9,16 +9,18 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-
+use Illuminate\Database\Eloquent\Model;
 class OurWorksResource extends Resource
 {
     protected static ?string $model = OurWork::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'الصفحة الرئيسية';
+    protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
+
+    protected static ?int $navigationSort = 6; 
 
     public static function getNavigationLabel(): string
     {
-        return 'أعمالنا';
+        return 'قسم أعمالنا - الصفحه الرئيسيه';
     }
 
     public static function form(Form $form): Form
@@ -95,14 +97,37 @@ class OurWorksResource extends Resource
                 Tables\Columns\TextColumn::make('banner_text')->label('جملة قبل قسم الحلقات'),
                 Tables\Columns\TextColumn::make('created_at')->label('تاريخ الاضافة')->dateTime()->sortable(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
+                    ->actions([
+            Tables\Actions\ViewAction::make(), // View action for all users
+            Tables\Actions\EditAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible edit
+            Tables\Actions\DeleteAction::make()
+                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible delete
+        ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
+
+    public static function canCreate(): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can create
+}
+
+public static function canEdit(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can edit
+}
+
+public static function canDelete(Model $record): bool
+{
+    return auth()->user()->isAdmin(); // Only admins can delete
+}
+
+public static function canViewAny(): bool
+{
+    return true; // All users can view
+}
 
     public static function getPages(): array
     {
