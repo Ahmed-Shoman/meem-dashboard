@@ -10,12 +10,13 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
-    protected static ?string $navigationGroup = 'برامج ميم';
+    // protected static ?string $navigationGroup = 'برامج ميم';
 
     public static function getNavigationLabel(): string
     {
@@ -93,6 +94,9 @@ class NewsResource extends Resource
                             ->nullable()
                             ->url()
                             ->maxLength(255),
+
+                            Forms\Components\Hidden::make('user_id')
+                                ->default(Auth::id()),
                     ])
                     ->columns(1)
                     ->columnSpanFull(),
@@ -123,40 +127,39 @@ public static function table(Table $table): Table
                 ->sortable(),
         ])
         ->actions([
-            Tables\Actions\ViewAction::make(), // Allow all users to view
+    Tables\Actions\ViewAction::make(), // Allow all users to view
 
-            Tables\Actions\EditAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can edit
+    Tables\Actions\EditAction::make()
+        ->visible(fn ($record) => auth()->user()->isAdmin() || auth()->user()->id === $record->user_id),
 
-            Tables\Actions\DeleteAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can delete
-        ])
-        ->bulkActions([
-            Tables\Actions\DeleteBulkAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can bulk delete
-        ]);
+    Tables\Actions\DeleteAction::make()
+        ->visible(fn ($record) => auth()->user()->isAdmin() || auth()->user()->id === $record->user_id),
+])
+->bulkActions([
+    Tables\Actions\DeleteBulkAction::make()
+        ->visible(fn () => auth()->user()->isAdmin()), // Only admin can bulk delete
+]);
 }
 
 public static function canCreate(): bool
 {
-    return true;  // All users Can Create
+    return true; // All users can create
 }
 
 public static function canEdit(Model $record): bool
 {
-    return auth()->user()->isAdmin(); // Only admins can edit
+    return auth()->user()->isAdmin() || auth()->user()->id === $record->user_id; // Admin or the owner can edit
 }
 
 public static function canDelete(Model $record): bool
 {
-    return auth()->user()->isAdmin(); // Only admins can delete
+    return auth()->user()->isAdmin() || auth()->user()->id === $record->user_id; // Admin or the owner can delete
 }
 
 public static function canViewAny(): bool
 {
     return true; // All users can view
 }
-
 
     public static function getPages(): array
     {

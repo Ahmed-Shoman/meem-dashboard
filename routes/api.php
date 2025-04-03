@@ -2,9 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ProgramController;
 use App\Http\Controllers\API\ServiceController;
-use App\Http\Controllers\API\StudioBookingController;
+
 
 
 /*
@@ -22,17 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
- //program api
-Route::prefix('programs')->group(function () {
-    Route::get('/', [ProgramController::class, 'index']);
-    Route::get('/{id}', [ProgramController::class, 'show']);
-    Route::post('/', [ProgramController::class, 'store']);
-    Route::put('/{id}', [ProgramController::class, 'update']);
-    Route::delete('/{id}', [ProgramController::class, 'destroy']);
-});
-
-
-
 
 Route::prefix('services')->group(function () {
     Route::get('/', [ServiceController::class, 'index']);
@@ -41,7 +29,6 @@ Route::prefix('services')->group(function () {
     Route::put('/{id}', [ServiceController::class, 'update']);
     Route::delete('/{id}', [ServiceController::class, 'destroy']);
 });
-
 
 
 use App\Http\Controllers\API\OurWorksController;
@@ -120,16 +107,6 @@ Route::post('/newsletter-section', [NewsletterSectionController::class, 'store']
 Route::put('/newsletter-section/{newsletterSection}', [NewsletterSectionController::class, 'update']);
 
 
-use App\Http\Controllers\API\AudioLibraryController;
-
-Route::prefix('audio-library')->group(function () {
-    Route::get('/', [AudioLibraryController::class, 'index']);
-    Route::post('/', [AudioLibraryController::class, 'store']);
-    Route::get('/{id}', [AudioLibraryController::class, 'show']);
-    Route::put('/{id}', [AudioLibraryController::class, 'update']);
-    Route::delete('/{id}', [AudioLibraryController::class, 'destroy']);
-});
-
 use App\Http\Controllers\API\SliderSectionController;
 
 Route::prefix('slider-sections')->group(function () {
@@ -151,35 +128,6 @@ Route::prefix('customer-reviews')->group(function () {
     Route::delete('/{id}', [CustomerReviewController::class, 'destroy']);
 });
 
-use App\Http\Controllers\API\NewsController;
-
-Route::get('/news', [NewsController::class, 'index']);
-
-
-
-// on the fly programs عالطاير
-
-use App\Http\Controllers\API\OnTheFlyController;
-
-Route::apiResource('on-the-fly', OnTheFlyController::class);
-
-
-use App\Http\Controllers\API\AudiobookEpisodeController;
-
-Route::get('audiobook-episodes', [AudiobookEpisodeController::class, 'index']);
-Route::post('audiobook-episodes', [AudiobookEpisodeController::class, 'store']);
-Route::put('audiobook-episodes/{id}', [AudiobookEpisodeController::class, 'update']);
-Route::delete('audiobook-episodes/{id}', [AudiobookEpisodeController::class, 'destroy']);
-
-
-use App\Http\Controllers\API\AudiobookController;
-
-Route::get('audiobooks', [AudiobookController::class, 'index']); // عرض جميع الكتب الصوتية
-Route::post('audiobooks', [AudiobookController::class, 'store']); // إضافة كتاب صوتي
-Route::put('audiobooks/{id}', [AudiobookController::class, 'update']); // تحديث كتاب صوتي
-Route::delete('audiobooks/{id}', [AudiobookController::class, 'destroy']); // حذف كتاب صوتي
-
-
 
 // Contact Section API
 
@@ -187,6 +135,9 @@ use App\Http\Controllers\API\ContactSectionController;
 
 Route::apiResource('contact-sections', ContactSectionController::class);
 
+
+
+// ********************************************************
 
 // Contact Requests API
 use App\Http\Controllers\API\ContactRequestController;
@@ -200,17 +151,47 @@ Route::prefix('contact-requests')->group(function () {
 });
 
 
-// Users API
-use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\NewsController;
 
+Route::get('/news', [NewsController::class, 'index']);
+
+
+// users api 
+
+use App\Http\Controllers\Api\UserController;
 
 Route::prefix('users')->group(function () {
-    Route::get('/', [UserController::class, 'index']);          
-    Route::post('/', [UserController::class, 'store']);          // Create a new user
-    Route::get('{user}', [UserController::class, 'show']);       // Get a specific user
-    Route::put('{user}', [UserController::class, 'update']);     // Update a specific user
-    Route::delete('{user}', [UserController::class, 'destroy']); // Delete a specific user
+    Route::get('/', [UserController::class, 'index']); // Get all users
+    Route::post('/', [UserController::class, 'store']); // Create a new user
+    Route::get('/{user}', [UserController::class, 'show']); // Get a single user
+    Route::put('/{user}', [UserController::class, 'update']); // Update a user
+    Route::delete('/{user}', [UserController::class, 'destroy']); // Delete a user
 });
+
+// Programs API => All categories "Podcast , On the fly , Audiobooks "
+
+use App\Http\Controllers\API\ProgramController;
+
+Route::prefix('programs')->group(function () {
+    Route::get('/', [ProgramController::class, 'index']); // Get all programs
+    Route::post('/', [ProgramController::class, 'store']); // Create a new program
+    Route::get('{program}', [ProgramController::class, 'show']); // Get a single program
+    Route::put('{program}', [ProgramController::class, 'update']); // Update an existing program
+    Route::delete('{program}', [ProgramController::class, 'destroy']); // Delete a program
+});
+
+// Eposides API for all types " Podcast , on the fly , audiobooks "
+
+use App\Http\Controllers\Api\EpisodeController;
+Route::prefix('episodes')->group(function () {
+    Route::get('/', [EpisodeController::class, 'index']); // List all episodes
+    Route::post('/', [EpisodeController::class, 'store']); // Create a new episode
+    Route::get('{episode}', [EpisodeController::class, 'show']); // Get a specific episode
+    Route::put('{episode}', [EpisodeController::class, 'update']); // Update an episode
+    Route::delete('{episode}', [EpisodeController::class, 'destroy']); // Delete an episode
+});
+
+
 
 
 

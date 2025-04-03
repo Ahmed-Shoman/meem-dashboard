@@ -5,185 +5,125 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProgramResource\Pages;
 use App\Models\Program;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+use Filament\Tables\Table; 
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class ProgramResource extends Resource
 {
     protected static ?string $model = Program::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'برامج ميم';
-
-    public static function getNavigationLabel(): string
-    {
-        return 'اضافة البودكاست';
-    }
-
+    protected static ?string $navigationLabel = 'البودكاست وعالطاير والكتب';
+    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static ?string $label = 'برنامج';
+    protected static ?string $pluralLabel = 'برامج';
+    
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('اضافة البرامج التابعة لقناة ميم')
-                    ->schema([
-                        Forms\Components\TextInput::make('program_name')
-                            ->label('اسم البرنامج')
-                            ->required(),
+                Forms\Components\TextInput::make('program_name')
+                    ->label('اسم البرنامج')
+                    ->required()
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('presenter')
+                    ->label('اسم المقدم')
+                    ->required()
+                    ->columnSpanFull(),
+                Forms\Components\FileUpload::make('presenter_image')
+                    ->label('صورة المقدم')
+                    ->image()
+                    ->required()
+                    ->columnSpanFull(),
+                Forms\Components\FileUpload::make('image')
+                    ->label('صورة الغلاف الخارجي للبرنامج')
+                    ->image()
+                    ->required()
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('description')
+                    ->label('الوصف')
+                    ->rows(5) 
+                    ->required()
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('seasons')
+                    ->label('عدد المواسم')
+                    ->numeric()
+                    ->required()
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('episodes')
+                    ->label('عدد الحلقات')
+                    ->numeric()
+                    ->required()
+                    ->columnSpanFull(),
+                Forms\Components\Select::make('type')
+                    ->label('نوع البرنامج')
+                    ->options([
+                        'كتاب صوتي' => 'كتاب صوتي',
+                        'بودكاست' => 'بودكاست', 
+                        'عالطاير' => 'عالطاير',
+                    ])
+                    ->required()
+                    ->columnSpanFull(),
 
-                        Forms\Components\TextInput::make('presenter')
-                            ->label('اسم المقدم / المقدمة للبرنامج')
-                            ->required(),
-
-                        Forms\Components\FileUpload::make('presenter_image')
-                            ->label('صورة مقدم البرنامج')
-                            ->directory('uploads/presenters')
-                            ->image()
-                            ->nullable()
-                            ->imageEditor()
-                            ->maxSize(20971520),
-
-                        Forms\Components\TextInput::make('instagram')
-                            ->label('حساب انستجرام للمقدم')
-                            ->placeholder('https://www.instagram.com/username')
-                            ->url()
-                            ->nullable(),
-
-                        Forms\Components\TextInput::make('snapchat')
-                            ->label('حساب سناب شات للمقدم')
-                            ->placeholder('https://www.snapchat.com/add/username')
-                            ->nullable()
-                            ->url(),
-
-                        Forms\Components\TextInput::make('x')
-                            ->label('حساب اكس - تويتر للمقدم')
-                            ->placeholder('https://twitter.com/username')
-                            ->url()
-                            ->nullable(),
-
-                        Forms\Components\Textarea::make('program_description')
-                            ->label('وصف مفصل عن البرنامج وما سيقدمه')
-                            ->required(),
-
-                        Forms\Components\FileUpload::make('image')
-                            ->label('صورة الغلاف الخارجي للبرنامج')
-                            ->directory('uploads/logos')
-                            ->image()
-                            ->required()
-                            ->imageEditor()
-                            ->maxSize(20971520),
-
-                        Forms\Components\TextInput::make('seasons')
-                            ->label('عدد مواسم البرنامج')
-                            ->numeric()
-                            ->required(),
-
-                        Forms\Components\TextInput::make('episodes')
-                            ->label('عدد حلقات البرنامج')
-                            ->numeric()
-                            ->required(),
-
-                        Forms\Components\Toggle::make('is_active')
-                            ->label('حالة البرنامج - (نشط - غير نشط)')
-                            ->default(true),
-                    ]),
+                Forms\Components\TextInput::make('instagram')
+                    ->label('انستاجرام')
+                    ->url()
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('snapchat')
+                    ->label('سناب شات')
+                    ->url()
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('x')
+                    ->label('X')
+                    ->url()
+                    ->columnSpanFull(),
             ]);
     }
 
-    public static function query(EloquentBuilder $query): EloquentBuilder
-{
-    $user = auth()->user();
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('program_name')
+                    ->label('اسم البرنامج')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('presenter')
+                    ->label('المقدم')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->label('نوع البرنامج'),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+    // View action is available for all users
+    Action::make('view')
+        ->label('عرض')
+        ->icon('heroicon-o-eye')
+        ->visible(fn () => true), // All users can view
 
-    if (!$user->isAdmin()) {
-        // Get program IDs assigned to the user
-        $programIds = collect($user->assignable)->pluck('program_id')->map(fn ($id) => (int) $id)->toArray();
+    // Edit action is only available for admins
+    Action::make('edit')
+        ->label('تعديل')
+        ->icon('heroicon-o-pencil')
+        ->visible(fn () => auth()->user()->isAdmin()), // Only admins can edit
 
-        return $query->whereIn('id', $programIds);
+    // Delete action is only available for admins
+    Action::make('delete')
+        ->label('حذف')
+        ->icon('heroicon-o-trash')
+        ->visible(fn () => auth()->user()->isAdmin()), // Only admins can delete
+]);
     }
 
-    return $query;
-}
-
-public static function table(Table $table): Table
-{
-    return $table
-        ->columns([
-            Tables\Columns\TextColumn::make('program_name')
-                ->label('اسم البرنامج')
-                ->sortable()
-                ->searchable(),
-
-            Tables\Columns\TextColumn::make('presenter')
-                ->label('مقدم البرنامج')
-                ->sortable()
-                ->searchable(),
-
-            Tables\Columns\ImageColumn::make('presenter_image')
-                ->label('صورة مقدم البرنامج')
-                ->size(50),
-
-            Tables\Columns\TextColumn::make('instagram')
-                ->label('انستجرام')
-                ->limit(30)
-                ->searchable(),
-
-            Tables\Columns\TextColumn::make('snapchat')
-                ->label('سناب شات')
-                ->limit(30)
-                ->searchable(),
-
-            Tables\Columns\TextColumn::make('x')
-                ->label('تويتر')
-                ->limit(30)
-                ->searchable(),
-
-            Tables\Columns\TextColumn::make('seasons')
-                ->label('عدد المواسم'),
-
-            Tables\Columns\TextColumn::make('episodes')
-                ->label('عدد الحلقات'),
-
-            Tables\Columns\TextColumn::make('program_description')
-                ->label('وصف البرنامج')
-                ->limit(50)
-                ->searchable(),
-
-            Tables\Columns\IconColumn::make('is_active')
-                ->label('حالة النشاط')
-                ->boolean(),
-
-            Tables\Columns\TextColumn::make('created_at')
-                ->label('تاريخ الإضافة')
-                ->dateTime()
-                ->sortable(),
-        ])
-        ->filters([])
-        ->actions([
-            Tables\Actions\ViewAction::make()
-    ->visible(fn () => true),
-
-            Tables\Actions\EditAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can edit
-
-            Tables\Actions\DeleteAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can delete
-        ])
-        ->bulkActions([
-            Tables\Actions\DeleteBulkAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin can bulk delete
-        ]);
-}
-
-public static function canCreate(): bool
+    public static function canCreate(): bool
 {
     return auth()->user()->isAdmin(); // Only admins can create
 }
@@ -198,13 +138,12 @@ public static function canDelete(Model $record): bool
     return auth()->user()->isAdmin(); // Only admins can delete
 }
 
-public static function canView(Model $record): bool
+public static function canViewAny(): bool
 {
-    return true;
+    return true; // All users can view
 }
 
-
-        public static function getPages(): array
+    public static function getPages(): array
     {
         return [
             'index' => Pages\ListPrograms::route('/'),

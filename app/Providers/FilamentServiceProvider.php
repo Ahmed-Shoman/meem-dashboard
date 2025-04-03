@@ -30,15 +30,6 @@ public function boot()
             ]);
 
             Filament::registerNavigationItems([
-                NavigationItem::make('المستخدمين')
-                    ->icon('heroicon-o-users')
-                    ->url(fn() => UserResource::getUrl('index'))
-                    ->group('إدارة المستخدمين'),
-
-                NavigationItem::make('البرامج')
-                    ->icon('heroicon-o-folder')
-                    ->url(fn() => ProgramResource::getUrl('index'))
-                    ->group('إدارة البرامج'),
             ]);
         }
     });

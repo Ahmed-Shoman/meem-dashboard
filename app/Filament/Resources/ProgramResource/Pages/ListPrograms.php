@@ -16,8 +16,4 @@ class ListPrograms extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-
-    
-
-
 }

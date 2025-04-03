@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\OnTheFlyResource\Pages;
+namespace App\Filament\Resources\EpisodeResource\Pages;
 
-use App\Filament\Resources\OnTheFlyResource;
+use App\Filament\Resources\EpisodeResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditOnTheFly extends EditRecord
+class EditEpisode extends EditRecord
 {
-    protected static string $resource = OnTheFlyResource::class;
+    protected static string $resource = EpisodeResource::class;
 
     protected function getHeaderActions(): array
     {

@@ -10,21 +10,29 @@ class Program extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
+        'program_id',
+        'program_name',
         'presenter',
         'presenter_image',
-        'instagram',
-        'snapchat',
-        'x',
         'image',
         'seasons',
         'episodes',
-        'program_name',
         'is_active',
-        'program_description',
+        'type',
+        'description',
+        'instagram',
+        'snapchat',
+        'x',
     ];
 
     public function episodes()
     {
-        return $this->hasMany(AudioLibrary::class, 'program_id');
+        return $this->hasMany(Episode::class, 'program_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

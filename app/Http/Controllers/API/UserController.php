@@ -2,93 +2,81 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Program;
-use App\Models\OnTheFly;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    // Display a listing of the users.
     public function index()
     {
-        return response()->json(User::all());
+        $users = User::all(); // You can paginate if needed
+        return response()->json($users); // Return raw user data as JSON
     }
 
+    // Store a newly created user in storage.
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-            'image' => 'nullable|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'is_admin' => 'nullable|boolean',
+            'role' => 'nullable|string|max:255',
             'bio' => 'nullable|string',
-            'role' => 'nullable|string',
-            'is_admin' => 'boolean',
-            'assignable' => 'nullable|array', 
-            'assignable.program_id' => 'nullable|integer',
-            'assignable.program_name' => 'nullable|string',
-            'assignable.program_type' => [
-                'nullable',
-                Rule::in(['بودكاست', 'عالطاير', 'كتب صوتية', 'جريدة']),
-            ],
+            'image' => 'nullable|image', 
+            'social_media' => 'nullable|array',
+            'assignable' => 'nullable|array',
         ]);
 
-        // Hash the password
-        $validated['password'] = Hash::make($validated['password']);
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'is_admin' => $validated['is_admin'] ?? false,
+            'role' => $validated['role'] ?? null,
+            'bio' => $validated['bio'] ?? null,
+            'image' => $validated['image'] ?? null,
+            'social_media' => $validated['social_media'] ?? [],
+            'assignable' => $validated['assignable'] ?? [],
+        ]);
 
-        // Create the user
-        $user = User::create($validated);
-
-        return response()->json($user, 201);
+        return response()->json($user, 201); // Return the newly created user as raw JSON
     }
 
+    // Display the specified user.
     public function show(User $user)
     {
-        return response()->json($user);
+        return response()->json($user); // Return a single user as raw JSON
     }
 
+    // Update the specified user in storage.
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'email' => [
-                'sometimes',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($user->id),
-            ],
-            'password' => 'sometimes|string|min:6',
-            'image' => 'nullable|string',
-            'role' => 'nullable|string',
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8',
+            'is_admin' => 'nullable|boolean',
+            'role' => 'nullable|string|max:255',
             'bio' => 'nullable|string',
-            'is_admin' => 'boolean',
+            'image' => 'nullable|image',
+            'social_media' => 'nullable|array',
             'assignable' => 'nullable|array',
-            'assignable.program_id' => 'nullable|integer',
-            'assignable.program_name' => 'nullable|string',
-            'assignable.program_type' => [
-                'nullable',
-                Rule::in(['بودكاست', 'عالطاير', 'كتب صوتية', 'جريدة']),
-            ],
         ]);
 
-        // Hash the password if it's updated
-        if (isset($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
-        }
+        $user->update(array_filter($validated)); // Only update the fields that are passed
 
-        // Update the user with the validated data
-        $user->update($validated);
-
-        return response()->json($user);
+        return response()->json($user); // Return the updated user as raw JSON
     }
 
+    // Remove the specified user from storage.
     public function destroy(User $user)
     {
-        $user->delete();
-        return response()->json(['message' => 'User deleted successfully']);
+        $user->delete(); // Delete the user
+
+        return response()->noContent(); // Return no content after deletion
     }
 }

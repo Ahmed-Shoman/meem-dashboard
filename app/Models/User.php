@@ -2,57 +2,54 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'image', 'bio', 'is_admin', 
-        'role', 'social_media', 'assignable'
+        'name',
+        'email',
+        'password',
+        'image',
+        'bio',
+        'is_admin',
+        'role',
+        'social_media',
+        'assignable',
     ];
 
     protected $casts = [
-        'is_admin' => 'boolean',
         'social_media' => 'array',
         'assignable' => 'array',
+        'is_admin' => 'boolean',
     ];
 
-    public function isAdmin(): bool
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    // One-to-many relationship with episodes
+    public function episodes()
     {
+        return $this->hasMany(Episode::class, 'user_id');
+    }
+
+    // Many-to-many relationship with programs
+    public function programs()
+    {
+        return $this->belongsToMany(Program::class, 'program_user', 'user_id', 'program_id')->withTimestamps();
+    }
+
+    // adding auth function
+    public function isAdmin(): mixed
+    {
+
         return $this->is_admin;
-    }
 
-    public function getAssignableProgram(): ?array
-    {
-        return $this->assignable;
-    }
-
-    public function setAssignableProgram(array $program): void
-    {
-        $assignable = $this->assignable ?? [];
-
-        // Check if the program already exists and update it, or add it
-        $found = false;
-        foreach ($assignable as &$assign) {
-            if ($assign['id'] === $program['id'] && $assign['assignable_type'] === $program['assignable_type']) {
-                $assign['program_name'] = $program['program_name'];
-                $found = true;
-                break;
-            }
-        }
-
-        if (!$found) {
-            $assignable[] = [
-                'assignable_type' => $program['assignable_type'],
-                'id' => $program['id'],
-                'program_name' => $program['program_name'],
-            ];
-        }
-
-        $this->assignable = $assignable;
-        $this->save();
     }
 }
