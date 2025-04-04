@@ -184,11 +184,11 @@ Route::prefix('programs')->group(function () {
 
 use App\Http\Controllers\Api\EpisodeController;
 Route::prefix('episodes')->group(function () {
-    Route::get('/', [EpisodeController::class, 'index']); // List all episodes
-    Route::post('/', [EpisodeController::class, 'store']); // Create a new episode
-    Route::get('{episode}', [EpisodeController::class, 'show']); // Get a specific episode
-    Route::put('{episode}', [EpisodeController::class, 'update']); // Update an episode
-    Route::delete('{episode}', [EpisodeController::class, 'destroy']); // Delete an episode
+    Route::get('/', [EpisodeController::class, 'index']);
+    Route::post('/', [EpisodeController::class, 'store']);
+    Route::get('{episode}', [EpisodeController::class, 'show']);
+    Route::put('{episode}', [EpisodeController::class, 'update']);
+    Route::delete('{episode}', [EpisodeController::class, 'destroy']);
 });
 
 use App\Http\Controllers\API\NewsletterMailsController;

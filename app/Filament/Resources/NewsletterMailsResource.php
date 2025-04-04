@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Mail;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Notifications\Notification;
 
 class NewsletterMailsResource extends Resource
 {
@@ -65,24 +66,41 @@ public static function table(Table $table): Table
                 ->requiresConfirmation()
                 ->color('danger'),
         ])
-        ->bulkActions([
-            BulkAction::make('sendNewsletter')
-                ->label('إرسال نشرة بريدية')
-                ->form([
-                    Textarea::make('content')
-                        ->label('محتوى النشرة')
-                        ->rows(6)
-                        ->required(),
-                ])
-                ->action(function (array $data) {
-                    $emails = NewsletterMails::pluck('email');
-                    foreach ($emails as $email) {
-                        Mail::to($email)->send(new Newsletter($data['content']));
-                    }
-                })
-                ->requiresConfirmation()
-                ->modalHeading('إرسال نشرة بريدية'),
-        ]);
+->bulkActions([
+    BulkAction::make('sendNewsletter')
+        ->label('إرسال نشرة بريدية')
+        ->form([
+            Textarea::make('content')
+                ->label('محتوى النشرة')
+                ->rows(6)
+                ->required()
+                ->columnSpan('full'),
+        ])
+        ->action(function (array $data) {
+            try {
+                $emails = NewsletterMails::pluck('email');
+                foreach ($emails as $email) {
+                    Mail::to($email)->send(new Newsletter($data['content']));
+                }
+
+                Notification::make()
+                    ->title('تم الإرسال بنجاح')
+                    ->success()
+                    ->body('تم إرسال النشرة البريدية إلى المشتركين المحددين .')
+                    ->send();
+
+            } catch (\Exception $e) {
+                Notification::make()
+                    ->title('فشل الإرسال')
+                    ->danger()
+                    ->body('حدث خطأ أثناء إرسال النشرة: ' . $e->getMessage())
+                    ->send();
+            }
+        })
+        ->requiresConfirmation()
+        ->modalHeading('إرسال نشرة بريدية'),
+])
+;
 }
 
 
