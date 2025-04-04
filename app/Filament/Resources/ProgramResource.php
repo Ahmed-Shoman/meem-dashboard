@@ -104,21 +104,16 @@ class ProgramResource extends Resource
             ])
             ->actions([
     // View action is available for all users
-    Action::make('view')
-        ->label('عرض')
-        ->icon('heroicon-o-eye')
-        ->visible(fn () => true), // All users can view
+    Tables\Actions\ViewAction::make(),
 
     // Edit action is only available for admins
-    Action::make('edit')
+    Tables\Actions\EditAction::make('edit')
         ->label('تعديل')
-        ->icon('heroicon-o-pencil')
         ->visible(fn () => auth()->user()->isAdmin()), // Only admins can edit
 
     // Delete action is only available for admins
-    Action::make('delete')
+    Tables\Actions\DeleteAction::make('delete')
         ->label('حذف')
-        ->icon('heroicon-o-trash')
         ->visible(fn () => auth()->user()->isAdmin()), // Only admins can delete
 ]);
     }
