@@ -56,6 +56,9 @@ class NewsletterSectionResource extends Resource
 
     public static function table(Table $table): Table
     {
+                    if (!auth()->user() || !auth()->user()->is_admin) {
+        abort(403, 'Unauthorized');
+    }
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('main_title')
