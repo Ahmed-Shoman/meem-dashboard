@@ -15,6 +15,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Actions\EditAction;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\TextArea;
 
 
 class EpisodeResource extends Resource
@@ -35,10 +36,7 @@ class EpisodeResource extends Resource
                     ->label('عنوان الحلقة')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\TextArea::make('description')
-                    ->label('الوصف')
-                    ->required()
-                    ->columnSpanFull(),
+
                 Forms\Components\TextInput::make('episode_type')
                     ->label('نوع الحلقة')
                     ->required()
