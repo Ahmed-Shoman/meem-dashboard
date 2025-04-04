@@ -16,6 +16,7 @@ use Filament\Tables\Actions\EditAction;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\TextArea;
+use Filament\Forms\Components\Select;
 
 
 class EpisodeResource extends Resource
@@ -44,22 +45,27 @@ class EpisodeResource extends Resource
 
 // Program selection (visible)
 // Program selection (visible)
-Forms\Components\Select::make('program_id')
+
+
+Select::make('program_id')
     ->label('البرنامج الذي تتبع له الحلقه')
-    ->options(
-        Program::query()
-            // Get programs where the program_id is in the user's assignable list
-            ->whereIn('id', collect(auth()->user()->assignable)->pluck('program_id'))
+    ->options(function () {
+        $query = Program::query();
+
+        if (!auth()->user()->isAdmin()) {
+            $query->whereIn('id', collect(auth()->user()->assignable)->pluck('program_id'));
+        }
+
+        return $query
             ->select('id', 'program_name', 'type')
             ->get()
             ->mapWithKeys(fn ($program) => [
                 $program->id => "{$program->program_name} ({$program->type})"
-            ])
-    )
-    ->searchable()
+            ]);
+    })
     ->required()
     ->columnSpanFull()
-    ->live() // Add live() to update category in real-time
+    ->live()
     ->afterStateUpdated(function ($state, callable $set) {
         if ($state) {
             $program = Program::find($state);
