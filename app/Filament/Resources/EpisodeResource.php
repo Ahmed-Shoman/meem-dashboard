@@ -38,6 +38,11 @@ class EpisodeResource extends Resource
                     ->required()
                     ->columnSpanFull(),
 
+                Forms\Components\TextInput::make('description')
+                    ->label('وصف الحلقة')
+                    ->required()
+                    ->columnSpanFull(),
+
                 Forms\Components\TextInput::make('episode_type')
                     ->label('نوع الحلقة')
                     ->required()
