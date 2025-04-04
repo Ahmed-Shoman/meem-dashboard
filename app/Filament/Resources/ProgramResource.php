@@ -72,7 +72,7 @@ class ProgramResource extends Resource
                     ->columnSpanFull(),
 
                     Forms\Components\Toggle::make('is_active')
-                    ->label('حالة الشناط')
+                    ->label('ادراج البرامج')
                     ->default(true)
                     ->columnSpanFull(),
 
@@ -104,7 +104,7 @@ class ProgramResource extends Resource
                 Tables\Columns\TextColumn::make('type')
                     ->label('نوع البرنامج'),
                 Tables\Columns\BooleanColumn::make('is_active')
-                    ->label('حالة النشاط')
+                    ->label('البرنامج مدرج')
                     ->sortable(),
             ])
             ->filters([

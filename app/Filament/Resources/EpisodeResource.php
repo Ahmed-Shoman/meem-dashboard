@@ -123,7 +123,7 @@ Forms\Components\Hidden::make('user_id')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('is_active')
-                    ->label('نشط')
+                    ->label('ادراج الحلقة')
                     ->default(true)
                     ->columnSpanFull(),
             ]);
@@ -151,7 +151,7 @@ Forms\Components\Hidden::make('user_id')
                 Tables\Columns\TextColumn::make('guest_name')
                     ->label('اسم الضيف'),
                 Tables\Columns\BooleanColumn::make('is_active')
-                    ->label('نشط')
+                    ->label('الحلقة مدرجة')
                     ->sortable(),
             ])
             ->filters([])
