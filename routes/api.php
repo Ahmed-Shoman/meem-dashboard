@@ -191,12 +191,9 @@ Route::prefix('episodes')->group(function () {
     Route::delete('{episode}', [EpisodeController::class, 'destroy']); // Delete an episode
 });
 
-
-
 use App\Http\Controllers\API\NewsletterMailsController;
 
-Route::prefix('newsletter')->group(function () {
-    Route::get('/emails', [NewsletterMailsController::class, 'index']); // استرجاع قائمة الإيميلات
-    Route::post('/subscribe', [NewsletterMailsController::class, 'store']); // إضافة بريد إلكتروني
-    Route::post('/send', [NewsletterMailsController::class, 'sendNewsletter']); // إرسال نشرة بريدية
+Route::prefix('newsletter-emails')->group(function () {
+    Route::get('/', [NewsletterMailsController::class, 'index']); 
+    Route::post('/subscribe', [NewsletterMailsController::class, 'store']); 
 });

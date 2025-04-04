@@ -88,6 +88,9 @@ class OurWorksResource extends Resource
 
     public static function table(Table $table): Table
     {
+            if (!auth()->user() || !auth()->user()->is_admin) {
+        abort(403, 'Unauthorized');
+    }
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('main_title')->label('العنوان الاساسي للقسم')->searchable(),
@@ -98,36 +101,15 @@ class OurWorksResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->label('تاريخ الاضافة')->dateTime()->sortable(),
             ])
                     ->actions([
-            Tables\Actions\ViewAction::make(), // View action for all users
-            Tables\Actions\EditAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible edit
-            Tables\Actions\DeleteAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible delete
+            Tables\Actions\ViewAction::make(),
+            Tables\Actions\EditAction::make(),
+            Tables\Actions\DeleteAction::make(),
         ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
-    public static function canCreate(): bool
-{
-    return auth()->user()->isAdmin(); // Only admins can create
-}
-
-public static function canEdit(Model $record): bool
-{
-    return auth()->user()->isAdmin(); // Only admins can edit
-}
-
-public static function canDelete(Model $record): bool
-{
-    return auth()->user()->isAdmin(); // Only admins can delete
-}
-
-public static function canViewAny(): bool
-{
-    return true; // All users can view
-}
 
     public static function getPages(): array
     {

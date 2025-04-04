@@ -57,6 +57,9 @@ class TeamMemberResource extends Resource
 
     public static function table(Table $table): Table
     {
+            if (!auth()->user() || !auth()->user()->is_admin) {
+        abort(403, 'Unauthorized');
+    }
         return $table
             ->columns([
 
@@ -85,25 +88,6 @@ class TeamMemberResource extends Resource
             ]);
     }
 
-    public static function canCreate(): bool
-{
-    return auth()->user()->isAdmin(); // Only admins can create
-}
-
-public static function canEdit(Model $record): bool
-{
-    return auth()->user()->isAdmin(); // Only admins can edit
-}
-
-public static function canDelete(Model $record): bool
-{
-    return auth()->user()->isAdmin(); // Only admins can delete
-}
-
-public static function canViewAny(): bool
-{
-    return true; // All users can view
-}
 
     public static function getPages(): array
     {

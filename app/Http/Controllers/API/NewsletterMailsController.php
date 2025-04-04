@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Mail\Newsletter;
 use App\Models\NewsletterMails;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class NewsletterMailsController extends Controller
 {
     /**
-     * عرض قائمة الإيميلات
+     * Display a listing of the emails.
      */
     public function index()
     {
@@ -24,10 +22,11 @@ class NewsletterMailsController extends Controller
     }
 
     /**
-     * إضافة بريد إلكتروني جديد
+     * Add a new email subscription.
      */
     public function store(Request $request)
     {
+        // Validate the email provided in the request
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:newsletter_mails,email',
         ]);
@@ -40,10 +39,12 @@ class NewsletterMailsController extends Controller
             ], 422);
         }
 
+        // Create a new subscription with the validated email
         $newsletterMail = NewsletterMails::create([
             'email' => $request->email,
         ]);
 
+        // Return success response with the newly created email subscription
         return response()->json([
             'status' => 'success',
             'message' => 'Email added successfully',
@@ -52,30 +53,13 @@ class NewsletterMailsController extends Controller
     }
 
     /**
-     * إرسال نشرة بريدية إلى جميع الإيميلات
+     * This function is no longer needed as you don't send newsletters from this controller.
      */
     public function sendNewsletter(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'content' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Validation failed',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-
-        $emails = NewsletterMails::pluck('email');
-        foreach ($emails as $email) {
-            Mail::to($email)->send(new Newsletter($request->content));
-        }
-
         return response()->json([
-            'status' => 'success',
-            'message' => 'Newsletter sent successfully to all subscribers',
-        ], 200);
+            'status' => 'error',
+            'message' => 'Sending newsletters is not supported in this controller.',
+        ], 405);  // Method Not Allowed
     }
 }

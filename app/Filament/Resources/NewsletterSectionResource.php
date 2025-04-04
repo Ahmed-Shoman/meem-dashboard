@@ -36,17 +36,20 @@ class NewsletterSectionResource extends Resource
 
                 Forms\Components\Textarea::make('description')
                     ->label('وصف بسيط عن قسم الاشتراك في النشرة البريدية')
+                    ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\FileUpload::make('image')
                     ->label('صورة معبره عن دور القسم وهويته')
                     ->image()
                     ->imageEditor()
+                    ->required()
                     ->columnSpanFull()
                     ->maxSize(20971520),
 
                 Forms\Components\TextInput::make('cta_button_text')
                     ->label('نص الزر في قسم الاشتراك في النشرة البريدية - مثل: اشترك الأن')
+                    ->required()
                     ->columnSpanFull(),
             ]);
     }
@@ -68,36 +71,16 @@ class NewsletterSectionResource extends Resource
             ])
             ->filters([])
                     ->actions([
-            Tables\Actions\ViewAction::make(), // View action for all users
-            Tables\Actions\EditAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible edit
+            Tables\Actions\ViewAction::make(),
+            Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make()
-                ->visible(fn () => auth()->user()->isAdmin()), // Only admin visible delete
         ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
-    public static function canCreate(): bool
-{
-    return auth()->user()->isAdmin(); // Only admins can create
-}
 
-public static function canEdit(Model $record): bool
-{
-    return auth()->user()->isAdmin(); // Only admins can edit
-}
-
-public static function canDelete(Model $record): bool
-{
-    return auth()->user()->isAdmin(); // Only admins can delete
-}
-
-public static function canViewAny(): bool
-{
-    return true; // All users can view
-}
 
     public static function getPages(): array
     {
