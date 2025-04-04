@@ -97,7 +97,6 @@ Forms\Components\Hidden::make('user_id')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('guest_name')
                     ->label('اسم الضيف')
-                    ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('youtube_link')
                     ->label('رابط يوتيوب')
