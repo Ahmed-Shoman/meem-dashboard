@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ServiceController;
+
 
 
 
@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+use App\Http\Controllers\API\ServiceController;
 Route::prefix('services')->group(function () {
     Route::get('/', [ServiceController::class, 'index']);
     Route::get('/{id}', [ServiceController::class, 'show']);
@@ -158,7 +158,7 @@ Route::get('/news', [NewsController::class, 'index']);
 
 // users api
 
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\API\UserController;
 
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index']); // Get all users
@@ -182,7 +182,7 @@ Route::prefix('programs')->group(function () {
 
 // Eposides API for all types " Podcast , on the fly , audiobooks "
 
-use App\Http\Controllers\Api\EpisodeController;
+use App\Http\Controllers\API\EpisodeController;
 Route::prefix('episodes')->group(function () {
     Route::get('/', [EpisodeController::class, 'index']);
     Route::post('/', [EpisodeController::class, 'store']);
