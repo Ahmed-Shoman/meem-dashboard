@@ -144,10 +144,10 @@ use App\Http\Controllers\API\ContactRequestController;
 
 Route::prefix('contact-requests')->group(function () {
     Route::get('/', [ContactRequestController::class, 'index']);
-    Route::post('/', [ContactRequestController::class, 'store']); 
-    Route::get('{contact}', [ContactRequestController::class, 'show']); 
+    Route::post('/', [ContactRequestController::class, 'store']);
+    Route::get('{contact}', [ContactRequestController::class, 'show']);
     Route::put('{contact}', [ContactRequestController::class, 'update']);
-    Route::delete('{contact}', [ContactRequestController::class, 'destroy']); 
+    Route::delete('{contact}', [ContactRequestController::class, 'destroy']);
 });
 
 
@@ -156,7 +156,7 @@ use App\Http\Controllers\API\NewsController;
 Route::get('/news', [NewsController::class, 'index']);
 
 
-// users api 
+// users api
 
 use App\Http\Controllers\Api\UserController;
 
@@ -193,5 +193,10 @@ Route::prefix('episodes')->group(function () {
 
 
 
+use App\Http\Controllers\API\NewsletterMailsController;
 
-
+Route::prefix('newsletter')->group(function () {
+    Route::get('/emails', [NewsletterMailsController::class, 'index']); // استرجاع قائمة الإيميلات
+    Route::post('/subscribe', [NewsletterMailsController::class, 'store']); // إضافة بريد إلكتروني
+    Route::post('/send', [NewsletterMailsController::class, 'sendNewsletter']); // إرسال نشرة بريدية
+});
