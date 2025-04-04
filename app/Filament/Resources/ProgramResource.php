@@ -71,6 +71,11 @@ class ProgramResource extends Resource
                     ->required()
                     ->columnSpanFull(),
 
+                    Forms\Components\Toggle::make('is_active')
+                    ->label('حالة الشناط')
+                    ->default(true)
+                    ->columnSpanFull(),
+
                 Forms\Components\TextInput::make('instagram')
                     ->label('انستاجرام')
                     ->url()
@@ -98,6 +103,9 @@ class ProgramResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->label('نوع البرنامج'),
+                Tables\Columns\BooleanColumn::make('is_active')
+                    ->label('حالة النشاط')
+                    ->sortable(),
             ])
             ->filters([
                 //
