@@ -33,10 +33,12 @@ class SliderSectionResource extends Resource
                     ->required(),
 
                 Forms\Components\TextInput::make('subtitle')
-                    ->label('عنوان بسيط لقسم الخدمات'),
+                    ->label('عنوان بسيط لقسم الخدمات')
+                    ->required(),
 
                 Forms\Components\Textarea::make('description')
-                    ->label('وصف مناسب لقسم الخدمات'),
+                    ->label('وصف مناسب لقسم الخدمات')
+                    ->required(),
 
 
                 Forms\Components\Repeater::make('slider_images')
@@ -46,6 +48,7 @@ class SliderSectionResource extends Resource
                             ->label('ارفاق صورة')
                             ->directory('uploads/slider')
                             ->image()
+                            ->required()
                             ->imageEditor()
                             ->maxSize(20971520),
                     ])
@@ -57,6 +60,7 @@ class SliderSectionResource extends Resource
                     ->directory('uploads/slider')
                     ->image()
                     ->imageEditor()
+                    ->required()
                     ->maxSize(20971520),
             ]);
     }
