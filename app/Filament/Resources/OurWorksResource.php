@@ -33,7 +33,8 @@ class OurWorksResource extends Resource
                         ->required(),
 
                     Forms\Components\TextInput::make('subtitle')
-                        ->label('وصف بسيط عن قسم أعمالنا'),
+                        ->label('وصف بسيط عن قسم أعمالنا')
+                        ->required(),
 
                     Forms\Components\Repeater::make('client_logos')
                         ->label('شعارات الشركات او الداعمين ')
@@ -49,38 +50,49 @@ class OurWorksResource extends Resource
 
 
                     Forms\Components\Textarea::make('description_text')
-                        ->label('جملة معبرة عن أرقام ونجاحات ميم'),
+                        ->label('جملة معبرة عن أرقام ونجاحات ميم')
+                        ->required(),
 
                     Forms\Components\TextInput::make('listeners_stat')
-                        ->label('عنوان احصائيات عدد المستعمين'),
+                        ->label('عنوان احصائيات عدد المستعمين')
+                        ->required(),
 
                     Forms\Components\TextInput::make('listeners_stat_description')
-                        ->label('وصف بسيط عن النجاح في زيادة أعداد المستعمين'),
+                        ->label('وصف بسيط عن النجاح في زيادة أعداد المستعمين')
+                        ->required(),
 
                     Forms\Components\TextInput::make('listeners_stat_subtitle')
-                        ->label('عنوان فرعي لاحصائيات عدد المستعمين'),
+                        ->label('عنوان فرعي لاحصائيات عدد المستعمين')
+                        ->required(),
                         ////////
                     Forms\Components\TextInput::make('episodes_stat')
-                        ->label('عنوان عن احصائيات اعداد الحلقات'),
+                        ->label('عنوان عن احصائيات اعداد الحلقات')
+                        ->required(),
 
                     Forms\Components\TextInput::make('episodes_stat_description')
-                        ->label('وصف بسيط معبر عن النجاح في زيادة أعداد وتنوع الحلقات'),
+                        ->label('وصف بسيط معبر عن النجاح في زيادة أعداد وتنوع الحلقات')
+                        ->required(),
 
                     Forms\Components\TextInput::make('episodes_stat_subtitle')
-                        ->label('عنوان فرعي لاحصائيات عدد الحلقات'),
+                        ->label('عنوان فرعي لاحصائيات عدد الحلقات')
+                        ->required(),
 
                     Forms\Components\TextInput::make('programs_stat')
-                        ->label('عنوان عن احصائيات انواع البرامج'),
+                        ->label('عنوان عن احصائيات انواع البرامج')
+                        ->required(),
 
                     Forms\Components\TextInput::make('programs_stat_description')
-                        ->label('وصف بسيط ومعبر عن النجاحات في البرامج والتعاقد مع مقدميمن متميزين'),
+                        ->label('وصف بسيط ومعبر عن النجاحات في البرامج والتعاقد مع مقدميمن متميزين')
+                        ->required(),
 
                     Forms\Components\TextInput::make('programs_stat_subtitle')
-                        ->label('عنوان فرعي لاحصائيات عدد البرامج'),
+                        ->label('عنوان فرعي لاحصائيات عدد البرامج')
+                        ->required(),
 
 
-                    Forms\Components\TextInput::make('banner_text')
-                        ->label('جملة قوية قبل قسم الحلقات لتجذب انتباه الزوار'),
+                    // Forms\Components\TextInput::make('banner_text')
+                    //     ->label('جملة قوية قبل قسم الحلقات لتجذب انتباه الزوار')
+                    //     ->required(),
                 ])
         ]);
     }
@@ -97,7 +109,7 @@ class OurWorksResource extends Resource
                 Tables\Columns\TextColumn::make('listeners_stat')->label('نجاحات المستمعين'),
                 Tables\Columns\TextColumn::make('episodes_stat')->label('نجاحات الحلقات'),
                 Tables\Columns\TextColumn::make('programs_stat')->label('نجاحات البرامج'),
-                Tables\Columns\TextColumn::make('banner_text')->label('جملة قبل قسم الحلقات'),
+                // Tables\Columns\TextColumn::make('banner_text')->label('جملة قبل قسم الحلقات'),
                 Tables\Columns\TextColumn::make('created_at')->label('تاريخ الاضافة')->dateTime()->sortable(),
             ])
                     ->actions([
