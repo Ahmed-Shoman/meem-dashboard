@@ -10,16 +10,19 @@ class Newsletter extends Mailable
     use Queueable, SerializesModels;
 
     public $content;
+    public $image;
+    public $link;
 
-    public function __construct($content)
+    public function __construct(string $content, ?string $image = null, ?string $link = null)
     {
         $this->content = $content;
+        $this->image = $image;
+        $this->link = $link;
     }
 
     public function build()
     {
-        return $this->subject('نشرتنا البريدية')
-                    ->view('emails.newsletter')
-                    ->with(['content' => $this->content]);
+        return $this->subject('نشرة بريدية جديدة')
+                    ->view('emails.newsletter');
     }
 }
