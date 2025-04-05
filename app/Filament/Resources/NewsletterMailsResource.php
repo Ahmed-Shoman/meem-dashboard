@@ -10,18 +10,19 @@ use App\Filament\Resources\NewsletterMailsResource\Pages\ListNewsletterMails;
 use App\Mail\Newsletter;
 use App\Models\NewsletterMails;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Forms\Components\Textarea;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Actions\BulkAction;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Mail;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Support\Facades\Mail;
 
 class NewsletterMailsResource extends Resource
 {
@@ -70,40 +71,64 @@ public static function table(Table $table): Table
     BulkAction::make('sendNewsletter')
         ->label('إرسال نشرة بريدية')
         ->form([
-            Textarea::make('content')
+            Forms\Components\Textarea::make('content')
                 ->label('محتوى النشرة')
                 ->rows(6)
                 ->required()
                 ->columnSpan('full'),
+
+            Forms\Components\Repeater::make('items')
+                ->label('الصور والروابط')
+                ->schema([
+                    Forms\Components\FileUpload::make('image')
+                        ->label('صورة النشرة')
+                        ->image()
+                        ->directory('newsletter-images')
+                        ->required(),
+
+                    Forms\Components\TextInput::make('link')
+                        ->label('رابط')
+                        ->url()
+                        ->required(),
+                ])
+                ->minItems(1)
+                ->columns(1)
+                ->columnSpanFull(),
         ])
         ->action(function (array $data) {
             try {
                 $emails = NewsletterMails::pluck('email');
+
                 foreach ($emails as $email) {
-                    Mail::to($email)->send(new Newsletter($data['content']));
+                    foreach ($data['items'] as $item) {
+                        Mail::to($email)->send(
+                            new Newsletter(
+                                content: $data['content'],
+                                image: $item['image'],
+                                link: $item['link']
+                            )
+                        );
+                    }
                 }
 
                 Notification::make()
                     ->title('تم الإرسال بنجاح')
                     ->success()
-                    ->body('تم إرسال النشرة البريدية إلى المشتركين المحددين .')
+                    ->body('تم إرسال جميع النشرات بنجاح إلى كل المشتركين.')
                     ->send();
 
             } catch (\Exception $e) {
                 Notification::make()
                     ->title('فشل الإرسال')
                     ->danger()
-                    ->body('حدث خطأ أثناء إرسال النشرة: ' . $e->getMessage())
+                    ->body('حدث خطأ أثناء الإرسال: ' . $e->getMessage())
                     ->send();
             }
         })
         ->requiresConfirmation()
         ->modalHeading('إرسال نشرة بريدية'),
-])
-;
+    ]);
 }
-
-
     public static function getPages(): array
     {
         return [
