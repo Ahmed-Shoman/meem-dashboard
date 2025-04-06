@@ -119,7 +119,7 @@ Forms\Components\Repeater::make('assignable')
     ->reorderable()
     ->addActionLabel('إضافة برنامج جديد')
     ->collapsible()
-    ->required()
+    ->helperText('في حالة عدم اختيار برنامج - سيكون المستخدم له صلاحيات الوصول الي جزء الجريده والمقالات فقط')
     ->visible(fn () => auth()->user()->isAdmin()),
             ]);
     }
