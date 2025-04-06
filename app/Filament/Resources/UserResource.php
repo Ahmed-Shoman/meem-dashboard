@@ -109,7 +109,7 @@ Forms\Components\Repeater::make('assignable')
             ->label('اسم البرنامج')
             ->options(Program::pluck('program_name', 'id')->toArray())
             ->searchable()
-            ->required()
+            // ->required()
             ->columnSpanFull(),
     ])
     ->columns(2)
