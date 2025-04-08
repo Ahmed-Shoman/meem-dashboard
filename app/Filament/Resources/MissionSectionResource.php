@@ -26,7 +26,7 @@ class MissionSectionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-lifebuoy';
     protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
-    protected static ?int $navigationSort = 6; 
+    protected static ?int $navigationSort = 6;
 
     public static function getNavigationLabel(): string
     {

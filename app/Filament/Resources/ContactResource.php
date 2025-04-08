@@ -18,7 +18,7 @@ class ContactResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
     // protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
-    protected static ?int $navigationSort = 9; 
+    protected static ?int $navigationSort = 9;
     protected static ?string $pluralLabel = 'طلبات التواصل';
 
 
@@ -74,7 +74,7 @@ class ContactResource extends Resource
                 //
             ])
                     ->actions([
-            Tables\Actions\ViewAction::make(), 
+            Tables\Actions\ViewAction::make(),
             Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make()
         ])

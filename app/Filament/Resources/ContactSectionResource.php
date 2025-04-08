@@ -19,7 +19,7 @@ class ContactSectionResource extends Resource
 
     protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
-    protected static ?int $navigationSort = 8; 
+    protected static ?int $navigationSort = 8;
 
     public static function getNavigationLabel(): string
     {

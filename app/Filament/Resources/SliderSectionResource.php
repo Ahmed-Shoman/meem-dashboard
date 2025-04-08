@@ -17,7 +17,7 @@ class SliderSectionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
     protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
-    protected static ?int $navigationSort = 14; 
+    protected static ?int $navigationSort = 14;
 
     public static function getNavigationLabel(): string
     {

@@ -7,7 +7,7 @@ use App\Models\Program;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Tables;
-use Filament\Tables\Table; 
+use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Repeater;
@@ -15,6 +15,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
+
+
 
 class ProgramResource extends Resource
 {
@@ -23,7 +27,7 @@ class ProgramResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-folder';
     protected static ?string $label = 'برنامج';
     protected static ?string $pluralLabel = 'برامج';
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -48,7 +52,7 @@ class ProgramResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('description')
                     ->label('الوصف')
-                    ->rows(5) 
+                    ->rows(5)
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('seasons')
@@ -65,7 +69,7 @@ class ProgramResource extends Resource
                     ->label('نوع البرنامج')
                     ->options([
                         'كتاب صوتي' => 'كتاب صوتي',
-                        'بودكاست' => 'بودكاست', 
+                        'بودكاست' => 'بودكاست',
                         'عالطاير' => 'عالطاير',
                     ])
                     ->required()
@@ -133,17 +137,32 @@ class ProgramResource extends Resource
 
 public static function canEdit(Model $record): bool
 {
-    return auth()->user()->isAdmin(); // Only admins can edit
+    // السماح للإدمن بالتعديل دائمًا
+    if (auth()->user()->isAdmin()) {
+        return true;
+    }
+
+    // السماح للمستخدم إذا كان هذا البرنامج ضمن البرامج المعينة له
+    $assignedProgramIds = collect(auth()->user()->assignable)->pluck('program_id')->filter()->toArray();
+
+    return in_array($record->id, $assignedProgramIds);
 }
+
 
 public static function canDelete(Model $record): bool
 {
     return auth()->user()->isAdmin(); // Only admins can delete
 }
 
-public static function canViewAny(): bool
+public static function canView(Model $record): bool
 {
-    return true; // All users can view
+    if (auth()->user()->isAdmin()) {
+        return true;
+    }
+
+    $assignedProgramIds = collect(auth()->user()->assignable)->pluck('program_id')->filter()->toArray();
+
+    return in_array($record->id, $assignedProgramIds);
 }
 
     public static function getPages(): array
@@ -154,4 +173,19 @@ public static function canViewAny(): bool
             'edit' => Pages\EditProgram::route('/{record}/edit'),
         ];
     }
+
+
+public static function getEloquentQuery(): Builder
+{
+    $query = parent::getEloquentQuery();
+
+    if (auth()->user()->isAdmin()) {
+        return $query;
+    }
+
+    $assignedProgramIds = collect(auth()->user()->assignable)->pluck('program_id')->filter()->toArray();
+
+    return $query->whereIn('id', $assignedProgramIds);
+}
+
 }

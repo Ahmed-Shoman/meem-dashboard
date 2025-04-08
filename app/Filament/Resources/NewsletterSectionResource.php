@@ -17,7 +17,7 @@ class NewsletterSectionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
     protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
-    protected static ?int $navigationSort = 12; 
+    protected static ?int $navigationSort = 12;
 
     public static function getNavigationLabel(): string
     {

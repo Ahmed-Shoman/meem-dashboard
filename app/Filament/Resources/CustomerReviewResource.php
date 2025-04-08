@@ -17,7 +17,7 @@ class CustomerReviewResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-numbered-list';
     protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
-    protected static ?int $navigationSort = 10; 
+    protected static ?int $navigationSort = 10;
 
     public static function getNavigationLabel(): string
     {

@@ -17,7 +17,7 @@ class AboutSectionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';
     protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
-    protected static ?int $navigationSort = 5; 
+    protected static ?int $navigationSort = 5;
 
     public static function getNavigationLabel(): string
     {

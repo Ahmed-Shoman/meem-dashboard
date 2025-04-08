@@ -17,7 +17,7 @@ class ConsultantResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
     protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
-    protected static ?int $navigationSort = 7; 
+    protected static ?int $navigationSort = 7;
 
     public static function getNavigationLabel(): string
     {
@@ -57,6 +57,7 @@ class ConsultantResource extends Resource
         abort(403, 'Unauthorized');
     }
         return $table
+
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('الاسم')

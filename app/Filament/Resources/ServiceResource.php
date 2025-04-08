@@ -19,9 +19,9 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationGroup = 'أقسام الواجهة الاماميه';
 
-    protected static ?int $navigationSort = 13; 
+    protected static ?int $navigationSort = 13;
 
-    
+
 
     public static function getNavigationLabel(): string
     {

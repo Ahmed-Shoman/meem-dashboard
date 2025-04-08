@@ -8,7 +8,7 @@ use App\Models\Program;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Tables;
-use Filament\Tables\Table; 
+use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\ViewAction;
@@ -22,7 +22,7 @@ use Filament\Forms\Components\Select;
 class EpisodeResource extends Resource
 {
     protected static ?string $model = Episode::class;
-    
+
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
     // protected static ?string $navigationGroup = 'البرامج';
