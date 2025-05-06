@@ -49,7 +49,8 @@ class ProgramResource extends Resource
                     ->label('صورة الغلاف الخارجي للبرنامج')
                     ->image()
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->maxSize(12888888),
                 Forms\Components\Textarea::make('description')
                     ->label('الوصف')
                     ->rows(5)
@@ -147,7 +148,6 @@ public static function canEdit(Model $record): bool
 
     return in_array($record->id, $assignedProgramIds);
 }
-
 
 public static function canDelete(Model $record): bool
 {
